@@ -479,8 +479,11 @@
     .ref-panel-inner p, .ref-panel-inner li { font-size: 14px; line-height: 1.65; }
     .ref-panel-inner { zoom: 1.35; }
 
-    .qcard { padding: 32px 34px 26px; border-radius: 28px; max-width: 640px; margin: 0 auto; }
-    .qcard-stack { max-width: 640px; margin: 20px auto 0; }
+    .qcard { padding: 32px 34px 26px; border-radius: 28px; max-width: 860px; margin: 0 auto; }
+    .qcard-stack { max-width: 860px; margin: 20px auto 0; }
+    .q-body { display: flex; gap: 22px; align-items: flex-start; }
+    .q-body .q-image { flex: 0 0 40%; max-width: 340px; margin: 0; }
+    .q-body .opt-list { flex: 1; min-width: 0; }
     .q-text { font-size: 19px; }
     .opt { font-size: 16px; padding: 17px 20px; }
     .btn { font-size: 15px; padding: 13px 26px; }
@@ -556,11 +559,13 @@
       <div class="qcard-ghost qcard-ghost-2"></div>
       <div class="qcard-ghost qcard-ghost-1"></div>
       <div class="qcard" id="qcard">
-        <img class="q-image hidden" id="q-image" src="" alt="">
         <div class="q-number" id="q-number">PREGUNTA 1</div>
         <div class="q-text" id="q-text"></div>
         <div class="q-hint hidden" id="q-hint">Esta pregunta tiene más de una respuesta correcta.</div>
-        <div class="opt-list" id="opt-list"></div>
+        <div class="q-body">
+          <img class="q-image hidden" id="q-image" src="" alt="">
+          <div class="opt-list" id="opt-list"></div>
+        </div>
         <div class="feedback" id="feedback"></div>
         <div class="qcard-actions">
           <button class="btn btn-primary" id="btn-check" disabled>Comprobar</button>
