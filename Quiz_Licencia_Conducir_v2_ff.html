@@ -524,18 +524,7 @@
         <div id="quiz-list"></div>
       </div>
       <div class="cat-panel" id="panel-simulacro">
-        <div class="sim-card" id="sim-card">
-          <div class="sim-icon">🎯</div>
-          <h3>Simulacro General</h3>
-          <p class="sim-sub">Un examen mixto con preguntas de los 10 temas.</p>
-          <ul class="sim-list">
-            <li><span class="chk">✓</span> 35 preguntas al azar de todas las versiones</li>
-            <li><span class="chk">✓</span> Mezcla los 10 temas</li>
-            <li><span class="chk">✓</span> Tu mejor puntaje se guarda</li>
-          </ul>
-          <button class="sim-btn" id="sim-btn">Comenzar Simulacro →</button>
-        </div>
-        <div class="sim-card" id="sim-muni-card" style="margin-top:18px">
+        <div class="sim-card" id="sim-muni-card">
           <div class="sim-icon">🏛️</div>
           <h3>Simulacro Municipalidad</h3>
           <p class="sim-sub">Últimas preguntas según la Municipalidad.</p>
@@ -4532,10 +4521,6 @@ function renderHome() {
   });
 
   // ---- Categoría 3: Simulacro ----
-  el("sim-btn").onclick = function () { startQuiz("mix"); };
-  el("sim-card").onclick = function (e) {
-    if (e.target.id !== "sim-btn") startQuiz("mix");
-  };
   el("sim-muni-card").onclick = function () { startQuiz("muni"); };
 
   // ---- Tabs ----
