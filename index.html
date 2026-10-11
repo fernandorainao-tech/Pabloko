@@ -1099,7 +1099,7 @@
   @media (prefers-reduced-motion: reduce) { #dx-splash * { transition:none !important; animation:none !important; } }
 
   .dx-fire { display:block; height:24px; margin-top:-10px; margin-bottom:-14px; pointer-events:none; opacity:.5; }
-  .tb-msg-t + .dx-fire { height:20px; margin-top:-8px; margin-bottom:-12px; }
+  .tb-msg-p + .dx-fire { height:22px; margin-top:-6px; margin-bottom:-14px; }
 </style>
 </head>
 <body><div id="dx-splash" aria-hidden="true"><canvas id="dx-fire"></canvas><div class="dx-row"><img src="icons/logo-d.png" alt=""><div class="dx-name"><span class="dx-gap"></span><span style="color:#3FE0D0;transition-delay:250ms">D</span><span style="color:#3FE0D0;transition-delay:370ms">u</span><span style="color:#3FE0D0;transition-delay:490ms">x</span><span style="color:#FFFFFF;transition-delay:610ms">D</span><span style="color:#FFFFFF;transition-delay:730ms">r</span><span style="color:#FFFFFF;transition-delay:850ms">i</span><span style="color:#FFFFFF;transition-delay:970ms">v</span><span style="color:#FFFFFF;transition-delay:1090ms">e</span></div></div></div><script>
@@ -4623,7 +4623,7 @@ if (document.readyState === "loading") {
   }
   function scan() {
     attach(document.querySelector(".tb-hello"));
-    document.querySelectorAll(".tb-msg-t").forEach(attach);
+    document.querySelectorAll(".tb-msg-p").forEach(attach);
     effects = effects.filter(function (e) { return document.body.contains(e.cv) && document.body.contains(e.el); });
   }
   function visible(e) {
