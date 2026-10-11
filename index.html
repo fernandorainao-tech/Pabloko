@@ -838,6 +838,54 @@
   .tb-mod.open .tb-mod-chev { transform:rotate(180deg); }
   .tb-mod-body { display:none; padding:0 12px 12px; }
   .tb-mod.open .tb-mod-body { display:block; }
+
+  .lg-stat { position:relative; display:flex; align-items:center; gap:12px; padding:14px !important; overflow:hidden; }
+  .lg-si { width:42px; height:42px; border-radius:12px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+  .lg-si svg { width:22px; height:22px; }
+  .lg-si.fire { background:rgba(255,138,31,.16); color:#FF9A3C; } .lg-si.teal { background:rgba(45,212,191,.14); color:#2DD4BF; }
+  .lg-stat b { display:block; font-family:'Chakra Petch',sans-serif; font-size:24px; line-height:1.1; color:#E8ECF2; }
+  .lg-stat span span { font-size:12.5px; color:#A7AFBD; }
+  .lg-corner { position:absolute; top:6px; right:8px; font-size:15px; opacity:.85; }
+  .lg-week { display:grid; grid-template-columns:repeat(7,minmax(0,1fr)); gap:6px; margin-top:12px; }
+  .lg-day { display:flex; flex-direction:column; align-items:center; gap:7px; font-size:12px; font-weight:700; color:#8B94A5; }
+  .lg-day i { width:36px; height:36px; border-radius:50%; background:#1E293B; border:2px solid #263244; display:flex; align-items:center; justify-content:center; color:#0E1117; }
+  .lg-day.on i { background:#2DD4BF; border-color:#2DD4BF; box-shadow:0 0 12px rgba(45,212,191,.45); }
+  .lg-day.hoy:not(.on) i { border-color:#2DD4BF; }
+  .lg-day svg { width:17px; height:17px; }
+  .lg-medals { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:16px 8px; }
+  .lg-medal { display:flex; flex-direction:column; align-items:center; gap:7px; }
+  .lg-mc { position:relative; width:62px; height:62px; }
+  .lg-mi { position:absolute; inset:0; border-radius:50%; background:#1E293B; border:2px solid #334155; display:flex; align-items:center; justify-content:center; color:#94A3B8; filter:grayscale(1); opacity:.3; }
+  .lg-mi svg { width:28px; height:28px; }
+  .lg-medal.on .lg-mi { background:radial-gradient(circle at 35% 30%, #5EEAD4 0%, #2DD4BF 45%, #14B8A6 100%); border:2px solid #A7F3EB; color:#0B2B2A; filter:none; opacity:1; box-shadow:0 0 0 3px rgba(251,191,36,.35), 0 0 16px rgba(45,212,191,.5); }
+  .lg-ok { position:absolute; right:-3px; bottom:-2px; width:22px; height:22px; border-radius:50%; background:#FBBF24; color:#3B2500; display:flex; align-items:center; justify-content:center; border:2px solid #0E1117; }
+  .lg-ok svg { width:12px; height:12px; }
+  .lg-lock { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; color:#CBD5E1; }
+  .lg-lock svg { width:18px; height:18px; }
+  .lg-mn { font-size:11.5px; font-weight:600; color:#8B94A5; text-align:center; line-height:1.2; }
+  .lg-medal.on .lg-mn { color:#E8ECF2; }
+  .lg-prize { display:flex; align-items:center; gap:12px; padding:12px; border-radius:16px; border:1px solid #252C39; background:linear-gradient(135deg,#171D28 0%,#11151D 100%); margin-bottom:10px; }
+  .lg-prize.won { border-color:#1E5C57; background:linear-gradient(135deg,#12272A 0%,#11151D 100%); }
+  .lg-badge { flex:0 0 50px; height:50px; border-radius:50%; padding:3px; display:flex; }
+  .lg-badge > span { flex:1; border-radius:50%; display:flex; align-items:center; justify-content:center; background:#151A23; }
+  .lg-badge svg { width:24px; height:24px; }
+  .lg-teal { background:linear-gradient(145deg,#5EEAD4,#0E7490); } .lg-teal > span { color:#5EEAD4; }
+  .lg-green { background:linear-gradient(145deg,#86EFAC,#15803D); } .lg-green > span { color:#86EFAC; }
+  .lg-gold { background:linear-gradient(145deg,#FDE68A,#B45309); } .lg-gold > span { color:#FCD34D; }
+  .lg-amber { background:linear-gradient(145deg,#FDBA74,#B91C1C); } .lg-amber > span { color:#FDBA74; }
+  .lg-fire { background:linear-gradient(145deg,#FDBA74,#DC2626); } .lg-fire > span { color:#FB923C; }
+  .lg-prize:not(.won) .lg-badge { filter:saturate(.35) brightness(.75); }
+  .lg-prize.won .lg-badge { box-shadow:0 0 14px rgba(45,212,191,.35); }
+  .lg-prize.won .lg-badge > span { background:radial-gradient(circle at 35% 30%, #1F3B40, #101820); }
+  .lg-pb { flex:1; min-width:0; display:flex; flex-direction:column; gap:5px; }
+  .lg-ph { display:flex; justify-content:space-between; align-items:center; gap:8px; }
+  .lg-ph b { font-size:14.5px; color:#E8ECF2; }
+  .lg-won { display:inline-flex; align-items:center; gap:4px; font-size:11px; font-weight:800; letter-spacing:.04em; color:#0E1117; background:#2DD4BF; border-radius:20px; padding:3px 8px; white-space:nowrap; }
+  .lg-won svg { width:11px; height:11px; }
+  .lg-st { font-size:12px; font-weight:700; color:#A7AFBD; white-space:nowrap; }
+  .lg-pd { font-size:12.5px; color:#A7AFBD; }
+  .lg-bar { height:7px; border-radius:4px; background:#1E293B; overflow:hidden; }
+  .lg-bar i { display:block; height:100%; border-radius:4px; background:linear-gradient(90deg,#06B6D4,#2DD4BF); min-width:0; }
   .tb-quiz-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; }
   .tb-qt { background:#151A23; border:1px solid #252C39; border-radius:18px; padding:12px; display:flex; flex-direction:column; gap:8px; color:#E8ECF2; text-align:left; font-family:inherit; cursor:pointer; min-height:122px; }
   .tb-qt.curso { border-color:#5C4610; }
@@ -3855,9 +3903,9 @@ function tbPremios(m) {
       pr("t5", "5", "Mitad del camino", "Aprueba 5 temas", m.aprobados, 5, " temas"),
       pr("t10", "10", "Teoría completa", "Aprueba los 10 temas", m.aprobados, 10, " temas") ] },
     { titulo: "Por puntaje", sub: "Según tus resultados en quiz y simulacros", items: [
-      pr("p30", "30", "Luz verde", "Aprueba un simulacro de la Municipalidad (30 o más)", m.muniBest, 30, "/35"),
+      pr("p30", "30", "Luz verde", "Aprueba un simulacro de la Municipalidad (30 o más)", m.muniBest, 30, " pts"),
       pr("p3x", "3x", "Licencia asegurada", "Aprueba 3 simulacros seguidos", s.passStreakMax, 3, " seguidos"),
-      pr("p35", "35", "Conducción perfecta", "Simulacro con 35 de 35", m.muniBest, 35, "/35"),
+      pr("p35", "35", "Conducción perfecta", "Simulacro con 35 de 35", m.muniBest, 35, " pts"),
       pr("p100", "100", "Sin multas", "Termina 3 temas sin ningún error", m.perfectos, 3, " temas") ] },
     { titulo: "Respuestas correctas", sub: "Todas las preguntas que respondiste bien", items: [
       pr("c100", "100", "Ruta de 100", "100 respuestas correctas", s.correct, 100),
@@ -4003,34 +4051,71 @@ function renderManejo() {
 var TB_HEAD = { inicio: ["Licencia clase B", "Hola, Constanza"], temas: ["Teoría", "Temas"], quiz: ["Práctica por tema", "Quiz"],
   simulacro: ["Modo examen", "Simulacro"], manejo: ["Práctica en video", "Manejo"], logros: ["Tu perfil", "Tus logros"] };
 function setHeader(tab) { var h = TB_HEAD[tab] || TB_HEAD.inicio; var e = document.querySelector(".tb-eyebrow"), t = document.querySelector(".tb-hello"); if (e) e.textContent = h[0]; if (t) t.textContent = h[1]; }
+
+var TB_LG = {
+  car_crash:'<path d="M5 16l1.5-4.5A2 2 0 0 1 8.4 10h7.2a2 2 0 0 1 1.9 1.5L19 16"/><rect x="4" y="16" width="16" height="4" rx="1.5"/><circle cx="8" cy="20" r="1"/><circle cx="16" cy="20" r="1"/><path d="M17 3l.8 2.2L20 4.5l-1 2 2 1.2-2.3.4"/>',
+  gear:'<circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/>',
+  people:'<circle cx="8" cy="7" r="2.5"/><circle cx="16" cy="7" r="2.5"/><path d="M3.5 20v-3a4.5 4.5 0 0 1 9 0v3M11.5 20v-3a4.5 4.5 0 0 1 9 0v3"/>',
+  head:'<path d="M15 21v-3.5a6 6 0 1 0-8.6-5.4L5 15h2v2a2 2 0 0 0 2 2h1v2"/><path d="M12 8.5a1.8 1.8 0 0 1 3 1.2"/>',
+  bike:'<circle cx="6" cy="16" r="3.5"/><circle cx="18" cy="16" r="3.5"/><path d="M6 16l4-7h5l3 7M10 9l2 7h-6M14 5h2.5"/>',
+  light:'<rect x="8" y="2" width="8" height="20" rx="3"/><circle cx="12" cy="7" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="12" cy="17" r="1.6"/>',
+  rain:'<path d="M7 15a4 4 0 0 1-.5-8 6 6 0 0 1 11.3 1.5A3.5 3.5 0 0 1 17.5 15z"/><path d="M8 18l-1 3M12 18l-1 3M16 18l-1 3"/>',
+  leaf:'<path d="M5 19c0-8 5-13 15-14-1 10-6 15-14 15"/><path d="M5 19l7-7"/>',
+  info:'<path d="M12 2l8 3v6c0 5-3.5 9-8 11-4.5-2-8-6-8-11V5z"/><path d="M12 10v6M12 7h.01"/>',
+  book:'<path d="M4 5h6a2 2 0 0 1 2 2v13a2 2 0 0 0-2-2H4zM20 5h-6a2 2 0 0 0-2 2v13a2 2 0 0 1 2-2h6z"/>',
+  clip:'<rect x="5" y="4" width="14" height="18" rx="2"/><path d="M9 4V3h6v1M9 12l2 2 4-4M9 18h6"/>',
+  wheel:'<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="2"/><path d="M12 3v7M4 15l6.2-2M20 15l-6.2-2"/>',
+  road:'<path d="M8 2L4 22M16 2l4 20M12 3v3M12 10v3M12 17v3"/>',
+  cap:'<path d="M2 9l10-5 10 5-10 5z"/><path d="M6 11v5c3 2 9 2 12 0v-5M22 9v6"/>',
+  shield:'<path d="M12 2l8 3v6c0 5-3.5 9-8 11-4.5-2-8-6-8-11V5z"/><path d="M8.5 12l2.5 2.5 4.5-5"/>',
+  trophy:'<path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0zM7 6H4a3 3 0 0 0 3 4M17 6h3a3 3 0 0 1-3 4"/>',
+  star:'<path d="M12 2l2.9 6.2 6.6.8-4.9 4.6 1.3 6.6L12 16.9 6.1 20.2l1.3-6.6L2.5 9l6.6-.8z"/>',
+  speed:'<path d="M4 18a8 8 0 1 1 16 0"/><path d="M12 18l4-6M8 18h8"/>',
+  map:'<path d="M3 6l6-2 6 2 6-2v14l-6 2-6-2-6 2z"/><path d="M9 4v14M15 6v14"/>',
+  globe:'<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/>',
+  undo:'<path d="M9 14L4 9l5-5"/><path d="M4 9h11a5 5 0 0 1 0 10h-3"/>',
+  wrench:'<path d="M14.7 6.3a4 4 0 0 0 5 5L12 19a2.8 2.8 0 0 1-4-4z"/><path d="M14.7 6.3L17 4l3 3-2.3 2.3"/>',
+  sparkle:'<rect x="5" y="4" width="14" height="18" rx="2"/><path d="M12 9l1 2.5 2.5 1-2.5 1L12 16l-1-2.5-2.5-1 2.5-1z"/>',
+  flame:'<path d="M12 2c2.5 3.5 6 5.3 6 10.3a6 6 0 0 1-12 0c0-3 1.8-4.8 3-6.5.6 2.3 1.8 3.5 3 3.5 0-2.3-1.2-4.7 0-7.3z"/>',
+  carmove:'<path d="M7 15l1.3-4a2 2 0 0 1 1.9-1.4h5.6a2 2 0 0 1 1.9 1.4L19 15"/><rect x="6" y="15" width="14" height="4" rx="1.5"/><path d="M2 11h3M1 15h3M3 19h2"/>',
+  calendar:'<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4M12 13l1 2 2 .3-1.5 1.4.4 2.1-1.9-1-1.9 1 .4-2.1L9 15.3l2-.3z"/>',
+  lock:'<rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/>',
+  check:'<path d="M5 12.5l4.5 4.5L19 7.5"/>'
+};
+function lgSvg(k, sw) { return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="' + (sw || 1.9) + '" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + TB_LG[k] + '</svg>'; }
+var TB_MEDAL_IC = ["car_crash","gear","people","head","bike","light","rain","leaf","info","book","clip"];
+var TB_PRIZE_IC = { t1:["wheel","teal"], t5:["road","teal"], t10:["cap","teal"], p30:["light","green"], p3x:["shield","green"], p35:["trophy","gold"], p100:["star","gold"],
+  c100:["speed","gold"], c500:["map","gold"], c1k:["globe","gold"], e10:["undo","amber"], e50:["wrench","amber"], e0:["sparkle","amber"],
+  r3:["flame","fire"], r7:["carmove","fire"], r30:["calendar","fire"] };
 function renderLogros(m) {
   var dias = ["L", "M", "M", "J", "V", "S", "D"], set = {}; m.s.days.forEach(function (d) { set[d] = 1; });
   var hoy = new Date(), dow = (hoy.getDay() + 6) % 7, lunes = new Date(hoy); lunes.setDate(hoy.getDate() - dow);
   var semana = dias.map(function (l, i) {
     var d = new Date(lunes); d.setDate(lunes.getDate() + i);
     var on = !!set[hoyStr(d)], esHoy = i === dow;
-    return '<div>' + l + '<i class="' + (on ? 'on' : '') + (esHoy && !on ? ' hoy' : '') + '">' + (on ? TB_IC.check : '') + '</i></div>';
+    return '<div class="lg-day' + (on ? ' on' : '') + (esHoy ? ' hoy' : '') + '"><span>' + l + '</span><i>' + (on ? lgSvg("check", 3) : '') + '</i></div>';
   }).join("");
   var nombres = ["Siniestros", "Principios", "Convivencia", "La persona", "Vulnerables", "Normas", "Especiales", "Eficiente", "Info. clave", "Anexos", "Pauta"];
   var ganadas = 0;
   var medallas = nombres.map(function (n, i) {
     var on = i < 10 ? (m.p[QUIZ_DATA[i].id] || 0) >= 85 : (m.etapasTot > 0 && m.etapasVistas >= m.etapasTot);
     if (on) ganadas++;
-    return '<div class="tb-medal"><i class="' + (on ? 'on' : '') + '">' + (i + 1) + '</i>' + n + '</div>';
+    return '<div class="lg-medal' + (on ? ' on' : '') + '"><div class="lg-mc"><span class="lg-mi">' + lgSvg(TB_MEDAL_IC[i]) + '</span>' +
+      (on ? '<span class="lg-ok">' + lgSvg("check", 3.2) + '</span>' : '<span class="lg-lock">' + lgSvg("lock", 2.2) + '</span>') + '</div><span class="lg-mn">' + n + '</span></div>';
   }).join("");
   var grupos = tbPremios(m).map(function (g) {
     return '<div class="tb-sec"><h3>' + g.titulo + '</h3></div><div class="tb-sub">' + g.sub + '</div>' + g.items.map(function (p) {
-      var pct = Math.min(100, Math.round(p.actual * 100 / p.meta));
-      var est = p.won ? "Ganado" : (p.id === "e0" ? (m.pendientes ? m.pendientes + " por corregir" : "Sin errores aún") : Math.min(p.actual, p.meta) + "/" + p.meta + p.suf);
-      return '<div class="tb-card tb-prize' + (p.won ? ' won' : '') + '"><span class="tb-prize-ic">' + p.badge + '</span><div class="tb-prize-b"><div class="tb-prize-h"><b>' + p.nombre + '</b><span>' + est + '</span></div><div class="tb-prize-d">' + p.desc + '</div><div class="tb-prog"><i style="width:' + pct + '%"></i></div></div></div>';
+      var pct = Math.min(100, Math.round(p.actual * 100 / p.meta)), ic = TB_PRIZE_IC[p.id] || ["star", "teal"];
+      var est = p.won ? '<span class="lg-won">' + lgSvg("check", 3) + 'GANADO</span>' : '<span class="lg-st">' + (p.id === "e0" ? (m.pendientes ? m.pendientes + " por corregir" : "Sin errores aún") : Math.min(p.actual, p.meta) + "/" + p.meta + p.suf) + '</span>';
+      return '<div class="lg-prize' + (p.won ? ' won' : '') + '"><span class="lg-badge lg-' + ic[1] + '"><span>' + lgSvg(ic[0], 2) + '</span></span>' +
+        '<div class="lg-pb"><div class="lg-ph"><b>' + p.nombre + '</b>' + est + '</div><div class="lg-pd">' + p.desc + '</div><div class="lg-bar"><i style="width:' + pct + '%"></i></div></div></div>';
     }).join("");
   }).join("");
   el("logros-body").innerHTML =
-    '<h2 class="tb-h2" style="margin-bottom:0">Tus logros</h2>' +
-    '<div class="tb-lg-stats"><div class="tb-card tb-lg-stat"><span style="color:#FFB020">' + TB_IC.flame + '</span><span><b>' + m.racha + '</b><span>días de racha</span></span></div>' +
-      '<div class="tb-card tb-lg-stat"><span style="color:#3FE0D0">' + TB_IC.timer + '</span><span><b>' + (m.muniBest ? m.muniBest + '/35' : '—') + '</b><span>mejor simulacro</span></span></div></div>' +
-    '<div class="tb-card"><h3 style="font-size:15px;color:#E8ECF2">Esta semana</h3><div class="tb-week">' + semana + '</div></div>' +
-    '<div class="tb-sec"><h3>Medallas por tema</h3><span>' + ganadas + ' de 11</span></div><div class="tb-medals">' + medallas + '</div>' + grupos;
+    '<div class="tb-lg-stats"><div class="tb-card lg-stat"><span class="lg-si fire">' + lgSvg("flame", 2) + '</span><span><b>' + m.racha + '</b><span>días de racha</span></span><span class="lg-corner">🔥</span></div>' +
+      '<div class="tb-card lg-stat"><span class="lg-si teal">' + TB_IC.timer + '</span><span><b>' + (m.muniBest ? m.muniBest + '/35' : '—') + '</b><span>mejor simulacro</span></span><span class="lg-corner">⏱️</span></div></div>' +
+    '<div class="tb-card"><h3 style="font-size:15px;color:#E8ECF2">Esta semana</h3><div class="lg-week">' + semana + '</div></div>' +
+    '<div class="tb-sec"><h3>Medallas por tema</h3><span>' + ganadas + ' de 11</span></div><div class="lg-medals">' + medallas + '</div>' + grupos;
 }
 function updateLogrosBadge() {
   var m = tbMetrics(), won = [];
