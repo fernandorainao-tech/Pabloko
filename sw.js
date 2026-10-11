@@ -1,6 +1,6 @@
 /* DuxDrive · service worker */
-var VERSION = "duxdrive-v2";
-var SHELL = ["./", "./index.html", "./manifest.webmanifest", "./icons/icon-192.png", "./icons/icon-512.png", "./icons/apple-touch-icon.png", "./img/avatar.jpg", "./img/mensajes/sprite.jpg"];
+var VERSION = "duxdrive-v3";
+var SHELL = ["./", "./index.html", "./manifest.webmanifest", "./icons/icon-192.png", "./icons/icon-512.png", "./icons/apple-touch-icon.png", "./img/avatar.jpg", "./img/mensajes/sprite.jpg", "./icons/logo-d.png"];
 self.addEventListener("install", function (e) {
   e.waitUntil(caches.open(VERSION).then(function (c) { return c.addAll(SHELL); }).then(function () { return self.skipWaiting(); }));
 });
