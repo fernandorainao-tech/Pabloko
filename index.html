@@ -1035,30 +1035,30 @@
   /* app instalada: respetar la zona de la barra de estado */
   body { padding-top: env(safe-area-inset-top, 0px); }
 
-  #dx-splash { position:fixed; inset:0; z-index:9999; background:#0E1117; display:flex; align-items:center; justify-content:center; transition:opacity .35s ease; }
+  #dx-splash { position:fixed; inset:0; z-index:9999; background:#0E1117; display:flex; align-items:center; justify-content:center; transition:opacity .6s ease; }
   #dx-splash.out { opacity:0; pointer-events:none; }
   #dx-splash .dx-row { display:flex; align-items:center; }
-  #dx-splash img { width:76px; height:auto; animation:dxLogo .6s ease-out both; }
-  #dx-splash .dx-name { max-width:0; overflow:hidden; white-space:nowrap; font-family:'Chakra Petch','Manrope',sans-serif; font-weight:700; font-size:38px; letter-spacing:.01em; transition:max-width .75s cubic-bezier(.2,.7,.2,1); }
+  #dx-splash img { width:76px; height:auto; animation:dxLogo .9s ease-out both; }
+  #dx-splash .dx-name { max-width:0; overflow:hidden; white-space:nowrap; font-family:'Chakra Petch','Manrope',sans-serif; font-weight:700; font-size:38px; letter-spacing:.01em; transition:max-width 1.2s cubic-bezier(.2,.7,.2,1); }
   #dx-splash.go .dx-name { max-width:240px; }
-  #dx-splash .dx-name span { display:inline-block; opacity:0; transform:translateX(-6px); transition:opacity .25s ease, transform .25s ease; }
+  #dx-splash .dx-name span { display:inline-block; opacity:0; transform:translateX(-6px); transition:opacity .4s ease, transform .4s ease; }
   #dx-splash.go .dx-name span { opacity:1; transform:none; }
   #dx-splash .dx-name .dx-gap { width:14px; }
   @keyframes dxLogo { from { transform:scale(.86); opacity:.6; } to { transform:none; opacity:1; } }
   @media (prefers-reduced-motion: reduce) { #dx-splash * { transition:none !important; animation:none !important; } }
 </style>
 </head>
-<body><div id="dx-splash" aria-hidden="true"><div class="dx-row"><img src="icons/logo-d.png" alt=""><div class="dx-name"><span class="dx-gap"></span><span style="color:#3FE0D0;transition-delay:120ms">D</span><span style="color:#3FE0D0;transition-delay:190ms">u</span><span style="color:#3FE0D0;transition-delay:260ms">x</span><span style="color:#FFFFFF;transition-delay:330ms">D</span><span style="color:#FFFFFF;transition-delay:400ms">r</span><span style="color:#FFFFFF;transition-delay:470ms">i</span><span style="color:#FFFFFF;transition-delay:540ms">v</span><span style="color:#FFFFFF;transition-delay:610ms">e</span></div></div></div><script>
+<body><div id="dx-splash" aria-hidden="true"><div class="dx-row"><img src="icons/logo-d.png" alt=""><div class="dx-name"><span class="dx-gap"></span><span style="color:#3FE0D0;transition-delay:250ms">D</span><span style="color:#3FE0D0;transition-delay:370ms">u</span><span style="color:#3FE0D0;transition-delay:490ms">x</span><span style="color:#FFFFFF;transition-delay:610ms">D</span><span style="color:#FFFFFF;transition-delay:730ms">r</span><span style="color:#FFFFFF;transition-delay:850ms">i</span><span style="color:#FFFFFF;transition-delay:970ms">v</span><span style="color:#FFFFFF;transition-delay:1090ms">e</span></div></div></div><script>
 (function () {
   var sp = document.getElementById("dx-splash"); if (!sp) return;
   var t0 = Date.now();
-  requestAnimationFrame(function () { setTimeout(function () { sp.classList.add("go"); }, 250); });
+  requestAnimationFrame(function () { setTimeout(function () { sp.classList.add("go"); }, 500); });
   function done() {
-    var wait = Math.max(0, 1700 - (Date.now() - t0));
-    setTimeout(function () { sp.classList.add("out"); setTimeout(function () { if (sp.parentNode) sp.parentNode.removeChild(sp); }, 400); }, wait);
+    var wait = Math.max(0, 3200 - (Date.now() - t0));
+    setTimeout(function () { sp.classList.add("out"); setTimeout(function () { if (sp.parentNode) sp.parentNode.removeChild(sp); }, 650); }, wait);
   }
   if (document.readyState === "complete") done(); else window.addEventListener("load", done);
-  setTimeout(function () { if (sp.parentNode) { sp.classList.add("out"); setTimeout(function () { if (sp.parentNode) sp.parentNode.removeChild(sp); }, 400); } }, 4500);
+  setTimeout(function () { if (sp.parentNode) { sp.classList.add("out"); setTimeout(function () { if (sp.parentNode) sp.parentNode.removeChild(sp); }, 400); } }, 7000);
 })();
 </script>
 
