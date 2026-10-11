@@ -1,5 +1,5 @@
 /* DuxDrive · service worker */
-var VERSION = "duxdrive-v1";
+var VERSION = "duxdrive-v2";
 var SHELL = ["./", "./index.html", "./manifest.webmanifest", "./icons/icon-192.png", "./icons/icon-512.png", "./icons/apple-touch-icon.png", "./img/avatar.jpg", "./img/mensajes/sprite.jpg"];
 self.addEventListener("install", function (e) {
   e.waitUntil(caches.open(VERSION).then(function (c) { return c.addAll(SHELL); }).then(function () { return self.skipWaiting(); }));
