@@ -1098,7 +1098,8 @@
   @keyframes dxLogo { from { transform:scale(.86); opacity:.6; } to { transform:none; opacity:1; } }
   @media (prefers-reduced-motion: reduce) { #dx-splash * { transition:none !important; animation:none !important; } }
 
-  #dx-hello-fire { display:block; height:24px; margin-top:-10px; margin-bottom:-14px; pointer-events:none; opacity:.5; }
+  .dx-fire { display:block; height:24px; margin-top:-10px; margin-bottom:-14px; pointer-events:none; opacity:.5; }
+  .tb-msg-t + .dx-fire { height:20px; margin-top:-8px; margin-bottom:-12px; }
 </style>
 </head>
 <body><div id="dx-splash" aria-hidden="true"><canvas id="dx-fire"></canvas><div class="dx-row"><img src="icons/logo-d.png" alt=""><div class="dx-name"><span class="dx-gap"></span><span style="color:#3FE0D0;transition-delay:250ms">D</span><span style="color:#3FE0D0;transition-delay:370ms">u</span><span style="color:#3FE0D0;transition-delay:490ms">x</span><span style="color:#FFFFFF;transition-delay:610ms">D</span><span style="color:#FFFFFF;transition-delay:730ms">r</span><span style="color:#FFFFFF;transition-delay:850ms">i</span><span style="color:#FFFFFF;transition-delay:970ms">v</span><span style="color:#FFFFFF;transition-delay:1090ms">e</span></div></div></div><script>
@@ -4606,44 +4607,62 @@ if (document.readyState === "loading") {
 </script>
 <script>
 (function () {
-  var h = document.querySelector(".tb-hello"); if (!h) return;
   if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-  var cv = document.createElement("canvas"); cv.id = "dx-hello-fire"; cv.setAttribute("aria-hidden", "true");
-  h.insertAdjacentElement("afterend", cv);
-  var ctx = cv.getContext("2d"), dpr = Math.min(window.devicePixelRatio || 1, 2), W = 0, H = 24, parts = [], last = 0, raf = 0;
+  var dpr = Math.min(window.devicePixelRatio || 1, 2), effects = [], last = 0;
   var spr = ["45,212,191", "6,182,212"].map(function (rgb) {
     var c = document.createElement("canvas"); c.width = c.height = 32; var g = c.getContext("2d");
     var gr = g.createRadialGradient(16, 16, 0, 16, 16, 16); gr.addColorStop(0, "rgba(255,255,255,.95)"); gr.addColorStop(.3, "rgba(" + rgb + ",.8)"); gr.addColorStop(1, "rgba(" + rgb + ",0)");
     g.fillStyle = gr; g.fillRect(0, 0, 32, 32); return c;
   });
-  function textWidth() { var r = document.createRange(); r.selectNodeContents(h); var w = r.getBoundingClientRect().width; return Math.max(80, Math.min(w, h.clientWidth)); }
-  function size() { W = Math.round(textWidth()); cv.style.width = W + "px"; cv.width = W * dpr; cv.height = H * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0); }
-  function visible() {
-    var home = document.getElementById("screen-home"), pan = document.getElementById("panel-inicio");
-    return !document.hidden && home && !home.classList.contains("hidden") && pan && pan.classList.contains("active") && !document.getElementById("dx-splash");
+  function textWidth(el) { var r = document.createRange(); r.selectNodeContents(el); var w = r.getBoundingClientRect().width; return Math.max(60, Math.min(w, el.clientWidth || w)); }
+  function attach(el) {
+    if (!el || (el.nextElementSibling && el.nextElementSibling.classList.contains("dx-fire"))) return;
+    var cv = document.createElement("canvas"); cv.className = "dx-fire"; cv.setAttribute("aria-hidden", "true");
+    el.insertAdjacentElement("afterend", cv);
+    effects.push({ el: el, cv: cv, ctx: cv.getContext("2d"), W: 0, H: 0, parts: [], n: 0, txt: "" });
   }
-  function frame(ts) {
-    raf = requestAnimationFrame(frame);
-    if (ts - last < 33) return; last = ts;          // ~30 fps, suficiente y liviano
-    if (!visible()) { if (parts.length) { parts = []; ctx.clearRect(0, 0, W, H); } return; }
-    if (cv.style.width !== W + "px" || !W) size();
-    if (parts.length < 26 && Math.random() < .55) {
+  function scan() {
+    attach(document.querySelector(".tb-hello"));
+    document.querySelectorAll(".tb-msg-t").forEach(attach);
+    effects = effects.filter(function (e) { return document.body.contains(e.cv) && document.body.contains(e.el); });
+  }
+  function visible(e) {
+    if (document.hidden || document.getElementById("dx-splash")) return false;
+    if (!e.cv.offsetParent) return false;
+    var r = e.cv.getBoundingClientRect(); return r.bottom > 0 && r.top < innerHeight;
+  }
+  function size(e) {
+    var H = e.cv.clientHeight || 24, W = Math.round(textWidth(e.el));
+    if (W === e.W && H === e.H) return;
+    e.W = W; e.H = H; e.cv.style.width = W + "px"; e.cv.width = W * dpr; e.cv.height = H * dpr; e.ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  function step(e) {
+    var ctx = e.ctx;
+    if (!visible(e)) { if (e.parts.length) { e.parts = []; ctx.clearRect(0, 0, e.W, e.H); } return; }
+    if (e.txt !== e.el.textContent || !e.W || (e.n++ % 30 === 0)) { e.txt = e.el.textContent; size(e); }
+    var W = e.W, H = e.H;
+    if (e.parts.length < Math.max(10, Math.round(W / 9)) && Math.random() < .55) {
       var ember = Math.random() < .55;
-      parts.push({ x: Math.random() * W, y: H - 2, vy: -(ember ? .35 + Math.random() * .45 : .18 + Math.random() * .25), vx: (Math.random() - .5) * .25,
+      e.parts.push({ x: Math.random() * W, y: H - 2, vy: -(ember ? .35 + Math.random() * .45 : .18 + Math.random() * .25), vx: (Math.random() - .5) * .25,
         s: ember ? 1.1 + Math.random() * 1.4 : 4 + Math.random() * 4, life: 0, max: ember ? 28 + Math.random() * 18 : 16 + Math.random() * 12, c: (Math.random() * 2) | 0, ph: Math.random() * 6.28, ember: ember });
     }
     ctx.clearRect(0, 0, W, H); ctx.globalCompositeOperation = "lighter";
-    for (var i = parts.length - 1; i >= 0; i--) {
-      var p = parts[i]; p.life++;
-      if (p.life > p.max || p.y < -4) { parts.splice(i, 1); continue; }
+    for (var i = e.parts.length - 1; i >= 0; i--) {
+      var p = e.parts[i]; p.life++;
+      if (p.life > p.max || p.y < -4) { e.parts.splice(i, 1); continue; }
       p.ph += .15; p.x += p.vx + Math.sin(p.ph) * .15; p.y += p.vy;
       var lf = 1 - p.life / p.max; ctx.globalAlpha = p.ember ? lf * (.7 + .3 * Math.sin(p.ph * 2)) : lf * .35;
       var sz = p.ember ? p.s : p.s * (.6 + lf * .5); ctx.drawImage(spr[p.c], p.x - sz, p.y - sz, sz * 2, sz * 2);
     }
     ctx.globalAlpha = 1;
   }
-  window.addEventListener("resize", size);
-  setTimeout(function () { size(); raf = requestAnimationFrame(frame); }, 300);
+  function frame(ts) {
+    requestAnimationFrame(frame);
+    if (ts - last < 33) return; last = ts;   // ~30 fps
+    effects.forEach(step);
+  }
+  setTimeout(function () { scan(); requestAnimationFrame(frame); }, 300);
+  setInterval(scan, 1000);                  // vuelve a colocar el efecto si la tarjeta del mensaje se redibuja
 })();
 </script><script>
 if ("serviceWorker" in navigator) {
