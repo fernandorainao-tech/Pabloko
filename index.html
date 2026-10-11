@@ -1037,7 +1037,10 @@
 
   #dx-splash { position:fixed; inset:0; z-index:9999; background:#0E1117; display:flex; align-items:center; justify-content:center; transition:opacity .6s ease; }
   #dx-splash.out { opacity:0; pointer-events:none; }
-  #dx-splash .dx-row { display:flex; align-items:center; }
+  #dx-splash canvas { position:absolute; inset:0; width:100%; height:100%; }
+  #dx-splash .dx-row { position:relative; z-index:1; display:flex; align-items:center; filter:drop-shadow(0 0 10px rgba(45,212,191,.35)); transition:filter 1s ease; }
+  #dx-splash.go .dx-row { filter:drop-shadow(0 0 20px rgba(45,212,191,.6)); }
+  #dx-splash.fire .dx-row { filter:drop-shadow(0 0 28px rgba(56,189,248,.85)) drop-shadow(0 0 60px rgba(45,212,191,.55)); }
   #dx-splash img { width:76px; height:auto; animation:dxLogo .9s ease-out both; }
   #dx-splash .dx-name { max-width:0; overflow:hidden; white-space:nowrap; font-family:'Chakra Petch','Manrope',sans-serif; font-weight:700; font-size:38px; letter-spacing:.01em; transition:max-width 1.2s cubic-bezier(.2,.7,.2,1); }
   #dx-splash.go .dx-name { max-width:240px; }
@@ -1048,17 +1051,68 @@
   @media (prefers-reduced-motion: reduce) { #dx-splash * { transition:none !important; animation:none !important; } }
 </style>
 </head>
-<body><div id="dx-splash" aria-hidden="true"><div class="dx-row"><img src="icons/logo-d.png" alt=""><div class="dx-name"><span class="dx-gap"></span><span style="color:#3FE0D0;transition-delay:250ms">D</span><span style="color:#3FE0D0;transition-delay:370ms">u</span><span style="color:#3FE0D0;transition-delay:490ms">x</span><span style="color:#FFFFFF;transition-delay:610ms">D</span><span style="color:#FFFFFF;transition-delay:730ms">r</span><span style="color:#FFFFFF;transition-delay:850ms">i</span><span style="color:#FFFFFF;transition-delay:970ms">v</span><span style="color:#FFFFFF;transition-delay:1090ms">e</span></div></div></div><script>
+<body><div id="dx-splash" aria-hidden="true"><canvas id="dx-fire"></canvas><div class="dx-row"><img src="icons/logo-d.png" alt=""><div class="dx-name"><span class="dx-gap"></span><span style="color:#3FE0D0;transition-delay:250ms">D</span><span style="color:#3FE0D0;transition-delay:370ms">u</span><span style="color:#3FE0D0;transition-delay:490ms">x</span><span style="color:#FFFFFF;transition-delay:610ms">D</span><span style="color:#FFFFFF;transition-delay:730ms">r</span><span style="color:#FFFFFF;transition-delay:850ms">i</span><span style="color:#FFFFFF;transition-delay:970ms">v</span><span style="color:#FFFFFF;transition-delay:1090ms">e</span></div></div></div><script>
 (function () {
   var sp = document.getElementById("dx-splash"); if (!sp) return;
-  var t0 = Date.now();
-  requestAnimationFrame(function () { setTimeout(function () { sp.classList.add("go"); }, 500); });
-  function done() {
-    var wait = Math.max(0, 3200 - (Date.now() - t0));
-    setTimeout(function () { sp.classList.add("out"); setTimeout(function () { if (sp.parentNode) sp.parentNode.removeChild(sp); }, 650); }, wait);
+  var t0 = Date.now(), FIN = 3200, raf = 0, stopped = false;
+  var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  // ---- fuego celeste ----
+  var cv = document.getElementById("dx-fire"), ctx = cv && cv.getContext("2d"), row = sp.querySelector(".dx-row");
+  var dpr = Math.min(window.devicePixelRatio || 1, 2), W = 0, H = 0, parts = [], sprites = [];
+  var COLS = ["45,212,191", "6,182,212", "56,189,248", "255,255,255"];
+  function sprite(rgb) {
+    var c = document.createElement("canvas"); c.width = c.height = 64; var g = c.getContext("2d");
+    var gr = g.createRadialGradient(32, 32, 0, 32, 32, 32);
+    gr.addColorStop(0, "rgba(255,255,255,1)"); gr.addColorStop(.25, "rgba(" + rgb + ",.9)"); gr.addColorStop(1, "rgba(" + rgb + ",0)");
+    g.fillStyle = gr; g.fillRect(0, 0, 64, 64); return c;
   }
+  function size() { W = cv.clientWidth; H = cv.clientHeight; cv.width = W * dpr; cv.height = H * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0); }
+  function emit(n, intense) {
+    var r = row.getBoundingClientRect();
+    for (var i = 0; i < n && parts.length < 420; i++) {
+      var ember = Math.random() < (intense ? .45 : .35);
+      var x = r.left + Math.random() * r.width, y = r.bottom + 6 - Math.random() * r.height * (intense ? .5 : .2);
+      parts.push({ x: x, y: y, vx: (Math.random() - .5) * (ember ? .9 : .5), vy: -(ember ? 1.2 + Math.random() * 2.2 : .5 + Math.random() * 1.1) * (intense ? 1.35 : 1),
+        life: 0, max: ember ? 55 + Math.random() * 60 : 28 + Math.random() * 26, s: ember ? 1.5 + Math.random() * 2.5 : (intense ? 14 : 9) + Math.random() * (intense ? 18 : 12),
+        c: ember ? (Math.random() < .35 ? 3 : (Math.random() * 3) | 0) : (Math.random() * 3) | 0, ember: ember, ph: Math.random() * 6.28 });
+    }
+  }
+  function frame() {
+    if (stopped) return;
+    var t = Date.now() - t0, fin = t > FIN - 1000;
+    if (fin && !sp.classList.contains("fire")) sp.classList.add("fire");
+    emit(t < 400 ? 2 : (fin ? 14 : 5), fin);
+    ctx.clearRect(0, 0, W, H);
+    // halo detrás del logo y el texto
+    var r = row.getBoundingClientRect(), cx = r.left + r.width / 2, cy = r.top + r.height / 2;
+    var k = fin ? Math.min(1, (t - (FIN - 1000)) / 600) : Math.min(.45, t / 2200 * .45);
+    var hg = ctx.createRadialGradient(cx, cy, 10, cx, cy, Math.max(r.width, 120) * (fin ? 1.1 : .8));
+    hg.addColorStop(0, "rgba(45,212,191," + (.28 * k + .05) + ")"); hg.addColorStop(.5, "rgba(6,182,212," + (.14 * k) + ")"); hg.addColorStop(1, "rgba(6,182,212,0)");
+    ctx.globalCompositeOperation = "source-over"; ctx.fillStyle = hg; ctx.fillRect(0, 0, W, H);
+    ctx.globalCompositeOperation = "lighter";
+    for (var i = parts.length - 1; i >= 0; i--) {
+      var p = parts[i]; p.life++;
+      if (p.life > p.max) { parts.splice(i, 1); continue; }
+      p.ph += .12; p.x += p.vx + Math.sin(p.ph) * (p.ember ? .35 : .6); p.y += p.vy; p.vy *= p.ember ? .995 : .985;
+      var lf = 1 - p.life / p.max, a = p.ember ? lf * (.6 + .4 * Math.sin(p.ph * 3)) : lf * .3, sz = p.ember ? p.s : p.s * (.5 + lf * .7);
+      ctx.globalAlpha = Math.max(0, a); ctx.drawImage(sprites[p.c], p.x - sz, p.y - sz, sz * 2, sz * 2);
+    }
+    ctx.globalAlpha = 1;
+    raf = requestAnimationFrame(frame);
+  }
+  if (ctx && !reduce) { COLS.forEach(function (c) { sprites.push(sprite(c)); }); size(); window.addEventListener("resize", size); raf = requestAnimationFrame(frame); }
+  function cleanup() {
+    stopped = true; cancelAnimationFrame(raf); window.removeEventListener("resize", size);
+    if (cv && cv.parentNode) cv.parentNode.removeChild(cv); parts = []; sprites = [];
+    if (sp.parentNode) sp.parentNode.removeChild(sp);
+  }
+  // ---- secuencia (mismos tiempos) ----
+  requestAnimationFrame(function () { setTimeout(function () { sp.classList.add("go"); }, 500); });
+  var ended = false;
+  function out() { if (ended) return; ended = true; sp.classList.add("out"); setTimeout(cleanup, 650); }
+  function done() { setTimeout(out, Math.max(0, FIN - (Date.now() - t0))); }
   if (document.readyState === "complete") done(); else window.addEventListener("load", done);
-  setTimeout(function () { if (sp.parentNode) { sp.classList.add("out"); setTimeout(function () { if (sp.parentNode) sp.parentNode.removeChild(sp); }, 400); } }, 7000);
+  setTimeout(out, 7000);
 })();
 </script>
 
