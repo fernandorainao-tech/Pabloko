@@ -806,6 +806,27 @@
   .tb-slot i { display:block; width:100%; border-radius:6px 6px 3px 3px; }
   .tb-slot.empty { height:44px; border:1.5px dashed #3A4354; border-radius:10px; justify-content:center; color:#8B94A5; }
   .tb-hist-empty { text-align:center; font-size:13.5px; color:#A7AFBD; margin-top:14px; }
+
+  #panel-manejo > .cat-intro { display:none; }
+  .tb-mj-sum { display:flex; align-items:center; gap:14px; margin-bottom:14px; }
+  .tb-mj-sum p { flex:1; font-size:15px; line-height:1.45; color:#C5CBD6; }
+  .tb-mj-count { flex-shrink:0; background:#3FE0D0; color:#0E1117; border-radius:12px; padding:8px 14px; text-align:center; font-size:13px; font-weight:600; line-height:1.2; }
+  .tb-mj-count b { display:block; font-family:'Chakra Petch',sans-serif; font-size:20px; }
+  .tb-mod { border:1.5px solid var(--c); border-radius:18px; margin-bottom:14px; overflow:hidden; background:linear-gradient(135deg, color-mix(in srgb, var(--c) 16%, #151A23) 0%, #151A23 70%); }
+  .tb-mod-head { width:100%; display:flex; gap:12px; align-items:center; padding:12px; background:none; border:none; color:inherit; text-align:left; font-family:inherit; cursor:pointer; position:relative; }
+  .tb-mod-img { flex:0 0 84px; height:84px; border-radius:14px; background:color-mix(in srgb, var(--c) 22%, #0E1117); display:flex; align-items:center; justify-content:center; font-size:46px; }
+  .tb-mod-t { flex:1; min-width:0; display:flex; flex-direction:column; gap:3px; padding-right:22px; }
+  .tb-mod-t small { font-family:'Chakra Petch',sans-serif; font-size:12px; font-weight:700; letter-spacing:.06em; color:var(--c); }
+  .tb-mod-t b { font-family:'Chakra Petch',sans-serif; font-size:17px; color:#E8ECF2; line-height:1.2; }
+  .tb-mod-d { font-size:13px; color:#A7AFBD; line-height:1.35; }
+  .tb-mod-prog { display:flex; align-items:center; gap:8px; margin-top:6px; }
+  .tb-mod-bar { flex:1; height:6px; border-radius:3px; background:rgba(255,255,255,.12); overflow:hidden; }
+  .tb-mod-bar i { display:block; height:100%; min-width:6px; background:var(--c); border-radius:3px; }
+  .tb-mod-n { font-size:11.5px; color:#A7AFBD; white-space:nowrap; }
+  .tb-mod-chev { position:absolute; top:12px; right:12px; width:26px; height:26px; border-radius:8px; background:rgba(255,255,255,.1); display:flex; align-items:center; justify-content:center; color:#C5CBD6; font-size:12px; transition:transform .2s; }
+  .tb-mod.open .tb-mod-chev { transform:rotate(180deg); }
+  .tb-mod-body { display:none; padding:0 12px 12px; }
+  .tb-mod.open .tb-mod-body { display:block; }
   .tb-quiz-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; }
   .tb-qt { background:#151A23; border:1px solid #252C39; border-radius:18px; padding:12px; display:flex; flex-direction:column; gap:8px; color:#E8ECF2; text-align:left; font-family:inherit; cursor:pointer; min-height:122px; }
   .tb-qt.curso { border-color:#5C4610; }
@@ -3846,8 +3867,47 @@ function renderSimulacro(m) {
   el("sim-facil-card").onclick = function () { startQuiz("facil"); };
   el("sim-dificil-card").onclick = function () { startQuiz("dificil"); };
 }
+
+// ---- Manejo (v3): resumen + módulos ----
+var TB_MOD = { curso: ["MÓDULO 1 · BASE", "#5B8DFF", "🚗"], situaciones: ["MÓDULO 2 · TRÁNSITO", "#3ECF7A", "🚦"], etapas: ["MÓDULO 3 · EXAMEN", "#2DD4BF", "📋"] };
+var tbMjOpen = {};
+function renderManejo() {
+  var cont = el("manejo-list"); if (!cont) return;
+  var vistos = loadVistos(), totalAll = 0, vistosAll = 0;
+  MANEJO.forEach(function (b) { b.grupos.forEach(function (g) { g.items.forEach(function (it) { totalAll++; if (vistos[it.v]) vistosAll++; }); }); });
+  var html = '<div class="tb-card tb-mj-sum"><p>Aprende paso a paso. Marca cada video como visto para guardar tu avance.</p><span class="tb-mj-count"><b>' + vistosAll + ' / ' + totalAll + '</b>Videos</span></div>';
+  MANEJO.forEach(function (b, bi) {
+    var meta = TB_MOD[b.id] || ["MÓDULO " + (bi + 1), "#3FE0D0", "🎬"], total = 0, vis = 0;
+    b.grupos.forEach(function (g) { g.items.forEach(function (it) { total++; if (vistos[it.v]) vis++; }); });
+    var open = !!tbMjOpen[b.id];
+    html += '<div class="tb-mod' + (open ? ' open' : '') + '" style="--c:' + meta[1] + '" data-id="' + b.id + '">' +
+      '<button class="tb-mod-head" aria-expanded="' + open + '"><span class="tb-mod-img" aria-hidden="true">' + meta[2] + '</span>' +
+      '<span class="tb-mod-t"><small>' + meta[0] + '</small><b>' + b.titulo + '</b><span class="tb-mod-d">' + b.desc + '</span>' +
+      '<span class="tb-mod-prog"><span class="tb-mod-bar"><i style="width:' + Math.round(vis * 100 / total) + '%"></i></span><span class="tb-mod-n">🎬 ' + vis + ' de ' + total + ' vistos</span></span></span>' +
+      '<span class="tb-mod-chev">▾</span></button><div class="tb-mod-body">';
+    if (b.nota) html += '<div class="mj-nota">💡 ' + b.nota + '</div>';
+    b.grupos.forEach(function (g) {
+      if (g.nombre) html += '<div class="mj-group">' + g.nombre + '</div>';
+      g.items.forEach(function (it) {
+        var v = !!vistos[it.v];
+        html += '<div class="mj-item' + (v ? ' visto' : '') + '"><a class="mj-link" href="https://www.youtube.com/watch?v=' + it.v + '" target="_blank" rel="noopener"><span class="mj-n" style="background:' + meta[1] + '">' + it.n + '</span><span class="mj-t">' + it.t + '</span><span class="mj-play">▶</span></a>' +
+          '<button class="mj-check" data-v="' + it.v + '" aria-label="Marcar como visto">' + (v ? '✓' : '') + '</button></div>';
+      });
+    });
+    if (b.enlace) html += '<button class="mj-cross" data-go="' + b.enlace + '">📄 Ver la Pauta de evaluación (Tema 11) →</button>';
+    html += '</div></div>';
+  });
+  cont.innerHTML = html;
+  cont.querySelectorAll(".tb-mod").forEach(function (m) {
+    m.querySelector(".tb-mod-head").onclick = function () { tbMjOpen[m.dataset.id] = !tbMjOpen[m.dataset.id]; renderManejo(); };
+  });
+  cont.querySelectorAll(".mj-check").forEach(function (btn) {
+    btn.onclick = function (ev) { ev.stopPropagation(); var vv = loadVistos(); if (vv[btn.dataset.v]) delete vv[btn.dataset.v]; else vv[btn.dataset.v] = 1; saveVistos(vv); renderManejo(); };
+  });
+  cont.querySelectorAll(".mj-cross").forEach(function (c) { c.onclick = function () { goToTema(c.dataset.go); }; });
+}
 var TB_HEAD = { inicio: ["Licencia clase B", "Hola, Constanza"], temas: ["Teoría", "Temas"], quiz: ["Práctica por tema", "Quiz"],
-  simulacro: ["Modo examen", "Simulacro"], manejo: ["Examen práctico", "Manejo"], logros: ["Tu perfil", "Tus logros"] };
+  simulacro: ["Modo examen", "Simulacro"], manejo: ["Práctica en video", "Manejo"], logros: ["Tu perfil", "Tus logros"] };
 function setHeader(tab) { var h = TB_HEAD[tab] || TB_HEAD.inicio; var e = document.querySelector(".tb-eyebrow"), t = document.querySelector(".tb-hello"); if (e) e.textContent = h[0]; if (t) t.textContent = h[1]; }
 function renderLogros(m) {
   var dias = ["L", "M", "M", "J", "V", "S", "D"], set = {}; m.s.days.forEach(function (d) { set[d] = 1; });
