@@ -776,6 +776,36 @@
   .tb-toast-x { width:44px; height:44px; border:none; background:transparent; color:#D8C9A0; display:flex; align-items:center; justify-content:center; cursor:pointer; }
   .tb-toast-x svg { width:18px; height:18px; }
   /* quiz grid */
+
+  .cat-panel > .tb-h2, .tb-stack > .tb-h2 { display:none; }
+  .tb-sim-hero { display:flex; flex-direction:column; gap:14px; padding:18px; border-color:#1E5C57 !important; background:linear-gradient(180deg,#132228 0%,#151A23 100%) !important; cursor:pointer; }
+  .tb-sim-hero .tb-sim-ic { width:56px; height:56px; border-radius:16px; }
+  .tb-sim-hero .tb-sim-ic svg { width:26px; height:26px; }
+  .tb-sim-k { display:block; font-size:13px; color:#A7AFBD; }
+  .tb-sim-hero h3 { font-size:21px; color:#E8ECF2; }
+  .tb-chips { display:flex; flex-wrap:wrap; gap:6px; }
+  .tb-chips span { display:inline-flex; align-items:center; gap:4px; background:#1F2632; border:1px solid #2C3444; border-radius:10px; padding:5px 7px; font-size:12px; color:#C5CBD6; white-space:nowrap; }
+  .tb-chips svg { width:13px; height:13px; color:#A7AFBD; }
+  .tb-sim-sep { height:1px; background:#2C3444; }
+  .tb-sim-hero .tb-btn-acc { height:54px; border-radius:16px; font-size:17px; }
+  .tb-smini { display:flex; flex-direction:column; gap:6px; text-align:left; font-family:inherit; color:#E8ECF2; cursor:pointer; padding:16px !important; }
+  .tb-smini-top { display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; }
+  .tb-smini .tb-sim-ic { width:46px; height:46px; border-radius:12px; }
+  .tb-smini .tb-sim-ic.fac { background:#11291C; color:#4ADE80; } .tb-smini .tb-sim-ic.dif { background:#2A1416; color:#FF8A8D; }
+  .tb-smini-arr svg { width:20px; height:20px; color:#8B94A5; }
+  .tb-smini h4 { font-size:17px; color:#E8ECF2; }
+  .tb-smini p { font-size:13.5px; color:#A7AFBD; }
+  .tb-smini-foot { display:flex; justify-content:space-between; align-items:center; border-top:1px solid #2C3444; padding-top:10px; margin-top:8px; font-size:13px; color:#A7AFBD; gap:6px; }
+  .tb-smini-foot b { font-size:13.5px; }
+  .tb-hist-h { display:flex; justify-content:space-between; align-items:center; gap:8px; flex-wrap:wrap; }
+  .tb-hist-h h3 { font-size:16px; color:#E8ECF2; }
+  .tb-pill { font-size:12px; color:#7EEDE2; border:1px solid #1E5C57; background:rgba(63,224,208,.08); border-radius:20px; padding:4px 10px; }
+  .tb-slots { display:grid; grid-template-columns:repeat(7,minmax(0,1fr)); gap:6px; margin-top:14px; height:96px; align-items:end; }
+  .tb-slots.vacio { height:auto; }
+  .tb-slot { height:100%; display:flex; flex-direction:column; justify-content:flex-end; align-items:center; gap:4px; font-size:12px; }
+  .tb-slot i { display:block; width:100%; border-radius:6px 6px 3px 3px; }
+  .tb-slot.empty { height:44px; border:1.5px dashed #3A4354; border-radius:10px; justify-content:center; color:#8B94A5; }
+  .tb-hist-empty { text-align:center; font-size:13.5px; color:#A7AFBD; margin-top:14px; }
   .tb-quiz-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; }
   .tb-qt { background:#151A23; border:1px solid #252C39; border-radius:18px; padding:12px; display:flex; flex-direction:column; gap:8px; color:#E8ECF2; text-align:left; font-family:inherit; cursor:pointer; min-height:122px; }
   .tb-qt.curso { border-color:#5C4610; }
@@ -3737,6 +3767,7 @@ function switchTab(tab) {
   document.querySelectorAll(".tb-nav button").forEach(function (b) { b.classList.toggle("active", b.dataset.tab === tab); });
   document.querySelectorAll(".cat-panel").forEach(function (p) { p.classList.remove("active"); });
   el("panel-" + tab).classList.add("active");
+  setHeader(tab);
   if (tab === "logros") { var s = statsLoad(); s.seen = tbPremios(tbMetrics()).reduce(function (a, g) { return a.concat(g.items.filter(function (i) { return i.won; }).map(function (i) { return i.id; })); }, []); statsSave(s); updateLogrosBadge(); }
   window.scrollTo({ top: 0 });
 }
@@ -3783,31 +3814,41 @@ function renderQuizGrid(m) {
   g.appendChild(mix);
 }
 function renderSimulacro(m) {
-  var hist = m.s.simu.muni.slice(-7), chart;
-  if (!hist.length) chart = '<div class="tb-empty">Aquí verás tus últimos 7 intentos cuando hagas el simulacro.</div>';
-  else {
-    chart = '<div class="tb-chart"><div class="tb-chart-line" style="bottom:' + Math.round(30 / 35 * 80) + 'px"></div>' + hist.map(function (v) {
+  var hist = m.s.simu.muni.slice(-7), slots = "";
+  for (var i = 0; i < 7; i++) {
+    var v = hist[i];
+    if (v === undefined) slots += '<div class="tb-slot empty"><span>#' + (i + 1) + '</span></div>';
+    else {
       var c = v >= 30 ? "#3FE0D0" : "#FFB020";
-      return '<span class="tb-bar" style="color:' + c + '">' + v + '<i style="height:' + Math.max(4, Math.round(v / 35 * 80)) + 'px;background:' + c + '"></i></span>';
-    }).join("") + '</div>';
+      slots += '<div class="tb-slot"><b style="color:' + c + '">' + v + '</b><i style="height:' + Math.max(6, Math.round(v / 35 * 100)) + '%;background:' + c + '"></i></div>';
+    }
   }
   var bf = bestCorrect(m.s.simu.facil), bd = bestCorrect(m.s.simu.dificil);
   if (!bf && m.p.facil) bf = Math.round(m.p.facil * 35 / 100);
   if (!bd && m.p.dificil) bd = Math.round(m.p.dificil * 35 / 100);
+  function mini(id, cls, ic, t, sub, best, act, actColor) {
+    return '<button class="tb-card tb-smini" id="' + id + '"><span class="tb-smini-top"><span class="tb-sim-ic ' + cls + '">' + ic + '</span><span class="tb-smini-arr">' + TB_IC.arrow + '</span></span>' +
+      '<h4>' + t + '</h4><p>' + sub + '</p><span class="tb-smini-foot"><span>' + (best ? 'Mejor: ' + best + '/35' : 'Sin intentos') + '</span><b style="color:' + actColor + '">' + act + '</b></span></button>';
+  }
   el("simulacro-body").innerHTML =
-    '<h2 class="tb-h2" style="margin-bottom:0">Simulacro</h2>' +
-    '<div class="tb-card"><div class="tb-sec" style="margin-top:0"><h3 style="font-size:15px">Tus últimos intentos</h3><span>Apruebas con 30</span></div>' + chart + '</div>' +
-    '<div class="tb-card tb-sim-main" id="sim-muni-card"><div class="tb-sim-row"><span class="tb-sim-ic" style="background:#3FE0D0;color:#0E1117">' + TB_IC.building + '</span>' +
-      '<span style="flex:1"><h3>Municipalidad</h3><p>35 preguntas · 10 versiones que rotan</p></span>' + (m.muniBest ? '<b class="tb-font" style="font-size:18px;color:#3FE0D0">' + m.muniBest + '</b>' : '') + '</div>' +
-      '<span class="tb-btn-acc">Comenzar simulacro' + TB_IC.arrow + '</span></div>' +
+    '<div class="tb-card tb-sim-hero" id="sim-muni-card">' +
+      '<div class="tb-sim-row"><span class="tb-sim-ic" style="background:#3FE0D0;color:#0E1117">' + TB_IC.building + '</span><span><small class="tb-sim-k">Examen oficial</small><h3>Municipalidad</h3></span></div>' +
+      '<div class="tb-chips"><span>' + TB_IC.quiz + '35 preguntas</span><span>' + TB_IC.timer + '10 versiones</span><span>' + TB_IC.trophy + (m.muniBest ? 'Mejor: ' + m.muniBest + '/35' : 'Sin intentos') + '</span></div>' +
+      '<div class="tb-sim-sep"></div><span class="tb-btn-acc">Comenzar simulacro' + TB_IC.arrow + '</span></div>' +
     '<div class="tb-sim-grid">' +
-      '<div class="tb-card tb-sim-mini" id="sim-facil-card"><span class="tb-sim-ic" style="background:#11291C;color:#4ADE80">' + TB_IC.smile + '</span><span><h4>Test fácil</h4><p>Las 35 más fáciles</p></span><b style="color:' + (bf ? '#4ADE80' : '#A7AFBD') + '">' + (bf ? 'Mejor: ' + bf + '/35' : 'Sin intentar') + '</b></div>' +
-      '<div class="tb-card tb-sim-mini" id="sim-dificil-card"><span class="tb-sim-ic" style="background:#2A1416;color:#FF8A8D">' + TB_IC.bolt + '</span><span><h4>Test difícil</h4><p>Las 35 más difíciles</p></span><b style="color:' + (bd ? '#FF8A8D' : '#A7AFBD') + '">' + (bd ? 'Mejor: ' + bd + '/35' : 'Sin intentar') + '</b></div>' +
-    '</div>';
+      mini("sim-facil-card", "fac", TB_IC.smile, "Test fácil", "Las 35 más fáciles", bf, "Practicar", "#4ADE80") +
+      mini("sim-dificil-card", "dif", TB_IC.bolt, "Test difícil", "Las 35 más difíciles", bd, "Retar", "#FF8A8D") +
+    '</div>' +
+    '<div class="tb-card"><div class="tb-hist-h"><h3>Tus últimos 7 intentos</h3><span class="tb-pill">Apruebas con 30/35</span></div>' +
+      '<div class="tb-slots' + (hist.length ? '' : ' vacio') + '">' + slots + '</div>' +
+      (hist.length ? '' : '<p class="tb-hist-empty">Completa tu primer simulacro para ver tu historial aquí.</p>') + '</div>';
   el("sim-muni-card").onclick = function () { startQuiz("muni"); };
   el("sim-facil-card").onclick = function () { startQuiz("facil"); };
   el("sim-dificil-card").onclick = function () { startQuiz("dificil"); };
 }
+var TB_HEAD = { inicio: ["Licencia clase B", "Hola, Constanza"], temas: ["Teoría", "Temas"], quiz: ["Práctica por tema", "Quiz"],
+  simulacro: ["Modo examen", "Simulacro"], manejo: ["Examen práctico", "Manejo"], logros: ["Tu perfil", "Tus logros"] };
+function setHeader(tab) { var h = TB_HEAD[tab] || TB_HEAD.inicio; var e = document.querySelector(".tb-eyebrow"), t = document.querySelector(".tb-hello"); if (e) e.textContent = h[0]; if (t) t.textContent = h[1]; }
 function renderLogros(m) {
   var dias = ["L", "M", "M", "J", "V", "S", "D"], set = {}; m.s.days.forEach(function (d) { set[d] = 1; });
   var hoy = new Date(), dow = (hoy.getDay() + 6) % 7, lunes = new Date(hoy); lunes.setDate(hoy.getDate() - dow);
