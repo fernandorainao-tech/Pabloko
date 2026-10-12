@@ -184,6 +184,17 @@
   .wr.cr .e { font-size:13.5px; }
   .cmark { width:28px; height:28px; border-radius:50%; display:flex; align-items:center; justify-content:center; color:#fff; flex-shrink:0; }
   .cmark svg { width:15px; height:15px; } .cmark.ok { background:var(--ok); } .cmark.bad { background:var(--bad); }
+  .blk { display:flex; align-items:center; gap:14px; width:100%; border:2px solid transparent; text-align:left; color:var(--ink); }
+  .blk-n { width:48px; height:48px; border-radius:14px; background:var(--pri-s); color:var(--pri); display:flex; align-items:center; justify-content:center; font-family:'Fredoka','Nunito',sans-serif; font-weight:700; font-size:18px; flex-shrink:0; }
+  .blk-n svg { width:22px; height:22px; }
+  .blk-t { display:flex; flex-direction:column; gap:3px; }
+  .blk-t b { font-size:15.5px; line-height:1.3; } .blk-t span { font-size:13.5px; color:var(--muted); }
+  .blk.open { border-color:var(--pri-s); }
+  .blk.done .blk-n { background:var(--ok); color:#fff; }
+  .blk.lock { opacity:.55; } .blk.lock .blk-n { background:#EEF0F8; }
+  .blk-done { width:84px; height:84px; margin:0 auto 16px; border-radius:50%; background:var(--ok); color:#fff; display:flex; align-items:center; justify-content:center; }
+  .blk-done svg { width:42px; height:42px; }
+  #exhub p.x { font-size:16px; line-height:1.55; color:#3A4066; }
   /* resultado */
   .res { text-align:center; padding:40px 0 20px; }
   .res .ring { width:150px; height:150px; margin:0 auto 18px; position:relative; }
@@ -221,10 +232,12 @@
     <div class="opts" id="opts"></div>
     <button class="btn check" id="qcheck" disabled>Comprobar</button>
   </div>
+  <div id="exhub" class="hidden"></div>
   <div id="exam" class="hidden">
     <div class="qtop"><button class="qx" id="ex-x" aria-label="Salir del examen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
       <div class="qbar"><i id="ex-bar"></i></div><span class="qn" id="ex-n"></span></div>
     <div class="qk" id="ex-k"></div>
+    <div class="tip" id="ex-intro">✍️ Escribe la traducción de cada una y toca <b>Comprobar</b>. Tienes 2 intentos; después te mostraremos alternativas.</div>
     <div class="card qprompt"><button class="spk" id="ex-say" data-say="" aria-label="Escuchar"></button><div><div class="qp" id="ex-num"></div><div class="qw" id="ex-q"></div></div></div>
     <label for="ex-in" class="sr">Tu respuesta</label>
     <input id="ex-in" class="ex-in" type="text" autocomplete="off" autocapitalize="off" spellcheck="false">
@@ -405,17 +418,45 @@ function judge(it, user) { var u = norm(user); if (!u) return 0; var vs = varian
   var tol = it.ans.split(" ").length > 2 ? 3 : (u.length >= 5 ? 1 : 0);
   for (var i = 0; i < vs.length; i++) if (tol && lev(u, vs[i]) <= tol) return 1;   // 1 = correcta con un pequeño error de escritura
   return 0; }
+// ---- examen por bloques ----
+function getAtt(L) { var s = load(), st = s.les[L.id] || {}; return st.att || {}; }
+function setAtt(L, att) { var s = load(), st = s.les[L.id] || {}; st.att = att; s.les[L.id] = st; save(s); }
 function startExam(id, fromPop) {
-  var L = findLesson(id), items = [];
-  L.examen.partes.forEach(function (p) { p.items.forEach(function (it, j) { items.push({ p: p, it: it, j: j }); }); });
-  EX = { L: L, items: items, i: 0, tries: 0, ok: 0, res: [], mode: "write" };
-  el("app").classList.add("hidden"); el("leccion").classList.add("hidden"); el("nav").classList.add("hidden"); el("result").classList.add("hidden"); el("exam").classList.remove("hidden");
-  if (!fromPop) history.pushState({ v: "exam" }, "");
+  var L = findLesson(id); curLesson = L;
+  el("app").classList.add("hidden"); el("leccion").classList.add("hidden"); el("nav").classList.add("hidden"); el("result").classList.add("hidden"); el("exam").classList.add("hidden");
+  el("exhub").classList.remove("hidden");
+  if (!fromPop) history.pushState({ v: "exhub", id: id }, "");
+  rHub(); window.scrollTo(0, 0);
+}
+function rHub() {
+  var L = curLesson, att = getAtt(L), parts = L.examen.partes, html = '';
+  var allDone = parts.every(function (p) { return att[p.k]; });
+  parts.forEach(function (p, i) {
+    var a = att[p.k], prevOk = i === 0 || att[parts[i - 1].k], st = a ? "done" : prevOk ? "open" : "lock";
+    html += '<button class="card blk ' + st + '" data-k="' + p.k + '"' + (st === "lock" ? ' disabled' : '') + '><span class="blk-n">' + (a ? IC.check : st === "lock" ? '🔒' : p.k + ')') + '</span>' +
+      '<span class="blk-t"><b>' + p.k + ') ' + esc(p.t) + '</b><span>' + p.items.length + ' ' + (p.items[0].q.split(" ").length > 2 ? 'frases' : 'palabras') + (a ? ' · ' + a.ok + '/' + a.res.length + ' correctas' : st === "lock" ? ' · Completa el bloque anterior' : ' · Toca para comenzar') + '</span></span></button>';
+  });
+  el("exhub").innerHTML = '<div class="lhead"><div class="lrow"><button class="back" id="hub-back" aria-label="Volver">' + IC.back + '</button><div><div class="eye">Lección ' + L.n + '</div><h2 style="font-size:21px">' + esc(L.examen.titulo) + '</h2></div></div></div>' +
+    '<p class="x" style="margin:18px 0 6px">El examen tiene <b>3 bloques</b>. Escribe cada respuesta; si te equivocas 2 veces, te daremos alternativas. Completa un bloque para pasar al siguiente: tu avance queda guardado.</p>' +
+    '<div class="stack" style="margin-top:12px">' + html + '</div>' +
+    (allDone ? '<button class="btn" id="hub-final" style="margin-top:18px">Ver resultado final</button>' : '') +
+    (Object.keys(att).length ? '<button class="btn ghost" id="hub-reset" style="margin-top:12px">Empezar el examen desde cero</button>' : '');
+  el("hub-back").onclick = function () { history.back(); };
+  el("exhub").querySelectorAll(".blk:not([disabled])").forEach(function (b) { b.onclick = function () { startBlock(b.dataset.k); }; });
+  if (el("hub-final")) el("hub-final").onclick = function () { finishExam(); };
+  if (el("hub-reset")) el("hub-reset").onclick = function () { if (confirm("¿Empezar el examen desde cero? Se borrarán los bloques ya hechos de este intento.")) { setAtt(L, {}); rHub(); } };
+}
+function startBlock(k, fromPop) {
+  var L = curLesson, p = L.examen.partes.filter(function (x) { return x.k === k; })[0], items = p.items.map(function (it, j) { return { p: p, it: it, j: j }; });
+  EX = { L: L, k: k, p: p, items: items, i: 0, tries: 0, ok: 0, res: [], mode: "write" };
+  el("exhub").classList.add("hidden"); el("result").classList.add("hidden"); el("exam").classList.remove("hidden");
+  if (!fromPop) history.pushState({ v: "exam", id: L.id }, "");
   rEx();
 }
 function rEx() {
   var x = EX.items[EX.i], p = x.p, it = x.it; EX.tries = 0; EX.mode = "write"; EX.done = false;
   el("ex-bar").style.width = Math.round(EX.i * 100 / EX.items.length) + "%"; el("ex-n").textContent = (EX.i + 1) + "/" + EX.items.length;
+  el("ex-intro").classList.toggle("hidden", EX.i !== 0);
   el("ex-k").textContent = p.k + ") " + p.t; el("ex-num").textContent = (x.j + 1) + ".";
   el("ex-q").textContent = it.q; el("ex-say").classList.toggle("hidden", p.dir !== "en"); el("ex-say").dataset.say = it.q;
   el("ex-in").value = ""; el("ex-in").placeholder = p.dir === "en" ? "Escribe en castellano…" : "Write in English…";
@@ -453,22 +494,42 @@ function exResolve(ok, u, viaOpts, typo) {
   var sh = el("sheet"); sh.className = "sheet show " + (ok ? "good" : "wrong"); el("sh-ic").innerHTML = ok ? IC.check : IC.x;
   el("sh-t").textContent = ok ? (typo ? "¡Correcto! (revisa la ortografía)" : viaOpts ? "¡Correcto, con ayuda!" : "¡Correcto!") : "La respuesta correcta es «" + x.it.ans + "»";
   el("sh-p").innerHTML = '<b>' + esc(x.it.q) + '</b> = ' + esc(x.it.ans) + (ok ? '' : '. Repásala en la lección: volverá a aparecer en tus prácticas.');
-  el("sh-btn").textContent = EX.i < EX.items.length - 1 ? "Siguiente" : "Ver resultado";
+  el("sh-btn").textContent = EX.i < EX.items.length - 1 ? "Siguiente" : "Terminar el bloque";
   el("sh-btn").dataset.ctx = "exam";
   speak(en);
 }
-function finishExam() {
-  var L = EX.L, pct = Math.round(EX.ok * 100 / EX.items.length), s = load(), st = s.les[L.id] || {}, wasDone = st.done;
-  st.exam = Math.max(st.exam || 0, pct); st.last = EX.res; if (pct >= 80) st.done = true; s.les[L.id] = st; save(s);
+function finishBlock() {
+  var L = EX.L, att = getAtt(L); att[EX.k] = { ok: EX.ok, res: EX.res }; setAtt(L, att);
+  var parts = L.examen.partes, idx = parts.indexOf(EX.p), nx = parts[idx + 1];
   el("exam").classList.add("hidden");
+  el("result").innerHTML = '<div class="res"><div class="blk-done">' + IC.check + '</div><h2>¡Bloque ' + EX.k + ') completado!</h2><p><b>' + EX.ok + ' de ' + EX.items.length + '</b> correctas.' +
+    (nx ? ' Ahora puedes continuar con el siguiente bloque:<br><b>' + nx.k + ') ' + esc(nx.t) + '</b>.' : ' Terminaste los 3 bloques: ya puedes ver tu resultado final.') + '</p>' +
+    '<div class="stack">' + (nx ? '<button class="btn" id="b-next">Continuar con el bloque ' + nx.k + ')</button>' : '<button class="btn" id="b-final">Ver resultado final</button>') + '<button class="btn ghost" id="b-hub">Volver al examen</button></div></div>' +
+    '<h3 class="bh">Comprobación del bloque ' + EX.k + ')</h3>' + compPart(EX.p, EX.res);
+  el("result").classList.remove("hidden"); window.scrollTo(0, 0);
+  history.replaceState({ v: "blockres", id: L.id }, "");
+  if (el("b-next")) el("b-next").onclick = function () { startBlock(nx.k, true); history.replaceState({ v: "exam", id: L.id }, ""); };
+  if (el("b-final")) el("b-final").onclick = function () { finishExam(); };
+  el("b-hub").onclick = function () { history.back(); };
+  checkPrizes();
+}
+function compPart(p, res) { var h = '<div class="wl">'; p.items.forEach(function (it, j) { var r = res[j] || {};
+  h += '<div class="wr cr"><span class="wn">' + (j + 1) + '</span><div class="t"><b>' + esc(it.q) + '</b><span class="e">' + (r.ok ? '✓ ' : '✗ ') + esc(it.ans) + (r.ok ? '' : (r.u ? ' · tú: «' + esc(r.u) + '»' : '')) + (r.op ? ' · con alternativas' : '') + '</span></div><span class="cmark ' + (r.ok ? 'ok' : 'bad') + '">' + (r.ok ? IC.check : IC.x) + '</span></div>'; });
+  return h + '</div>'; }
+function finishExam() {
+  var L = curLesson, att = getAtt(L), parts = L.examen.partes, ok = 0, tot = 0, res = [];
+  parts.forEach(function (p) { var a = att[p.k] || { ok: 0, res: [] }; ok += a.ok; tot += p.items.length; res = res.concat(a.res); });
+  var pct = Math.round(ok * 100 / tot), s = load(), st = s.les[L.id] || {}, wasDone = st.done;
+  st.exam = Math.max(st.exam || 0, pct); st.last = res; if (pct >= 80) st.done = true; st.att = {}; s.les[L.id] = st; save(s);
+  el("exhub").classList.add("hidden"); el("exam").classList.add("hidden");
   var C = 2 * Math.PI * 64, d = Math.round(C * pct / 100), pass = pct >= 80;
   el("result").innerHTML = '<div class="res"><div class="ring"><svg viewBox="0 0 150 150" width="150" height="150"><circle cx="75" cy="75" r="64" fill="none" stroke="#DDE3FF" stroke-width="14"/><circle cx="75" cy="75" r="64" fill="none" stroke="' + (pass ? '#1FAE6B' : '#3D5AFE') + '" stroke-width="14" stroke-linecap="round" stroke-dasharray="' + d + ' ' + C + '" transform="rotate(-90 75 75)"/></svg><b>' + pct + '%</b></div>' +
-    '<h2>' + EX.ok + ' de ' + EX.items.length + ' correctas</h2><p>' + (pass ? (wasDone ? '¡Examen aprobado otra vez!' : '¡Lección aprobada! Ya puedes ver los ejercicios de perfeccionamiento y avanzar.') : esc(L.examen.cierre)) + '</p>' +
-    '<div class="stack"><button class="btn" id="r-back">Volver a la lección</button><button class="btn ghost" id="r-again">Rendir otra vez</button></div></div>' +
-    '<h3 class="bh">Comprobación del examen</h3>' + compHTML(L, EX.res);
+    '<h2>' + ok + ' de ' + tot + ' correctas</h2><p>' + (pass ? (wasDone ? '¡Examen aprobado otra vez!' : '¡Lección aprobada! Ya puedes ver los ejercicios de perfeccionamiento y avanzar.') : esc(L.examen.cierre)) + '</p>' +
+    '<div class="stack"><button class="btn" id="r-back">Volver a la lección</button></div></div>' +
+    '<h3 class="bh">Comprobación del examen</h3>' + compHTML(L, res);
   el("result").classList.remove("hidden"); window.scrollTo(0, 0);
+  history.replaceState({ v: "finalres", id: L.id }, "");
   el("r-back").onclick = function () { history.back(); };
-  el("r-again").onclick = function () { history.replaceState({ v: "exam" }, ""); startExam(L.id, true); };
   checkPrizes();
 }
 // ---------- práctica (pestaña) ----------
@@ -583,7 +644,7 @@ el("qcheck").onclick = function () {
   speak(q.en);
 };
 el("sh-btn").onclick = function () { el("sheet").classList.remove("show");
-  if (el("sh-btn").dataset.ctx === "exam") { if (EX.i < EX.items.length - 1) { EX.i++; rEx(); } else finishExam(); return; }
+  if (el("sh-btn").dataset.ctx === "exam") { if (EX.i < EX.items.length - 1) { EX.i++; rEx(); } else finishBlock(); return; }
   if (Q.i < Q.qs.length - 1) { Q.i++; rQ(); } else finishQuiz(); };
 function finishQuiz() {
   var pct = Math.round(Q.ok * 100 / Q.qs.length), s = load();
@@ -611,12 +672,24 @@ el("qx").onclick = function () { if (confirm("¿Salir de la práctica? Perderás
 // ---------- botón atrás ----------
 window.addEventListener("popstate", function (e) {
   var st = e.state || { v: "tab", t: "inicio" };
-  var inExam = !el("exam").classList.contains("hidden");
-  if (inExam) { if (!confirm("¿Salir del examen? Perderás las respuestas de este intento.")) { history.pushState({ v: "exam" }, ""); return; }
-    el("exam").classList.add("hidden"); el("sheet").classList.remove("show"); if (st.v === "les") { el("leccion").classList.remove("hidden"); rLesson(); } else { closeLesson(); tab(st.t || "inicio", true); } return; }
+  var inExam = !el("exam").classList.contains("hidden"), inHub = !el("exhub").classList.contains("hidden");
+  var exRes = !el("result").classList.contains("hidden") && (el("result").querySelector("#b-hub") || el("result").querySelector("#r-back"));
+  if (inExam) { if (!confirm("¿Salir del bloque? Perderás las respuestas de este bloque (los bloques terminados quedan guardados).")) { history.pushState({ v: "exam" }, ""); return; }
+    el("exam").classList.add("hidden"); el("sheet").classList.remove("show"); }
+  if (inExam || exRes) {
+    var wasFinal = exRes && el("result").querySelector("#r-back");
+    el("result").classList.add("hidden");
+    if (wasFinal && st.v === "exhub") { history.back(); return; }   // del resultado final se vuelve directo a la lección
+    if (st.v === "exhub") { el("exhub").classList.remove("hidden"); rHub(); return; }
+  }
+  if (inHub || inExam || exRes) {
+    el("exhub").classList.add("hidden");
+    if (st.v === "les") { el("leccion").classList.remove("hidden"); rLesson(); return; }
+    if (st.v === "exhub") { el("exhub").classList.remove("hidden"); rHub(); return; }
+    closeLesson(); tab(st.t || "inicio", true); return;
+  }
   var inQuiz = !el("quiz").classList.contains("hidden"), inRes = !el("result").classList.contains("hidden");
   if (inQuiz && !Q.leaving) { if (!confirm("¿Salir de la práctica? Perderás el avance de esta ronda.")) { history.pushState({ v: "quiz" }, ""); return; } }
-  if (inRes && EX && el("result").querySelector("#r-back")) { el("result").classList.add("hidden"); if (st.v === "les") { el("leccion").classList.remove("hidden"); rLesson(); } else { closeLesson(); tab(st.t || "inicio", true); } return; }
   if (inQuiz || inRes) { exitQuiz(); if (st.v === "les") { el("app").classList.add("hidden"); el("nav").classList.add("hidden"); el("leccion").classList.remove("hidden"); rLesson(); } return; }
   if (st.v === "les") { openLesson(st.id, curSeg, true); return; }
   if (!el("leccion").classList.contains("hidden")) closeLesson();
