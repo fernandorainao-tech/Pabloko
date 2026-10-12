@@ -3,12 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="theme-color" content="#3D5AFE">
+<meta name="theme-color" content="#FFFFFF">
 <title>Duxlingo</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@500;600;700;800&display=swap" rel="stylesheet">
 <style>
-  :root { --bg:#F4F6FF; --card:#FFFFFF; --ink:#1B2142; --muted:#5A6185; --soft:#8A90B0; --line:#E3E7F5;
+  :root { --bg:#FFFFFF; --card:#FFFFFF; --ink:#1B2142; --muted:#5A6185; --soft:#8A90B0; --line:#E3E7F5;
     --pri:#3D5AFE; --pri-d:#2B44D6; --pri-s:#DDE3FF; --coral:#E2504F; --coral-s:#FFE7E6; --sun:#FFC542; --sun-s:#FFF4DA; --sun-t:#B26A00;
     --ok:#1FAE6B; --ok-s:#E3F7EE; --ok-t:#0E6B42; --bad:#E2504F; --bad-s:#FFE7E6; }
   * { box-sizing:border-box; margin:0; padding:0; -webkit-tap-highlight-color:transparent; }
@@ -27,7 +27,7 @@
   .chip-r { height:44px; padding:0 12px; border-radius:14px; background:var(--sun-s); display:flex; align-items:center; gap:6px; font-weight:800; color:var(--sun-t); }
   .chip-r svg { width:20px; height:20px; }
   .ava { width:44px; height:44px; border-radius:50%; border:2px solid var(--pri); background:var(--pri-s); color:var(--pri); font-family:'Fredoka','Nunito',system-ui,sans-serif; font-weight:700; font-size:17px; }
-  .card { background:var(--card); border-radius:20px; padding:16px; box-shadow:0 4px 14px rgba(27,33,66,.06); }
+  .card { background:var(--card); border-radius:20px; padding:16px; border:1px solid #E6EAF8; box-shadow:0 4px 14px rgba(27,33,66,.06); }
   .stack { display:flex; flex-direction:column; gap:14px; }
   .panel { display:none; } .panel.on { display:block; }
   /* inicio */
@@ -46,9 +46,9 @@
   .spk { width:48px; height:48px; border-radius:14px; border:none; background:var(--pri-s); color:var(--pri); display:flex; align-items:center; justify-content:center; flex-shrink:0; }
   .spk svg { width:22px; height:22px; }
   .spk.coral { background:var(--coral-s); color:var(--coral); width:52px; height:52px; border-radius:16px; }
-  .spk.sm { width:42px; height:42px; border-radius:12px; background:var(--bg); }
+  .spk.sm { width:42px; height:42px; border-radius:12px; background:#EEF2FF; }
   .quick { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
-  .quick button { background:#fff; border:none; border-radius:20px; padding:14px; display:flex; flex-direction:column; gap:10px; text-align:left; box-shadow:0 4px 14px rgba(27,33,66,.06); color:var(--ink); }
+  .quick button { background:#fff; border:1px solid #E6EAF8; border-radius:20px; padding:14px; display:flex; flex-direction:column; gap:10px; text-align:left; box-shadow:0 4px 14px rgba(27,33,66,.06); color:var(--ink); }
   .qi { width:44px; height:44px; border-radius:14px; display:flex; align-items:center; justify-content:center; }
   .qi svg { width:22px; height:22px; }
   .quick b { font-family:'Fredoka','Nunito',system-ui,sans-serif; font-weight:600; font-size:17px; }
@@ -64,10 +64,10 @@
   /* pantalla lección */
   .lhead { background:#fff; margin:0 -18px; padding:18px 18px 14px; border-bottom:1px solid var(--line); position:sticky; top:0; z-index:5; }
   .lrow { display:flex; align-items:center; gap:12px; }
-  .back { width:44px; height:44px; border-radius:14px; background:var(--bg); border:none; color:var(--ink); display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+  .back { width:44px; height:44px; border-radius:14px; background:#EEF2FF; border:none; color:var(--ink); display:flex; align-items:center; justify-content:center; flex-shrink:0; }
   .back svg { width:20px; height:20px; }
   .segs { display:flex; gap:8px; margin-top:12px; }
-  .segs button { font-size:14px; font-weight:700; padding:8px 14px; border-radius:20px; border:none; background:var(--bg); color:var(--muted); }
+  .segs button { font-size:14px; font-weight:700; padding:8px 14px; border-radius:20px; border:none; background:#EEF2FF; color:var(--muted); }
   .segs button.on { background:var(--pri); color:#fff; font-weight:800; }
   .sec h3 { font-size:19px; margin:26px 0 10px; }
   .sec p.x { font-size:16px; line-height:1.55; color:#3A4066; margin-bottom:12px; }
@@ -131,7 +131,7 @@
   /* práctica */
   #quiz { padding-bottom:260px; }
   .qtop { display:flex; align-items:center; gap:12px; padding:18px 0 14px; }
-  .qx { width:44px; height:44px; border-radius:14px; background:#fff; border:none; color:var(--muted); display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+  .qx { width:44px; height:44px; border-radius:14px; background:#EEF2FF; border:none; color:var(--muted); display:flex; align-items:center; justify-content:center; flex-shrink:0; }
   .qx svg { width:18px; height:18px; }
   .qbar { flex:1; height:14px; border-radius:7px; background:var(--pri-s); overflow:hidden; }
   .qbar i { display:block; height:100%; background:var(--pri); border-radius:7px; transition:width .3s; }
@@ -164,16 +164,16 @@
   .sheet .btn { box-shadow:none; }
   .good .btn { background:var(--ok); } .wrong .btn { background:var(--bad); }
   .bh { font-size:19px; margin:30px 0 12px; }
-  .card.txt { padding:16px 18px; margin:0 0 18px; background:#DCE4FF; border:1.5px solid #B4C3FF; box-shadow:0 4px 12px rgba(61,90,254,.08); }
-  #leccion .card.txt p.x, #exhub .card.txt p.x { color:#232B5E !important; }
-  #leccion .card.txt p.x b { color:#2B44D6; }
+  .card.txt { padding:16px 18px; margin:0 0 18px; background:#B4C3FF; border:none; box-shadow:0 4px 12px rgba(61,90,254,.12); }
+  #leccion .card.txt p.x, #exhub .card.txt p.x { color:#141A3D !important; }
+  #leccion .card.txt p.x b { color:#1B2A9E; }
   #leccion .lhead + .card.txt { margin-top:18px; }
   #leccion .card.txt p.x { font-size:16.5px; line-height:1.6; color:#3A4066; margin:0 0 12px; }
   #leccion .card.txt p.x:last-child, #exhub .card.txt p.x:last-child { margin-bottom:0; }
   /* ejercicios y listas de palabras: libres, sin contenedor */
   #leccion .wl, #result .wl, #leccion .card + .wl { background:transparent; box-shadow:none; border-radius:0; margin:4px 0 22px; }
   #leccion .wr, #result .wr { padding:12px 2px; border-bottom:1px solid #E3E7F5; }
-  #leccion .wr .spk.sm, #result .wr .spk.sm { background:#fff; box-shadow:0 2px 6px rgba(27,33,66,.06); }
+  #leccion .wr .spk.sm, #result .wr .spk.sm { background:#EEF2FF; box-shadow:none; }
   #leccion .tip { margin:0 0 18px; }
   .wn { min-width:26px; height:26px; border-radius:8px; background:var(--pri-s); color:var(--pri); font-size:12px; font-weight:800; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
   .exlink { margin-top:30px; border:2px solid var(--coral-s); }
