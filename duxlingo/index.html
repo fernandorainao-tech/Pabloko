@@ -164,9 +164,14 @@
   .sheet .btn { box-shadow:none; }
   .good .btn { background:var(--ok); } .wrong .btn { background:var(--bad); }
   .bh { font-size:19px; margin:30px 0 12px; }
-  #leccion p.x { font-size:16.5px; line-height:1.6; color:#3A4066; margin:0 0 14px; }
-  #leccion .lhead + p.x { margin-top:18px; }
-  #leccion .wl { margin:4px 0 18px; }
+  .card.txt { padding:16px 18px; margin:0 0 18px; }
+  #leccion .lhead + .card.txt { margin-top:18px; }
+  #leccion .card.txt p.x { font-size:16.5px; line-height:1.6; color:#3A4066; margin:0 0 12px; }
+  #leccion .card.txt p.x:last-child, #exhub .card.txt p.x:last-child { margin-bottom:0; }
+  /* ejercicios y listas de palabras: libres, sin contenedor */
+  #leccion .wl, #result .wl, #leccion .card + .wl { background:transparent; box-shadow:none; border-radius:0; margin:4px 0 22px; }
+  #leccion .wr, #result .wr { padding:12px 2px; border-bottom:1px solid #E3E7F5; }
+  #leccion .wr .spk.sm, #result .wr .spk.sm { background:#fff; box-shadow:0 2px 6px rgba(27,33,66,.06); }
   #leccion .tip { margin:0 0 18px; }
   .wn { min-width:26px; height:26px; border-radius:8px; background:var(--pri-s); color:var(--pri); font-size:12px; font-weight:800; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
   .exlink { margin-top:30px; border:2px solid var(--coral-s); }
@@ -370,18 +375,22 @@ function wordRow(w) { var ph = w.en.split(" ").length > 2;
 function rLesson() {
   var L = curLesson, s = load(), st = s.les[L.id] || {}, body = '', tried = st.exam !== undefined;
   if (curSeg === "leccion") {
+    var pend = [];
+    function flushP() { if (pend.length) { body += '<div class="card txt">' + pend.map(function (x) { return '<p class="x">' + esc(x) + '</p>'; }).join("") + '</div>'; pend = []; } }
     L.blocks.forEach(function (b) {
-      if (b.t === "p") body += '<p class="x">' + esc(b.x) + '</p>';
+      if (b.t !== "p") flushP();
+      if (b.t === "p") pend.push(b.x);
       else if (b.t === "h") body += '<h3 class="bh">' + esc(b.x) + '</h3>';
       else if (b.t === "n") body += '<div class="tip"><b>Nota:</b> ' + esc(b.x) + '</div>';
       else if (b.t === "w") body += '<div class="wl">' + b.items.map(wordRow).join("") + '</div>';
     });
+    flushP();
     var ex = L.examen;
     body += '<div class="card exlink"><div class="eye" style="color:var(--coral)">Fin de la lección</div><h3>' + esc(ex.titulo) + '</h3>' + ex.intro.map(function (t) { return '<p>' + esc(t) + '</p>'; }).join("") +
       (tried ? '<p class="exbest">Tu mejor resultado: <b>' + st.exam + '%</b>' + (st.done ? ' · Aprobado ✓' : ' · Necesitas 80 % para aprobar') + '</p>' : '') +
       '<button class="btn" id="l-exam">' + (tried ? 'Rendir el examen otra vez' : 'Rendir el examen') + '</button></div>';
     if (st.done && L.perf) {
-      body += '<h3 class="bh" style="margin-top:34px">' + esc(L.perf.titulo) + '</h3>' + L.perf.intro.map(function (t) { return '<p class="x">' + esc(t) + '</p>'; }).join("") +
+      body += '<h3 class="bh" style="margin-top:34px">' + esc(L.perf.titulo) + '</h3><div class="card txt">' + L.perf.intro.map(function (t) { return '<p class="x">' + esc(t) + '</p>'; }).join("") + '</div>' +
         '<div class="wl">' + L.perf.items.map(wordRow).join("") + '</div>' + (L.perf.nota ? '<div class="tip" style="margin-top:14px">📒 ' + esc(L.perf.nota) + '</div>' : '');
       var nx = DATA.lecciones[L.n];
       body += '<div style="margin-top:22px">' + (nx ? '<button class="btn" id="l-next">Ir a la ' + esc(nx.titulo) + '</button>' : '<div class="card" style="text-align:center;color:var(--muted)">🎉 ¡Lección aprobada! La siguiente lección estará disponible pronto.</div>') + '</div>';
@@ -437,7 +446,7 @@ function rHub() {
       '<span class="blk-t"><b>' + p.k + ') ' + esc(p.t) + '</b><span>' + p.items.length + ' ' + (p.items[0].q.split(" ").length > 2 ? 'frases' : 'palabras') + (a ? ' · ' + a.ok + '/' + a.res.length + ' correctas' : st === "lock" ? ' · Completa el bloque anterior' : ' · Toca para comenzar') + '</span></span></button>';
   });
   el("exhub").innerHTML = '<div class="lhead"><div class="lrow"><button class="back" id="hub-back" aria-label="Volver">' + IC.back + '</button><div><div class="eye">Lección ' + L.n + '</div><h2 style="font-size:21px">' + esc(L.examen.titulo) + '</h2></div></div></div>' +
-    '<p class="x" style="margin:18px 0 6px">El examen tiene <b>3 bloques</b>. Escribe cada respuesta; si te equivocas 2 veces, te daremos alternativas. Completa un bloque para pasar al siguiente: tu avance queda guardado.</p>' +
+    '<div class="card txt" style="margin-top:18px"><p class="x" style="margin:0">El examen tiene <b>3 bloques</b>. Escribe cada respuesta; si te equivocas 2 veces, te daremos alternativas. Completa un bloque para pasar al siguiente: tu avance queda guardado.</p></div>' +
     '<div class="stack" style="margin-top:12px">' + html + '</div>' +
     (allDone ? '<button class="btn" id="hub-final" style="margin-top:18px">Ver resultado final</button>' : '') +
     (Object.keys(att).length ? '<button class="btn ghost" id="hub-reset" style="margin-top:12px">Empezar el examen desde cero</button>' : '');
