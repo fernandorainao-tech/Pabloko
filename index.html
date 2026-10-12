@@ -4673,7 +4673,119 @@ if (document.readyState === "loading") {
   setTimeout(function () { scan(); requestAnimationFrame(frame); }, 300);
   setInterval(scan, 1000);                  // vuelve a colocar el efecto si la tarjeta del mensaje se redibuja
 })();
-</script><script>
+</script><div class="dx-modal" id="dx-confirm" role="dialog" aria-modal="true" aria-labelledby="dx-confirm-t">
+  <div class="dx-modal-box">
+    <div class="dx-modal-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.9L2.4 18a2 2 0 0 0 1.7 3h15.8a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0zM12 9v4M12 17h.01"/></svg></div>
+    <h3 id="dx-confirm-t">¿Salir del quiz?</h3>
+    <p>Perderás el avance de esta ronda.</p>
+    <button class="dx-modal-stay" id="dx-confirm-stay">Seguir respondiendo</button>
+    <button class="dx-modal-exit" id="dx-confirm-exit">Salir</button>
+  </div>
+</div>
+<style>
+  .dx-modal { position:fixed; inset:0; z-index:200; background:rgba(5,7,11,.72); display:none; align-items:flex-end; justify-content:center; padding:16px; }
+  .dx-modal.show { display:flex; }
+  .dx-modal-box { width:100%; max-width:420px; background:#161B26; border:1px solid #2C3444; border-radius:22px; padding:22px 18px calc(18px + env(safe-area-inset-bottom,0px)); text-align:center; box-shadow:0 -10px 40px rgba(0,0,0,.5); animation:dxUp .22s ease-out; }
+  @keyframes dxUp { from { transform:translateY(30px); opacity:0; } to { transform:none; opacity:1; } }
+  .dx-modal-ic { width:52px; height:52px; margin:0 auto 10px; border-radius:50%; background:#3A2A10; color:#FFB020; display:flex; align-items:center; justify-content:center; }
+  .dx-modal-ic svg { width:26px; height:26px; }
+  .dx-modal-box h3 { font-family:'Chakra Petch',sans-serif; font-size:20px; color:#E8ECF2; margin-bottom:6px; }
+  .dx-modal-box p { font-size:15px; color:#A7AFBD; margin-bottom:18px; }
+  .dx-modal-box button { width:100%; height:52px; border-radius:16px; font-family:'Chakra Petch',sans-serif; font-size:16px; font-weight:700; cursor:pointer; }
+  .dx-modal-stay { background:#3FE0D0; color:#0E1117; border:none; margin-bottom:10px; }
+  .dx-modal-exit { background:transparent; color:#FF8A8D; border:1.5px solid #5E2A2D; }
+</style>
+<script>
+(function () {
+  var H = window.history; if (!H || !H.pushState) return;
+  var silent = 0;                       // pops que provocamos nosotros y no deben aplicarse
+  function cur() { return H.state || {}; }
+  function push(st) { if (JSON.stringify(cur()) !== JSON.stringify(st)) H.pushState(st, ""); }
+  function inQuiz() { var q = el("screen-quiz"); return q && !q.classList.contains("hidden"); }
+  function inResults() { var r = el("screen-results"); return r && !r.classList.contains("hidden"); }
+  function activeTab() { var b = document.querySelector(".tb-nav button.active"); var p = document.querySelector(".cat-panel.active"); return p ? p.id.replace("panel-", "") : (b ? b.dataset.tab : "inicio"); }
+  function openCardIndex() { var c = document.querySelectorAll("#ref-list .ref-card"); for (var i = 0; i < c.length; i++) if (c[i].classList.contains("open")) return i; return -1; }
+  function closeCards() { document.querySelectorAll("#ref-list .ref-card.open .ref-row").forEach(function (r) { r.dataset.dxSilent = "1"; r.click(); delete r.dataset.dxSilent; }); }
+  function closeModules() { if (window.tbMjOpen) { var any = false; for (var k in tbMjOpen) if (tbMjOpen[k]) { tbMjOpen[k] = false; any = true; } if (any) renderManejo(); } }
+  // ---- confirmación al salir de un quiz ----
+  var modal = el("dx-confirm"), onExit = null, onStay = null;
+  function ask(exit, stay) { onExit = exit; onStay = stay; modal.classList.add("show"); }
+  el("dx-confirm-stay").onclick = function () { modal.classList.remove("show"); if (onStay) onStay(); };
+  el("dx-confirm-exit").onclick = function () { modal.classList.remove("show"); if (onExit) onExit(); };
+  modal.addEventListener("click", function (e) { if (e.target === modal) el("dx-confirm-stay").click(); });
+  function leaveQuiz() {                 // salir del quiz quitando su paso del historial
+    if (cur().v === "quiz") { silent++; H.back(); }
+    goHome();
+  }
+  // ---- envolver funciones de la app para registrar cada paso ----
+  var _switch = window.switchTab;
+  window.switchTab = function (tab, fromPop) {
+    _switch(tab);
+    if (fromPop) return;
+    if (tab === "inicio") { if (cur().v !== "tab" || cur().tab !== "inicio") H.replaceState({ v: "tab", tab: "inicio" }, ""); }
+    else push({ v: "tab", tab: tab });
+  };
+  var _start = window.startQuiz;
+  window.startQuiz = function (id) { _start(id); push({ v: "quiz", id: id }); };
+  var _home = window.goHome;
+  window.goHome = function () { modal.classList.remove("show"); _home(); };
+  // abrir/cerrar un tema
+  document.addEventListener("click", function (e) {
+    var row = e.target.closest("#ref-list .ref-row"); if (!row || row.dataset.dxSilent) return;
+    setTimeout(function () {
+      var idx = openCardIndex();
+      if (idx >= 0) push({ v: "tema", tab: "temas", i: idx });
+      else if (cur().v === "tema") { silent++; H.back(); }
+    }, 0);
+  });
+  // abrir/cerrar un módulo de Manejo
+  document.addEventListener("click", function (e) {
+    var head = e.target.closest(".tb-mod-head"); if (!head) return;
+    var id = head.closest(".tb-mod").dataset.id;
+    setTimeout(function () {
+      if (window.tbMjOpen && tbMjOpen[id]) push({ v: "mod", tab: "manejo", id: id });
+      else if (cur().v === "mod" && cur().id === id) { silent++; H.back(); }
+    }, 0);
+  });
+  // botón ✕ del quiz: también pide confirmación
+  document.addEventListener("click", function (e) {
+    if (!e.target.closest("#tb-qx")) return;
+    e.stopImmediatePropagation(); e.preventDefault();
+    if (inResults()) { leaveQuiz(); return; }
+    ask(leaveQuiz, null);
+  }, true);
+  // volver al inicio desde resultados: limpiar el paso del quiz
+  document.addEventListener("click", function (e) {
+    if (e.target.closest("#btn-home") && cur().v === "quiz") { silent++; H.back(); }
+  }, true);
+  // ---- botón atrás del teléfono ----
+  window.addEventListener("popstate", function (e) {
+    if (silent > 0) { silent--; return; }
+    var lb = el("tb-lb"); if (lb && lb.classList.contains("show")) return;   // lo maneja el visor de imágenes
+    if (modal.classList.contains("show")) { modal.classList.remove("show"); push({ v: "quiz" }); return; }
+    var st = e.state || { v: "tab", tab: "inicio" };
+    if (inQuiz() || inResults()) {
+      if (st.v === "quiz") return;
+      if (inResults()) { goHome(); return; }
+      H.pushState({ v: "quiz" }, "");                 // mantener el quiz mientras decide
+      ask(function () { silent++; H.back(); goHome(); }, null);
+      return;
+    }
+    if (st.v === "tema") {
+      if (activeTab() !== "temas") switchTab("temas", true);
+      var c = document.querySelectorAll("#ref-list .ref-card")[st.i];
+      if (c && !c.classList.contains("open")) { closeCards(); var r = c.querySelector(".ref-row"); r.dataset.dxSilent = "1"; r.click(); delete r.dataset.dxSilent; }
+      return;
+    }
+    if (st.v === "mod") { if (activeTab() !== "manejo") switchTab("manejo", true); return; }
+    closeCards(); closeModules();
+    var tab = st.tab || "inicio";
+    if (activeTab() !== tab) switchTab(tab, true);
+  });
+  H.replaceState({ v: "tab", tab: "inicio" }, "");
+})();
+</script>
+<script>
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", function () { navigator.serviceWorker.register("sw.js").catch(function () {}); });
 }
