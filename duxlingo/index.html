@@ -202,6 +202,33 @@
   .blk-done { width:84px; height:84px; margin:0 auto 16px; border-radius:50%; background:var(--ok); color:#fff; display:flex; align-items:center; justify-content:center; }
   .blk-done svg { width:42px; height:42px; }
   #exhub p.x { font-size:16px; line-height:1.55; color:#3A4066; }
+
+  /* pantalla del examen (bloques) */
+  #exhub { background:#FFFFFF; }
+  .hb-head { display:flex; align-items:center; gap:14px; padding:20px 0 18px; }
+  .hb-back { width:46px; height:46px; border-radius:12px; border:none; background:#EAEFFF; color:#1A1D4E; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+  .hb-back svg { width:20px; height:20px; }
+  .hb-eye { font-size:13px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:#3A60BA; }
+  .hb-ttl { font-family:'Nunito',system-ui,sans-serif; font-size:25px; font-weight:800; color:#1A1D4E; line-height:1.2; }
+  .hb-call { display:flex; gap:12px; align-items:flex-start; background:#F4F6FE; border-radius:16px; padding:16px; margin-bottom:18px; }
+  .hb-cap { font-size:22px; line-height:1.2; flex-shrink:0; }
+  .hb-call p { font-size:15px; line-height:1.55; color:#2E325C; }
+  .hb-call b { font-weight:700; }
+  .hb-list { display:flex; flex-direction:column; gap:12px; }
+  .hb { display:flex; align-items:center; gap:14px; width:100%; text-align:left; background:#FFFFFF; border-radius:16px; padding:14px 14px 14px 14px; border:1px solid #F0F0F3; cursor:pointer; font-family:inherit; }
+  .hb-ic { width:48px; height:48px; border-radius:14px; display:flex; align-items:center; justify-content:center; font-size:21px; flex-shrink:0; }
+  .hb-ic svg { width:22px; height:22px; }
+  .hb-t { flex:1; min-width:0; display:flex; flex-direction:column; gap:3px; }
+  .hb-t b { font-size:15.5px; font-weight:600; color:#111111; line-height:1.3; }
+  .hb-t span { font-size:13.5px; color:#555555; }
+  .hb-chev { width:22px; height:22px; color:#353A85; flex-shrink:0; }
+  .hb-open { border:2px solid #353A85; box-shadow:0 6px 16px rgba(53,58,133,.12); }
+  .hb-open .hb-ic { background:#DCE4FF; }
+  .hb-lock { opacity:.55; cursor:not-allowed; }
+  .hb-lock .hb-ic { background:#F0F0F0; }
+  .hb-done { border:1.5px solid #BFE8D3; }
+  .hb-done .hb-ic { background:var(--ok); color:#fff; }
+  .hb-done .hb-chev { color:#8A90B0; }
   /* resultado */
   .res { text-align:center; padding:40px 0 20px; }
   .res .ring { width:150px; height:150px; margin:0 auto 18px; position:relative; }
@@ -442,18 +469,23 @@ function startExam(id, fromPop) {
 function rHub() {
   var L = curLesson, att = getAtt(L), parts = L.examen.partes, html = '';
   var allDone = parts.every(function (p) { return att[p.k]; });
+  var chev = '<svg class="hb-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>';
   parts.forEach(function (p, i) {
     var a = att[p.k], prevOk = i === 0 || att[parts[i - 1].k], st = a ? "done" : prevOk ? "open" : "lock";
-    html += '<button class="card blk ' + st + '" data-k="' + p.k + '"' + (st === "lock" ? ' disabled' : '') + '><span class="blk-n">' + (a ? IC.check : st === "lock" ? '🔒' : p.k + ')') + '</span>' +
-      '<span class="blk-t"><b>' + p.k + ') ' + esc(p.t) + '</b><span>' + p.items.length + ' ' + (p.items[0].q.split(" ").length > 2 ? 'frases' : 'palabras') + (a ? ' · ' + a.ok + '/' + a.res.length + ' correctas' : st === "lock" ? ' · Completa el bloque anterior' : ' · Toca para comenzar') + '</span></span></button>';
+    var unit = p.items[0].q.split(" ").length > 2 ? "frases" : "palabras";
+    var sub = a ? p.items.length + ' ' + unit + ' · ' + a.ok + '/' + a.res.length + ' correctas' : st === "lock" ? p.items.length + ' ' + unit + ' · Completa el bloque anterior' : p.items.length + ' ' + unit + ' · Toca para comenzar';
+    html += '<button class="hb hb-' + st + '" data-k="' + p.k + '"' + (st === "lock" ? ' disabled aria-disabled="true"' : '') + '>' +
+      '<span class="hb-ic">' + (a ? IC.check : st === "lock" ? '<svg viewBox="0 0 24 24" fill="none" stroke="#8A8A8A" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>' : '✏️') + '</span>' +
+      '<span class="hb-t"><b>' + p.k + ') ' + esc(p.t) + '</b><span>' + sub + '</span></span>' + (st === "lock" ? '' : chev) + '</button>';
   });
-  el("exhub").innerHTML = '<div class="lhead"><div class="lrow"><button class="back" id="hub-back" aria-label="Volver">' + IC.back + '</button><div><div class="eye">Lección ' + L.n + '</div><h2 style="font-size:21px">' + esc(L.examen.titulo) + '</h2></div></div></div>' +
-    '<div class="card txt" style="margin-top:18px"><p class="x" style="margin:0">El examen tiene <b>3 bloques</b>. Escribe cada respuesta; si te equivocas 2 veces, te daremos alternativas. Completa un bloque para pasar al siguiente: tu avance queda guardado.</p></div>' +
-    '<div class="stack" style="margin-top:12px">' + html + '</div>' +
+  el("exhub").innerHTML = '<div class="hb-head"><button class="hb-back" id="hub-back" aria-label="Volver"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg></button>' +
+      '<div><div class="hb-eye">Lección ' + L.n + '</div><h2 class="hb-ttl">' + esc(L.examen.titulo) + '</h2></div></div>' +
+    '<div class="hb-call"><span class="hb-cap" aria-hidden="true">🎓</span><p>El examen tiene <b>3 bloques</b>. Escribe cada respuesta; si te equivocas <b>2 veces</b>, te daremos alternativas. Completa un bloque para pasar al siguiente: tu avance queda guardado.</p></div>' +
+    '<div class="hb-list">' + html + '</div>' +
     (allDone ? '<button class="btn" id="hub-final" style="margin-top:18px">Ver resultado final</button>' : '') +
     (Object.keys(att).length ? '<button class="btn ghost" id="hub-reset" style="margin-top:12px">Empezar el examen desde cero</button>' : '');
   el("hub-back").onclick = function () { history.back(); };
-  el("exhub").querySelectorAll(".blk:not([disabled])").forEach(function (b) { b.onclick = function () { startBlock(b.dataset.k); }; });
+  el("exhub").querySelectorAll(".hb:not([disabled])").forEach(function (b) { b.onclick = function () { startBlock(b.dataset.k); }; });
   if (el("hub-final")) el("hub-final").onclick = function () { finishExam(); };
   if (el("hub-reset")) el("hub-reset").onclick = function () { if (confirm("¿Empezar el examen desde cero? Se borrarán los bloques ya hechos de este intento.")) { setAtt(L, {}); rHub(); } };
 }
