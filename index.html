@@ -1279,6 +1279,70 @@ html[data-theme="dark"] .tb-chips span { background:#0F2A31 !important; border-c
 html[data-theme="dark"] .tb-sim-hero { background:linear-gradient(180deg,#0E3540 0%,#0C2229 100%) !important; border-color:#0E5866 !important; }
 
   /* =================== FIN ESTILO TECH AUTOMOTRIZ =================== */
+  /* ===================== ESTILO CINEMATIC (solo CSS · solo modo oscuro) ===================== */
+  html[data-theme="dark"] {
+    --bg-principal:#050E11; --bg-tarjeta:#0C1E24; --border-cyan:rgba(0,229,255,.2); --acento-cyan:#00E5FF;
+    --texto-blanco:#FFFFFF; --texto-apagado:#8FA3AD; --rojo-freno:#FF3B30; --verde-siga:#00E5FF;
+    /* variables propias de la app apuntando a la paleta nueva */
+    --bg-page:#050E11; --bg-card:#0C1E24; --bg-card-alt:#0A1A20; --border-card:rgba(0,229,255,.2); --border-light:rgba(0,229,255,.12);
+    --text-primary:#FFFFFF; --text-secondary:#C4D3D9; --text-muted:#8FA3AD; --text-muted2:#8FA3AD; --tb-accent:#00E5FF; --tb-red:#FF3B30;
+  }
+  html[data-theme="dark"] body { background:radial-gradient(120% 50% at 50% 0%, #0A2A31 0%, #050E11 60%) fixed, #050E11; }
+
+  /* 1) Banner cinematográfico: solo en Inicio (la cabecera es compartida por las 5 pestañas) */
+  html[data-theme="dark"]:has(#panel-inicio.active) .tb-top {
+    position:relative; height:220px; margin:0 -16px 6px; padding:0 20px 18px; align-items:flex-end;
+    background:linear-gradient(to bottom, rgba(5,14,17,.40), rgba(5,14,17,.95)), url("https://images.unsplash.com/photo-1617469165786-8007eda3caa7?auto=format&fit=crop&w=600&q=80") center 30% / cover no-repeat, #0A2A31;
+    border-radius:0 0 22px 22px; border-bottom:1px solid var(--border-cyan);
+  }
+  html[data-theme="dark"]:has(#panel-inicio.active) .tb-top .tb-avatar { position:absolute; top:calc(16px + env(safe-area-inset-top,0px)); left:20px; }
+  html[data-theme="dark"]:has(#panel-inicio.active) .tb-top .tb-avatar img { width:48px; height:48px; border:2px solid var(--acento-cyan) !important; box-shadow:0 0 14px rgba(0,229,255,.45) !important; }
+  html[data-theme="dark"]:has(#panel-inicio.active) .tb-top .tb-iconbtn { position:absolute; top:calc(20px + env(safe-area-inset-top,0px)); right:20px; background:rgba(5,14,17,.55) !important; -webkit-backdrop-filter:blur(8px); backdrop-filter:blur(8px); border:1px solid var(--border-cyan); }
+  html[data-theme="dark"]:has(#panel-inicio.active) .tb-eyebrow, html[data-theme="dark"]:has(#panel-inicio.active) .tb-hello { text-shadow:0 2px 10px rgba(0,0,0,.85), 0 1px 2px rgba(0,0,0,.9); }
+  html[data-theme="dark"]:has(#panel-inicio.active) .tb-eyebrow { color:#BFEFF7 !important; }
+  html[data-theme="dark"]:has(#panel-inicio.active) .tb-hello { color:#FFFFFF !important; font-size:28px; }
+
+  /* 2) Tarjetas de cristal con borde de precisión (sin forzar padding: cada tarjeta conserva su distribución) */
+  html[data-theme="dark"] .tb-card, html[data-theme="dark"] .ref-card, html[data-theme="dark"] .tb-qt, html[data-theme="dark"] .mj-block,
+  html[data-theme="dark"] .tb-mod, html[data-theme="dark"] .tb-quick button, html[data-theme="dark"] .qcard {
+    background:linear-gradient(180deg, #0C232B 0%, #06161D 100%) !important; border:1px solid var(--border-cyan) !important; border-radius:16px !important;
+    box-shadow:0 8px 32px rgba(0,0,0,.6), inset 0 1px 0 rgba(255,255,255,.05) !important; transition:border-color .3s ease, box-shadow .3s ease, transform .15s ease !important; }
+  html[data-theme="dark"] .ref-card:active, html[data-theme="dark"] .tb-qt:active, html[data-theme="dark"] .tb-quick button:active,
+  html[data-theme="dark"] .tb-mod-head:active, html[data-theme="dark"] .tb-sim-hero:active {
+    border-color:var(--acento-cyan) !important; box-shadow:0 0 15px rgba(0,229,255,.15) !important; transform:translateY(1px); }
+  html[data-theme="dark"] .tb-sim-hero { background:linear-gradient(180deg, #0E3540 0%, #06161D 100%) !important; }
+
+  /* 3) Botones de acción: cápsula cyan iluminada */
+  html[data-theme="dark"] .tb-go, html[data-theme="dark"] .btn-primary, html[data-theme="dark"] .tb-btn-acc {
+    background:var(--acento-cyan) !important; color:#050E11 !important; border:none !important; border-radius:12px !important;
+    box-shadow:0 0 20px rgba(0,229,255,.45) !important; transition:box-shadow .2s ease, transform .2s ease !important; }
+  html[data-theme="dark"] .btn-primary, html[data-theme="dark"] .tb-btn-acc { font-family:'Chakra Petch',sans-serif !important; font-weight:700 !important; text-transform:uppercase; letter-spacing:.04em; }
+  html[data-theme="dark"] .tb-go:active, html[data-theme="dark"] .btn-primary:active, html[data-theme="dark"] .tb-btn-acc:active { box-shadow:0 0 30px var(--acento-cyan) !important; transform:scale(.98); }
+
+  /* 4) Números de temas y videos: cápsulas HUD */
+  html[data-theme="dark"] .ref-num, html[data-theme="dark"] .mj-n {
+    background:linear-gradient(180deg, #0E2F38, #071A20) !important; border:1px solid var(--acento-cyan) !important; border-radius:12px !important;
+    box-shadow:inset 0 0 8px rgba(0,229,255,.2) !important; color:var(--acento-cyan) !important; font-family:'Chakra Petch',sans-serif; font-weight:700; }
+  html[data-theme="dark"] .ref-card .rt-eyebrow { color:var(--acento-cyan) !important; }
+
+  /* 5) Miniaturas existentes en marco circular luminoso (solo marco: la imagen no se altera) */
+  html[data-theme="dark"] .tb-mod-img, html[data-theme="dark"] .tb-msg-img {
+    border-radius:50% !important; border:2px solid var(--border-cyan); box-shadow:0 0 10px rgba(0,229,255,.2); }
+  html[data-theme="dark"] .tb-mod-img { background:radial-gradient(circle at 50% 35%, #12404B, #071A20) !important; }
+  html[data-theme="dark"] .tb-avatar img { border:2px solid var(--border-cyan) !important; box-shadow:0 0 10px rgba(0,229,255,.2); }
+
+  /* 6) Barras de progreso: riel oscuro + relleno cyan con resplandor */
+  html[data-theme="dark"] .tb-mod-bar, html[data-theme="dark"] .mj-bar, html[data-theme="dark"] .lg-bar { background:#040C0F !important; box-shadow:inset 0 0 0 1px rgba(0,229,255,.08); }
+  html[data-theme="dark"] .tb-mod-bar i, html[data-theme="dark"] .mj-bar span, html[data-theme="dark"] .lg-bar i { background:var(--acento-cyan) !important; box-shadow:0 0 8px rgba(0,229,255,.7); }
+
+  /* 7) Barra inferior completa con desenfoque y resplandor */
+  html[data-theme="dark"] .tb-nav { background:rgba(5,14,17,.95) !important; -webkit-backdrop-filter:blur(12px); backdrop-filter:blur(12px); border-top:1px solid var(--border-cyan) !important; z-index:1000; }
+  html[data-theme="dark"] .tb-nav button { color:var(--texto-apagado) !important; font-family:'Manrope',sans-serif; font-size:11px; }
+  html[data-theme="dark"] .tb-nav button svg { background:none !important; box-shadow:none !important; padding:0 !important; }
+  html[data-theme="dark"] .tb-nav button.active { color:var(--acento-cyan) !important; text-shadow:0 0 8px rgba(0,229,255,.4); }
+  html[data-theme="dark"] .tb-nav button.active svg { filter:drop-shadow(0 0 6px var(--acento-cyan)); }
+  /* =================== FIN ESTILO CINEMATIC =================== */
+
 </style>
 </head>
 <body><div id="dx-splash" aria-hidden="true"><canvas id="dx-fire"></canvas><div class="dx-row"><img src="icons/logo-d.png" alt=""><div class="dx-name"><span class="dx-gap"></span><span style="color:#3FE0D0;transition-delay:250ms">D</span><span style="color:#3FE0D0;transition-delay:370ms">u</span><span style="color:#3FE0D0;transition-delay:490ms">x</span><span style="color:#FFFFFF;transition-delay:610ms">D</span><span style="color:#FFFFFF;transition-delay:730ms">r</span><span style="color:#FFFFFF;transition-delay:850ms">i</span><span style="color:#FFFFFF;transition-delay:970ms">v</span><span style="color:#FFFFFF;transition-delay:1090ms">e</span></div></div></div><script>
