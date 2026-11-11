@@ -1362,7 +1362,7 @@ html[data-theme="dark"] .tb-sim-hero { background:linear-gradient(180deg,#0E3540
   html[data-theme="dark"] .tb-nav button.active { color:var(--acento-cyan) !important; text-shadow:0 0 8px rgba(0,229,255,.4); }
   html[data-theme="dark"] .tb-nav button.active svg { filter:drop-shadow(0 0 6px var(--acento-cyan)); }
   /* 8) Manejo: avatares reales en los módulos (la foto va por CSS; el emoji queda en el DOM con font-size 0) */
-  html[data-theme="dark"] .tb-mod[data-id] .tb-mod-img { flex:0 0 64px !important; width:64px !important; height:64px !important; border-radius:50% !important;
+  html[data-theme="dark"] .tb-mod[data-id] .tb-mod-img { flex:0 0 60px !important; width:60px !important; height:60px !important; border-radius:50% !important;
     font-size:0 !important; background-size:cover !important; background-position:center !important; background-repeat:no-repeat !important;
     border:2px solid #00E5FF !important; box-shadow:0 0 12px rgba(0,229,255,.35) !important; flex-shrink:0; }
   html[data-theme="dark"] .tb-mod[data-id="curso"] .tb-mod-img { background-image:url("img/avatar-manejo1.jpg") !important; }
@@ -1370,11 +1370,34 @@ html[data-theme="dark"] .tb-sim-hero { background:linear-gradient(180deg,#0E3540
   html[data-theme="dark"] .tb-mod[data-id="etapas"] .tb-mod-img { background-image:url("img/avatar-manejo3.jpg") !important; }
   /* 9) Quiz: números sin intentar (gris #4A5366 puesto por el JS) en cyan translúcido; los aprobados (cyan) y en curso (ámbar) conservan su color de estado */
   html[data-theme="dark"] .tb-qt-n { font-family:'Chakra Petch',sans-serif !important; font-weight:700 !important; }
-  html[data-theme="dark"] .tb-qt-n[style*="#4A5366"] { color:rgba(0,229,255,.55) !important; text-shadow:0 0 8px rgba(0,229,255,.2); }
-  html[data-theme="dark"] .tb-qt [stroke="#252C39"] { stroke:rgba(0,229,255,.25) !important; }
+  html[data-theme="dark"] .tb-qt-n { color:#00E5FF !important; text-shadow:0 0 10px rgba(0,229,255,.35); font-size:22px !important; }
+  html[data-theme="dark"] .tb-qt [stroke="#252C39"] { stroke:rgba(0,229,255,.3) !important; }
+  html[data-theme="dark"] .tb-qt-top svg { filter:drop-shadow(0 0 4px rgba(0,229,255,.35)); }
   /* 10) Temas: cápsulas numéricas tipo instrumento encendido */
-  html[data-theme="dark"] .ref-num { background:radial-gradient(circle at 30% 30%, rgba(0,229,255,.18), rgba(6,22,29,.95)) !important; border:1.5px solid #00E5FF !important;
-    box-shadow:0 0 10px rgba(0,229,255,.25), inset 0 0 6px rgba(0,229,255,.2) !important; color:#FFFFFF !important; font-weight:700 !important; }
+  html[data-theme="dark"] .ref-num { --foto:none; width:48px !important; height:48px !important; flex:0 0 48px !important; border-radius:12px !important;
+    background:linear-gradient(rgba(5,14,17,.35), rgba(5,14,17,.55)), var(--foto) center / cover no-repeat, #0C232B !important;
+    border:1.5px solid #00E5FF !important; box-shadow:0 0 10px rgba(0,229,255,.25) !important;
+    color:#FFFFFF !important; font-weight:700 !important; font-size:18px !important; text-shadow:0 1px 4px rgba(0,0,0,.95), 0 0 8px rgba(0,0,0,.8); }
+  html[data-theme="dark"] #ref-list .ref-card:nth-child(1) .ref-num { --foto:url("img/tema1/v1/p02.jpg"); }
+  html[data-theme="dark"] #ref-list .ref-card:nth-child(2) .ref-num { --foto:url("img/tema2/v1/p05.jpg"); }
+  html[data-theme="dark"] #ref-list .ref-card:nth-child(3) .ref-num { --foto:url("img/tema3/v1/p04.jpg"); }
+  html[data-theme="dark"] #ref-list .ref-card:nth-child(4) .ref-num { --foto:url("img/tema4/v1/p03.jpg"); }
+  html[data-theme="dark"] #ref-list .ref-card:nth-child(5) .ref-num { --foto:url("img/tema5/v1/p06.jpg"); }
+  html[data-theme="dark"] #ref-list .ref-card:nth-child(6) .ref-num { --foto:url("img/resumen/tema6/eje-calzada.jpg"); }
+  html[data-theme="dark"] #ref-list .ref-card:nth-child(7) .ref-num { --foto:url("img/resumen/tema7/clima-lluvia.jpg"); }
+  html[data-theme="dark"] #ref-list .ref-card:nth-child(8) .ref-num { --foto:url("img/tema8/v1/p04.jpg"); }
+  html[data-theme="dark"] #ref-list .ref-card:nth-child(9) .ref-num { --foto:url("img/tema9/v1/p05.jpg"); }
+  html[data-theme="dark"] #ref-list .ref-card:nth-child(10) .ref-num { --foto:url("img/tema10/v1/p01.jpg"); }
+  html[data-theme="dark"] #ref-list .ref-card:nth-child(11) .ref-num { --foto:url("img/avatar-manejo3.jpg"); }
+  /* 11) Simulacro: Municipalidad destacada, Test fácil/difícil con neón de su color y acciones en píldora */
+  html[data-theme="dark"] #sim-muni-card { background:linear-gradient(145deg, rgba(0,229,255,.14) 0%, #0C232B 45%, #06161D 100%) !important; border-color:rgba(0,229,255,.45) !important; }
+  html[data-theme="dark"] #sim-muni-card .tb-sim-ic { border:1.5px solid #7FF3FF; box-shadow:0 0 18px rgba(0,229,255,.5) !important; }
+  html[data-theme="dark"] #sim-facil-card .tb-sim-ic.fac { border:1px solid rgba(52,199,89,.5); box-shadow:0 0 12px rgba(52,199,89,.35); }
+  html[data-theme="dark"] #sim-dificil-card .tb-sim-ic.dif { border:1px solid rgba(255,59,48,.5); box-shadow:0 0 12px rgba(255,59,48,.35); }
+  html[data-theme="dark"] .tb-smini-foot { border-top-color:rgba(0,229,255,.12) !important; }
+  html[data-theme="dark"] .tb-smini-foot b { padding:4px 12px; border-radius:999px; font-size:12.5px !important; letter-spacing:.02em; }
+  html[data-theme="dark"] #sim-facil-card .tb-smini-foot b { border:1px solid rgba(52,199,89,.6); background:rgba(52,199,89,.10); box-shadow:0 0 10px rgba(52,199,89,.2); }
+  html[data-theme="dark"] #sim-dificil-card .tb-smini-foot b { border:1px solid rgba(255,59,48,.6); background:rgba(255,59,48,.10); box-shadow:0 0 10px rgba(255,59,48,.2); }
   /* =================== FIN ESTILO CINEMATIC =================== */
 
 </style>
