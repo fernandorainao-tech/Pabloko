@@ -1262,7 +1262,7 @@ html[data-theme="dark"] [style*="color:#3FE0D0"] { color:#00E5FF !important; }
 html[data-theme="dark"] [style*="background:#3FE0D0"] { background:#00E5FF !important; }
 html[data-theme="dark"] [style*="color:#0E1117"] { color:#061214 !important; }
 /* --- Botones principales: cyan brillante, texto oscuro, esquinas redondeadas, sin relieve --- */
-html[data-theme="dark"] .btn-primary, html[data-theme="dark"] .tb-go, html[data-theme="dark"] .btn.btn-primary {
+html[data-theme="dark"] .btn-primary, html[data-theme="dark"] .btn.btn-primary {
   background:#00E5FF !important; color:#061214 !important; border:none !important; border-radius:14px !important;
   box-shadow:0 8px 22px rgba(0,229,255,.22) !important; font-weight:800; }
 html[data-theme="dark"] .btn-primary:active, html[data-theme="dark"] .tb-go:active { transform:scale(.98); box-shadow:0 4px 12px rgba(0,229,255,.18) !important; }
@@ -1292,7 +1292,7 @@ html[data-theme="dark"] .tb-sim-hero { background:linear-gradient(180deg,#0E3540
   /* 1) Banner cinematográfico: solo en Inicio (la cabecera es compartida por las 5 pestañas) */
   html[data-theme="dark"]:has(#panel-inicio.active) .tb-top {
     position:relative; height:220px; margin:0 -16px 6px; padding:0 20px 18px; align-items:flex-end;
-    background:linear-gradient(to bottom, rgba(5,14,17,.40), rgba(5,14,17,.95)), url("https://images.unsplash.com/photo-1617469165786-8007eda3caa7?auto=format&fit=crop&w=600&q=80") center 30% / cover no-repeat, #0A2A31;
+    background:linear-gradient(to bottom, rgba(5,14,17,.40), rgba(5,14,17,.95)), url("img/banner-inicio.jpg") center 32% / cover no-repeat, #0A2A31 !important;
     border-radius:0 0 22px 22px; border-bottom:1px solid var(--border-cyan);
   }
   html[data-theme="dark"]:has(#panel-inicio.active) .tb-top .tb-avatar { position:absolute; top:calc(16px + env(safe-area-inset-top,0px)); left:20px; }
@@ -1313,11 +1313,26 @@ html[data-theme="dark"] .tb-sim-hero { background:linear-gradient(180deg,#0E3540
   html[data-theme="dark"] .tb-sim-hero { background:linear-gradient(180deg, #0E3540 0%, #06161D 100%) !important; }
 
   /* 3) Botones de acción: cápsula cyan iluminada */
-  html[data-theme="dark"] .tb-go, html[data-theme="dark"] .btn-primary, html[data-theme="dark"] .tb-btn-acc {
+  html[data-theme="dark"] .tb-go {
+    position:relative; display:grid !important; grid-template-columns:72px 1fr 48px; grid-template-rows:auto auto; column-gap:14px; row-gap:2px; align-items:center;
+    padding:14px !important; text-align:left; color:#FFFFFF !important; border:1px solid rgba(0,229,255,.45) !important; border-radius:16px !important;
+    background:linear-gradient(180deg, #0E2A33 0%, #06161D 100%) !important;
+    box-shadow:0 8px 32px rgba(0,0,0,.6), 0 0 18px rgba(0,229,255,.12), inset 0 1px 0 rgba(255,255,255,.06) !important; }
+  /* miniatura de vista previa (misma foto del banner) */
+  html[data-theme="dark"] .tb-go::before { content:""; grid-row:1 / span 2; grid-column:1; width:72px; height:72px; border-radius:12px;
+    background:url("img/banner-inicio.jpg") 30% 40% / 260% auto no-repeat, #0A2A31; border:1px solid rgba(0,229,255,.25); }
+  html[data-theme="dark"] .tb-go small { grid-column:2; align-self:end; color:var(--acento-cyan) !important; letter-spacing:.12em !important; }
+  html[data-theme="dark"] .tb-go strong { grid-column:2; align-self:start; color:#FFFFFF !important; font-size:17px !important; line-height:1.25; }
+  /* la flecha se convierte en el botón de acción: cápsula cyan iluminada */
+  html[data-theme="dark"] .tb-go svg { grid-column:3; grid-row:1 / span 2; width:22px !important; height:22px !important; margin:0 !important; padding:13px; box-sizing:content-box;
+    border-radius:14px; background:var(--acento-cyan); color:#050E11; box-shadow:0 0 20px rgba(0,229,255,.45); transition:box-shadow .2s, transform .2s; }
+  html[data-theme="dark"] .tb-go:active { transform:translateY(1px); border-color:var(--acento-cyan) !important; }
+  html[data-theme="dark"] .tb-go:active svg { box-shadow:0 0 30px var(--acento-cyan); transform:scale(.96); }
+  html[data-theme="dark"] .btn-primary, html[data-theme="dark"] .tb-btn-acc {
     background:var(--acento-cyan) !important; color:#050E11 !important; border:none !important; border-radius:12px !important;
     box-shadow:0 0 20px rgba(0,229,255,.45) !important; transition:box-shadow .2s ease, transform .2s ease !important; }
   html[data-theme="dark"] .btn-primary, html[data-theme="dark"] .tb-btn-acc { font-family:'Chakra Petch',sans-serif !important; font-weight:700 !important; text-transform:uppercase; letter-spacing:.04em; }
-  html[data-theme="dark"] .tb-go:active, html[data-theme="dark"] .btn-primary:active, html[data-theme="dark"] .tb-btn-acc:active { box-shadow:0 0 30px var(--acento-cyan) !important; transform:scale(.98); }
+  html[data-theme="dark"] .btn-primary:active, html[data-theme="dark"] .tb-btn-acc:active { box-shadow:0 0 30px var(--acento-cyan) !important; transform:scale(.98); }
 
   /* 4) Números de temas y videos: cápsulas HUD */
   html[data-theme="dark"] .ref-num, html[data-theme="dark"] .mj-n {
@@ -1327,7 +1342,8 @@ html[data-theme="dark"] .tb-sim-hero { background:linear-gradient(180deg,#0E3540
 
   /* 5) Miniaturas existentes en marco circular luminoso (solo marco: la imagen no se altera) */
   html[data-theme="dark"] .tb-mod-img, html[data-theme="dark"] .tb-msg-img {
-    border-radius:50% !important; border:2px solid var(--border-cyan); box-shadow:0 0 10px rgba(0,229,255,.2); }
+    border-radius:50% !important; border:2px solid #00E5FF; box-shadow:0 0 10px rgba(0,229,255,.3); }
+  html[data-theme="dark"] .tb-mod-img { flex-basis:64px !important; width:64px; height:64px !important; font-size:32px !important; }
   html[data-theme="dark"] .tb-mod-img { background:radial-gradient(circle at 50% 35%, #12404B, #071A20) !important; }
   html[data-theme="dark"] .tb-avatar img { border:2px solid var(--border-cyan) !important; box-shadow:0 0 10px rgba(0,229,255,.2); }
 
