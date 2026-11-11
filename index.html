@@ -1109,6 +1109,176 @@
 
   .dx-fire { display:block; height:24px; margin-top:-10px; margin-bottom:-14px; pointer-events:none; opacity:.5; }
   .tb-msg-p + .dx-fire { height:22px; margin-top:-6px; margin-bottom:-14px; }
+
+  /* ===================== ESTILO TECH AUTOMOTRIZ (solo CSS · solo modo oscuro) =====================
+     1) Re-mapeo de la paleta Tablero → cyan abismal (mismas reglas, ahora con los colores nuevos)
+     2) Ajustes de tarjetas, botones, navegación y colores puestos en línea por el JS */
+html[data-theme="dark"] .mj-cross{background:#00A9C2}
+html[data-theme="dark"]{--bg-page:#061214; --text-primary:#F2FBFC; --text-secondary:#C2D6DB; --text-muted:#7E9AA2; --text-muted2:#94B0B7; --text-eyebrow:#7E9AA2; --bg-card:#0C2229; --bg-card-alt:#0F2A31; --border-card:#15363F; --border-light:#15363F; --border-input:#1A3F49; --border-review:#15363F; --bg-toast:#F2FBFC; --text-on-dark:#061214; --header-grad-1:#0C2229; --header-grad-2:#061214; --num-badge:#15363F; --score-bg:#0F2A31; --score-good-bg:#06323A; --score-good-text:#00E5FF; --sim-border:#15363F; --sim-bg-1:#0C2229; --sim-bg-2:#0C2229; --footer-text:#50707A; --opt-bg:#0C2229; --opt-border:#15363F; --opt-mark-border:#24525E; --opt-correct-border:#00E5FF; --opt-correct-bg:#06323A; --feedback-ok-bg:#06323A; --feedback-ok-text:#7FF3FF; --feedback-ok-border:#0E5866; --result-ring-border:#15363F; --ig-bg-card:#0C2229; --ig-bg-lavender:#0F2A31; --ig-border-lavender:#1A3F49; --tb-accent:#00E5FF}
+html[data-theme="dark"] body{background:#061214}
+html[data-theme="dark"] .tb-eyebrow{color:#7E9AA2}
+html[data-theme="dark"] .tb-hello{color:#F2FBFC}
+html[data-theme="dark"] .tb-iconbtn{background:#0F2A31}
+html[data-theme="dark"] .tb-avatar img{border:1.5px solid #00E5FF}
+html[data-theme="dark"] .tb-h2{color:#F2FBFC}
+html[data-theme="dark"] .tb-card{background:#0C2229; border:1px solid #15363F}
+html[data-theme="dark"] .tb-ring-c b{color:#F2FBFC}
+html[data-theme="dark"] .tb-ring-c span{color:#94B0B7}
+html[data-theme="dark"] .tb-ring-t h3{color:#F2FBFC}
+html[data-theme="dark"] .tb-ring-t p{color:#94B0B7}
+html[data-theme="dark"] .tb-go{background:#00E5FF; color:#061214}
+html[data-theme="dark"] .tb-quick button{background:#0C2229; border:1px solid #15363F; color:#F2FBFC}
+html[data-theme="dark"] .tb-quick svg{color:#00E5FF}
+html[data-theme="dark"] .tb-msg-t{color:#F2FBFC}
+html[data-theme="dark"] .tb-msg-p{color:#F2FBFC}
+html[data-theme="dark"] .tb-nav{background:#071A1F; border-top:1px solid #15363F}
+html[data-theme="dark"] .tb-nav button{color:#7E9AA2}
+html[data-theme="dark"] .tb-nav button.active{color:#00E5FF}
+html[data-theme="dark"] .tb-toast-ic{color:#061214}
+html[data-theme="dark"] .tb-toast-b b{color:#F2FBFC}
+html[data-theme="dark"] .tb-sim-hero{border-color:#0E5866 !important; background:linear-gradient(180deg,#0B2A31 0%,#0C2229 100%) !important}
+html[data-theme="dark"] .tb-sim-k{color:#94B0B7}
+html[data-theme="dark"] .tb-sim-hero h3{color:#F2FBFC}
+html[data-theme="dark"] .tb-chips span{background:#123039; border:1px solid #1A3F49; color:#C2D6DB}
+html[data-theme="dark"] .tb-chips svg{color:#94B0B7}
+html[data-theme="dark"] .tb-sim-sep{background:#1A3F49}
+html[data-theme="dark"] .tb-smini{color:#F2FBFC}
+html[data-theme="dark"] .tb-smini-arr svg{color:#7E9AA2}
+html[data-theme="dark"] .tb-smini h4{color:#F2FBFC}
+html[data-theme="dark"] .tb-smini p{color:#94B0B7}
+html[data-theme="dark"] .tb-smini-foot{border-top:1px solid #1A3F49; color:#94B0B7}
+html[data-theme="dark"] .tb-hist-h h3{color:#F2FBFC}
+html[data-theme="dark"] .tb-pill{color:#7FF3FF; border:1px solid #0E5866}
+html[data-theme="dark"] .tb-slot.empty{border:1.5px dashed #24525E; color:#7E9AA2}
+html[data-theme="dark"] .tb-hist-empty{color:#94B0B7}
+html[data-theme="dark"] .tb-mj-sum p{color:#C2D6DB}
+html[data-theme="dark"] .tb-mj-count{background:#00E5FF; color:#061214}
+html[data-theme="dark"] .tb-mod{background:linear-gradient(135deg, color-mix(in srgb, var(--c) 16%, #0C2229) 0%, #0C2229 70%)}
+html[data-theme="dark"] .tb-mod-img{background:color-mix(in srgb, var(--c) 22%, #061214)}
+html[data-theme="dark"] .tb-mod-t b{color:#F2FBFC}
+html[data-theme="dark"] .tb-mod-d{color:#94B0B7}
+html[data-theme="dark"] .tb-mod-n{color:#94B0B7}
+html[data-theme="dark"] .tb-mod-chev{color:#C2D6DB}
+html[data-theme="dark"] .lg-si.teal{color:#00E5FF}
+html[data-theme="dark"] .lg-stat b{color:#F2FBFC}
+html[data-theme="dark"] .lg-stat span span{color:#94B0B7}
+html[data-theme="dark"] .lg-day{color:#7E9AA2}
+html[data-theme="dark"] .lg-day i{color:#061214}
+html[data-theme="dark"] .lg-day.on i{background:#00E5FF; border-color:#00E5FF}
+html[data-theme="dark"] .lg-day.hoy:not(.on) i{border-color:#00E5FF}
+html[data-theme="dark"] .lg-medal.on .lg-mi{background:radial-gradient(circle at 35% 30%, #7FF3FF 0%, #00E5FF 45%, #14B8A6 100%)}
+html[data-theme="dark"] .lg-ok{border:2px solid #061214}
+html[data-theme="dark"] .lg-mn{color:#7E9AA2}
+html[data-theme="dark"] .lg-medal.on .lg-mn{color:#F2FBFC}
+html[data-theme="dark"] .lg-prize{border:1px solid #15363F}
+html[data-theme="dark"] .lg-prize.won{border-color:#0E5866}
+html[data-theme="dark"] .lg-badge > span{background:#0C2229}
+html[data-theme="dark"] .lg-teal{background:linear-gradient(145deg,#7FF3FF,#0E7490)}
+html[data-theme="dark"] .lg-teal > span{color:#7FF3FF}
+html[data-theme="dark"] .lg-ph b{color:#F2FBFC}
+html[data-theme="dark"] .lg-won{color:#061214; background:#00E5FF}
+html[data-theme="dark"] .lg-st{color:#94B0B7}
+html[data-theme="dark"] .lg-pd{color:#94B0B7}
+html[data-theme="dark"] .lg-bar i{background:linear-gradient(90deg,#06B6D4,#00E5FF)}
+html[data-theme="dark"] .tb-qt{background:#0C2229; border:1px solid #15363F; color:#F2FBFC}
+html[data-theme="dark"] .tb-qt small{color:#94B0B7}
+html[data-theme="dark"] .tb-empty{color:#7E9AA2}
+html[data-theme="dark"] .tb-sim-main{border-color:#0E5866}
+html[data-theme="dark"] .tb-sim-main h3{color:#F2FBFC}
+html[data-theme="dark"] .tb-sim-main p, html[data-theme="dark"] .tb-sim-mini p{color:#94B0B7}
+html[data-theme="dark"] .tb-btn-acc{background:#00E5FF; color:#061214}
+html[data-theme="dark"] .tb-sim-mini h4{color:#F2FBFC}
+html[data-theme="dark"] .tb-lg-stat b{color:#F2FBFC}
+html[data-theme="dark"] .tb-lg-stat span{color:#94B0B7}
+html[data-theme="dark"] .tb-week div{color:#7E9AA2}
+html[data-theme="dark"] .tb-week i{border:2px solid #24525E; color:#061214}
+html[data-theme="dark"] .tb-week i.hoy{border-color:#00E5FF}
+html[data-theme="dark"] .tb-sec h3{color:#F2FBFC}
+html[data-theme="dark"] .tb-sec span{color:#94B0B7}
+html[data-theme="dark"] .tb-sub{color:#94B0B7}
+html[data-theme="dark"] .tb-medal{color:#94B0B7}
+html[data-theme="dark"] .tb-medal i{border:2px solid #24525E; background:#0C2229; color:#50707A}
+html[data-theme="dark"] .tb-medal i.on{background:#00E5FF; border-color:#00E5FF; color:#061214}
+html[data-theme="dark"] .tb-prize.won{border-color:#0E5866}
+html[data-theme="dark"] .tb-prize.won .tb-prize-ic{background:#00E5FF; color:#061214}
+html[data-theme="dark"] .tb-prize-h b{color:#F2FBFC}
+html[data-theme="dark"] .tb-prize-h span{color:#94B0B7}
+html[data-theme="dark"] .tb-prize.won .tb-prize-h span{color:#00E5FF}
+html[data-theme="dark"] .tb-prize-d{color:#94B0B7}
+html[data-theme="dark"] .tb-prog{background:#15363F}
+html[data-theme="dark"] .tb-prize.won .tb-prog i{background:#00E5FF}
+html[data-theme="dark"] .quiz-header{background:#061214 !important}
+html[data-theme="dark"] .tb-qx{background:#0F2A31; color:#F2FBFC}
+html[data-theme="dark"] .tb-segs i{background:#15363F}
+html[data-theme="dark"] .tb-segs i.ok{background:#00E5FF}
+html[data-theme="dark"] .tb-qcount{color:#00E5FF}
+html[data-theme="dark"] .tb-qmeta #quiz-title{color:#7E9AA2 !important}
+html[data-theme="dark"] .tb-qmeta #progress-correct{color:#00E5FF}
+html[data-theme="dark"] .q-text{color:#F2FBFC !important}
+html[data-theme="dark"] .q-image{border:1px solid #15363F; background:#0C2229}
+html[data-theme="dark"] .opt{color:#F2FBFC !important}
+html[data-theme="dark"] .opt-label{color:#F2FBFC !important}
+html[data-theme="dark"] .qcard-actions .btn-primary, html[data-theme="dark"] .result-actions .btn-primary{background:#00E5FF !important; color:#061214 !important}
+html[data-theme="dark"] .qcard-actions .btn-primary:disabled{background:#15363F !important; color:#50707A !important}
+html[data-theme="dark"] .btn-ghost{background:#0C2229 !important; color:#F2FBFC !important; border:1px solid #15363F !important}
+html[data-theme="dark"] #screen-quiz{background:#061214 !important}
+html[data-theme="dark"] .result-ring{background:#0C2229 !important}
+html[data-theme="dark"] .result-ring .pct{color:#F2FBFC !important}
+html[data-theme="dark"] .result-ring .lbl, html[data-theme="dark"] .result-hero p{color:#94B0B7 !important}
+html[data-theme="dark"] .tb-sheet{border-top:1px solid #1A3F49}
+html[data-theme="dark"] .tb-sheet-grip{background:#24525E}
+html[data-theme="dark"] .tb-sheet .btn{background:#00E5FF !important; color:#061214 !important}
+html[data-theme="dark"] .result-hero h2{color:#F2FBFC}
+html[data-theme="dark"] .review-item{background:#0C2229 !important; border-color:#15363F !important}
+html[data-theme="dark"] .ref-card, html[data-theme="dark"] .mj-block{background:#0C2229 !important; border-color:#15363F !important}
+html[data-theme="dark"] .cat-intro{color:#94B0B7 !important}
+html[data-theme="dark"] .tb-pt{background:#0C2229; border:1px solid #15363F}
+html[data-theme="dark"] .tb-sem{border:1px solid #15363F}
+html[data-theme="dark"] .tb-lb-bar{color:#94B0B7}
+html[data-theme="dark"] .tb-lb-x{background:#0F2A31; color:#F2FBFC}
+html[data-theme="dark"] .tb-zhint{color:#7E9AA2}
+html[data-theme="dark"] #dx-splash{background:#061214}
+/* --- Fondo abismal con brillo radial (como la referencia) --- */
+html[data-theme="dark"] body { background:radial-gradient(120% 55% at 50% -8%, #0D3A43 0%, #08222A 38%, #061214 72%) fixed, #061214; }
+/* --- Tarjetas: más claras que el fondo, borde fino, esquinas 16px y sin sombras duras --- */
+html[data-theme="dark"] .tb-card, html[data-theme="dark"] .ref-card, html[data-theme="dark"] .mj-block, html[data-theme="dark"] .tb-mod,
+html[data-theme="dark"] .tb-qt, html[data-theme="dark"] .qcard, html[data-theme="dark"] .tb-quick button, html[data-theme="dark"] .sim-card,
+html[data-theme="dark"] .motiv-card, html[data-theme="dark"] .review-item, html[data-theme="dark"] .tb-prize, html[data-theme="dark"] .lg-prize {
+  border-radius:16px !important; box-shadow:none !important; }
+html[data-theme="dark"] .tb-card, html[data-theme="dark"] .ref-card, html[data-theme="dark"] .mj-block, html[data-theme="dark"] .tb-qt, html[data-theme="dark"] .tb-quick button {
+  background:#0C2229 !important; border:1px solid #15363F !important; }
+/* --- Temas: fuera los colores por tema; todo monocromo cyan --- */
+html[data-theme="dark"] .ref-num { background:#0F3440 !important; color:#00E5FF !important; border:1px solid #1D5562; box-shadow:none !important; }
+html[data-theme="dark"] .ref-card .rt-eyebrow { color:#00E5FF !important; }
+html[data-theme="dark"] .ref-card.open .ref-chevron { color:#00E5FF !important; }
+html[data-theme="dark"] .tb-mod { --c:#00E5FF !important; background:#0C2229 !important; border:1px solid #15363F !important; }
+html[data-theme="dark"] .tb-mod.open { border-color:#0E5866 !important; }
+html[data-theme="dark"] .mj-n { background:#00E5FF !important; color:#061214 !important; }
+html[data-theme="dark"] .tb-quick svg, html[data-theme="dark"] .tb-quick button:nth-child(3) svg { color:#00E5FF !important; }
+/* --- Colores que pone el JavaScript en línea (anillos, íconos): cyan en vez de turquesa --- */
+html[data-theme="dark"] [stroke="#3FE0D0"] { stroke:#00E5FF; filter:drop-shadow(0 0 4px rgba(0,229,255,.55)); }
+html[data-theme="dark"] [stroke="#252C39"] { stroke:#15363F; }
+html[data-theme="dark"] [style*="color:#3FE0D0"] { color:#00E5FF !important; }
+html[data-theme="dark"] [style*="background:#3FE0D0"] { background:#00E5FF !important; }
+html[data-theme="dark"] [style*="color:#0E1117"] { color:#061214 !important; }
+/* --- Botones principales: cyan brillante, texto oscuro, esquinas redondeadas, sin relieve --- */
+html[data-theme="dark"] .btn-primary, html[data-theme="dark"] .tb-go, html[data-theme="dark"] .btn.btn-primary {
+  background:#00E5FF !important; color:#061214 !important; border:none !important; border-radius:14px !important;
+  box-shadow:0 8px 22px rgba(0,229,255,.22) !important; font-weight:800; }
+html[data-theme="dark"] .btn-primary:active, html[data-theme="dark"] .tb-go:active { transform:scale(.98); box-shadow:0 4px 12px rgba(0,229,255,.18) !important; }
+html[data-theme="dark"] .btn:not(.btn-primary) { border-radius:14px !important; box-shadow:none !important; }
+/* --- Barra de navegación: vidrio oscuro, ícono activo cyan dentro de una cápsula luminosa --- */
+html[data-theme="dark"] .tb-nav { background:rgba(7,26,31,.92) !important; -webkit-backdrop-filter:blur(14px); backdrop-filter:blur(14px); border-top:1px solid #15363F !important; }
+html[data-theme="dark"] .tb-nav button { color:#6F8C94 !important; }
+html[data-theme="dark"] .tb-nav button svg { box-sizing:content-box; padding:5px 14px; border-radius:999px; transition:background .2s, color .2s; }
+html[data-theme="dark"] .tb-nav button.active { color:#00E5FF !important; }
+html[data-theme="dark"] .tb-nav button.active svg { background:rgba(0,229,255,.14); box-shadow:0 0 14px rgba(0,229,255,.25); }
+/* --- Detalles: avatar, chips y acentos --- */
+html[data-theme="dark"] .tb-avatar img { border-color:#00E5FF !important; box-shadow:0 0 0 3px rgba(0,229,255,.12); }
+html[data-theme="dark"] .tb-chips span { background:#0F2A31 !important; border-color:#1A3F49 !important; }
+html[data-theme="dark"] .tb-sim-hero { background:linear-gradient(180deg,#0E3540 0%,#0C2229 100%) !important; border-color:#0E5866 !important; }
+
+  /* =================== FIN ESTILO TECH AUTOMOTRIZ =================== */
 </style>
 </head>
 <body><div id="dx-splash" aria-hidden="true"><canvas id="dx-fire"></canvas><div class="dx-row"><img src="icons/logo-d.png" alt=""><div class="dx-name"><span class="dx-gap"></span><span style="color:#3FE0D0;transition-delay:250ms">D</span><span style="color:#3FE0D0;transition-delay:370ms">u</span><span style="color:#3FE0D0;transition-delay:490ms">x</span><span style="color:#FFFFFF;transition-delay:610ms">D</span><span style="color:#FFFFFF;transition-delay:730ms">r</span><span style="color:#FFFFFF;transition-delay:850ms">i</span><span style="color:#FFFFFF;transition-delay:970ms">v</span><span style="color:#FFFFFF;transition-delay:1090ms">e</span></div></div></div><script>
