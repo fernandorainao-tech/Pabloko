@@ -1361,6 +1361,20 @@ html[data-theme="dark"] .tb-sim-hero { background:linear-gradient(180deg,#0E3540
   html[data-theme="dark"] .tb-nav button svg { background:none !important; box-shadow:none !important; padding:0 !important; }
   html[data-theme="dark"] .tb-nav button.active { color:var(--acento-cyan) !important; text-shadow:0 0 8px rgba(0,229,255,.4); }
   html[data-theme="dark"] .tb-nav button.active svg { filter:drop-shadow(0 0 6px var(--acento-cyan)); }
+  /* 8) Manejo: avatares reales en los módulos (la foto va por CSS; el emoji queda en el DOM con font-size 0) */
+  html[data-theme="dark"] .tb-mod[data-id] .tb-mod-img { flex:0 0 64px !important; width:64px !important; height:64px !important; border-radius:50% !important;
+    font-size:0 !important; background-size:cover !important; background-position:center !important; background-repeat:no-repeat !important;
+    border:2px solid #00E5FF !important; box-shadow:0 0 12px rgba(0,229,255,.35) !important; flex-shrink:0; }
+  html[data-theme="dark"] .tb-mod[data-id="curso"] .tb-mod-img { background-image:url("img/avatar-manejo1.jpg") !important; }
+  html[data-theme="dark"] .tb-mod[data-id="situaciones"] .tb-mod-img { background-image:url("img/avatar-manejo2.jpg") !important; }
+  html[data-theme="dark"] .tb-mod[data-id="etapas"] .tb-mod-img { background-image:url("img/avatar-manejo3.jpg") !important; }
+  /* 9) Quiz: números sin intentar (gris #4A5366 puesto por el JS) en cyan translúcido; los aprobados (cyan) y en curso (ámbar) conservan su color de estado */
+  html[data-theme="dark"] .tb-qt-n { font-family:'Chakra Petch',sans-serif !important; font-weight:700 !important; }
+  html[data-theme="dark"] .tb-qt-n[style*="#4A5366"] { color:rgba(0,229,255,.55) !important; text-shadow:0 0 8px rgba(0,229,255,.2); }
+  html[data-theme="dark"] .tb-qt [stroke="#252C39"] { stroke:rgba(0,229,255,.25) !important; }
+  /* 10) Temas: cápsulas numéricas tipo instrumento encendido */
+  html[data-theme="dark"] .ref-num { background:radial-gradient(circle at 30% 30%, rgba(0,229,255,.18), rgba(6,22,29,.95)) !important; border:1.5px solid #00E5FF !important;
+    box-shadow:0 0 10px rgba(0,229,255,.25), inset 0 0 6px rgba(0,229,255,.2) !important; color:#FFFFFF !important; font-weight:700 !important; }
   /* =================== FIN ESTILO CINEMATIC =================== */
 
 </style>
