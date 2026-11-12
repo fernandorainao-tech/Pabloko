@@ -1292,8 +1292,8 @@ html[data-theme="dark"] .tb-sim-hero { background:linear-gradient(180deg,#0E3540
   /* 1) Banner cinematográfico: solo en Inicio (la cabecera es compartida por las 5 pestañas) */
   html[data-theme="dark"]:has(#panel-inicio.active) .tb-top {
     position:relative; height:220px; margin:0 -16px 6px; padding:0 20px 18px; align-items:flex-end;
-    background:linear-gradient(180deg, rgba(5,14,17,0.1) 0%, rgba(5,14,17,0.45) 55%, #050E11 100%), url("img/banner-inicio.jpg") center 25% / cover no-repeat !important;
-    border-radius:0 0 22px 22px; border-bottom:1px solid var(--border-cyan);
+    background:transparent !important;
+    border-radius:0; border-bottom:none;
   }
   html[data-theme="dark"]:has(#panel-inicio.active) .tb-top .tb-avatar { position:absolute; top:calc(16px + env(safe-area-inset-top,0px)); left:20px; }
   html[data-theme="dark"]:has(#panel-inicio.active) .tb-top .tb-avatar img { width:48px; height:48px; border:2px solid var(--acento-cyan) !important; box-shadow:0 0 14px rgba(0,229,255,.45) !important; }
@@ -1404,6 +1404,38 @@ html[data-theme="dark"] .tb-sim-hero { background:linear-gradient(180deg,#0E3540
   html[data-theme="dark"] .tb-smini-foot b { padding:4px 12px; border-radius:999px; font-size:12.5px !important; letter-spacing:.02em; }
   html[data-theme="dark"] #sim-facil-card .tb-smini-foot b { border:1px solid rgba(52,199,89,.6); background:rgba(52,199,89,.10); box-shadow:0 0 10px rgba(52,199,89,.2); }
   html[data-theme="dark"] #sim-dificil-card .tb-smini-foot b { border:1px solid rgba(255,59,48,.6); background:rgba(255,59,48,.10); box-shadow:0 0 10px rgba(255,59,48,.2); }
+  /* 12) INICIO "SEAMLESS & FADED GLASS": atardecer de fondo que se funde a negro + paneles de cristal livianos */
+  html[data-theme="dark"]:has(#panel-inicio.active) body {
+    /* el degradado mide lo mismo que la foto (proporción 676×950 → 140.5vw) para fundirse justo antes de las tarjetas */
+    background:linear-gradient(to bottom, rgba(5,10,15,.15) 0%, rgba(5,10,15,.25) 45%, rgba(5,10,15,.75) 70%, #050A0F 90%, #050A0F 100%) top center / 100% calc(100vw * 1.405) no-repeat,
+               url("img/sunset-drive.jpg") top center / 100% auto no-repeat, #050A0F !important;
+    background-attachment:scroll !important; }
+  html[data-theme="dark"]:has(#panel-inicio.active) .tb-top { height:200px; }
+  html[data-theme="dark"]:has(#panel-inicio.active) .tb-hello { text-shadow:0 2px 14px rgba(0,0,0,.55) !important; }
+  html[data-theme="dark"]:has(#panel-inicio.active) .tb-eyebrow { color:rgba(255,255,255,.75) !important; text-shadow:0 1px 8px rgba(0,0,0,.5) !important; }
+  html[data-theme="dark"] #panel-inicio { padding-bottom:80px; }
+  /* paneles de cristal: translúcidos, borde casi invisible y un leve reflejo cyan arriba */
+  html[data-theme="dark"] #inicio-body > .tb-card, html[data-theme="dark"] #inicio-body > .tb-go, html[data-theme="dark"] #inicio-body .tb-quick button {
+    background:rgba(12,30,44,.35) !important; -webkit-backdrop-filter:blur(16px) !important; backdrop-filter:blur(16px) !important;
+    border:1px solid rgba(255,255,255,.05) !important; border-top:1px solid rgba(0,229,255,.12) !important; border-radius:20px !important;
+    box-shadow:0 10px 40px rgba(0,0,0,.35) !important; transition:all .3s ease !important; }
+  html[data-theme="dark"] #inicio-body > .tb-card { padding:18px !important; }
+  html[data-theme="dark"] #inicio-body .tb-quick button { border-radius:18px !important; }
+  /* progreso: liviano, solo los datos clave */
+  html[data-theme="dark"] .tb-ring-card h3, html[data-theme="dark"] .tb-ring-card strong { color:rgba(255,255,255,.95) !important; text-shadow:0 0 12px rgba(0,229,255,.18); }
+  html[data-theme="dark"] .tb-ring-card p, html[data-theme="dark"] .tb-ring-card small { color:rgba(255,255,255,.62) !important; }
+  html[data-theme="dark"] .tb-ring-card [stroke="#252C39"] { stroke:rgba(255,255,255,.08) !important; }
+  html[data-theme="dark"] .tb-ring-card [stroke="#3FE0D0"] { stroke:#00E5FF !important; filter:drop-shadow(0 0 5px rgba(0,229,255,.3)) !important; }
+  /* "Arrancar": la píldora conserva el cyan pero con brillo más tenue */
+  html[data-theme="dark"] #inicio-body > .tb-go::after { background:linear-gradient(90deg,#00E5FF,#008AA6) !important; box-shadow:0 0 10px rgba(0,229,255,.3) !important; }
+  html[data-theme="dark"] #inicio-body > .tb-go::before { border-color:rgba(255,255,255,.08) !important; }
+  /* mensaje del día: etiqueta cálida y apagada, texto en blanco translúcido */
+  html[data-theme="dark"] .tb-msg-lbl { color:#D9A85B !important; text-shadow:0 0 10px rgba(217,168,91,.25); }
+  html[data-theme="dark"] .tb-msg-t { color:rgba(255,255,255,.92) !important; }
+  html[data-theme="dark"] .tb-msg-p { color:rgba(255,255,255,.85) !important; }
+  html[data-theme="dark"] .tb-msg-img { border-color:rgba(255,255,255,.12) !important; box-shadow:none !important; opacity:.92; }
+  /* barra inferior integrada al fondo (todas las pestañas) */
+  html[data-theme="dark"] .tb-nav { background:rgba(5,10,15,.75) !important; -webkit-backdrop-filter:blur(20px) !important; backdrop-filter:blur(20px) !important; border-top:1px solid rgba(255,255,255,.04) !important; }
   /* =================== FIN ESTILO CINEMATIC =================== */
 
 </style>
