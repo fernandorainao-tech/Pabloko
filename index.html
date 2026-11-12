@@ -17,7 +17,7 @@
 
 <title>DuxDrive</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Chakra+Petch:wght@500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap');
 
   :root {
     --bg-page: #f5f6fa;
@@ -1407,8 +1407,8 @@ html[data-theme="dark"] .tb-sim-hero { background:linear-gradient(180deg,#0E3540
   /* 12) INICIO "SEAMLESS & FADED GLASS": atardecer de fondo que se funde a negro + paneles de cristal livianos */
   html[data-theme="dark"]:has(#panel-inicio.active) body {
     /* el degradado mide lo mismo que la foto (proporción 676×950 → 140.5vw) para fundirse justo antes de las tarjetas */
-    background:linear-gradient(to bottom, rgba(5,10,15,.15) 0%, rgba(5,10,15,.25) 45%, rgba(5,10,15,.75) 70%, #050A0F 90%, #050A0F 100%) top center / 100% calc(100vw * 1.405) no-repeat,
-               url("img/sunset-drive.jpg") top center / 100% auto no-repeat, #050A0F !important;
+    background:linear-gradient(to bottom, rgba(5,10,15,.15) 0%, rgba(5,10,15,.28) 60%, rgba(5,10,15,.75) 75%, #050A0F 90%, #050A0F 100%) center -90px / 100% calc(100vw * 1.405) no-repeat,
+               url("img/sunset-drive.jpg") center -90px / 100% auto no-repeat, #050A0F !important;
     background-attachment:scroll !important; }
   html[data-theme="dark"]:has(#panel-inicio.active) .tb-top { height:200px; }
   html[data-theme="dark"]:has(#panel-inicio.active) .tb-hello { text-shadow:0 2px 14px rgba(0,0,0,.55) !important; }
@@ -1436,6 +1436,46 @@ html[data-theme="dark"] .tb-sim-hero { background:linear-gradient(180deg,#0E3540
   html[data-theme="dark"] .tb-msg-img { border-color:rgba(255,255,255,.12) !important; box-shadow:none !important; opacity:.92; }
   /* barra inferior integrada al fondo (todas las pestañas) */
   html[data-theme="dark"] .tb-nav { background:rgba(5,10,15,.75) !important; -webkit-backdrop-filter:blur(20px) !important; backdrop-filter:blur(20px) !important; border-top:1px solid rgba(255,255,255,.04) !important; }
+  /* 13) INICIO según la referencia: saludo con avatar, "Tu progreso" de cristal, Mensaje del día + Tu meta */
+  html[data-theme="dark"]:has(#panel-inicio.active) .tb-top { height:280px; align-items:flex-start; padding-top:calc(56px + env(safe-area-inset-top,0px)); }
+  html[data-theme="dark"]:has(#panel-inicio.active) .tb-top > div:first-child { display:flex; flex-direction:column-reverse; margin-left:68px; gap:2px; }
+  html[data-theme="dark"]:has(#panel-inicio.active) .tb-top .tb-avatar { top:calc(50px + env(safe-area-inset-top,0px)); left:18px; }
+  html[data-theme="dark"]:has(#panel-inicio.active) .tb-top .tb-avatar img { width:54px; height:54px; }
+  html[data-theme="dark"]:has(#panel-inicio.active) .tb-top .tb-iconbtn { display:none !important; }
+  html[data-theme="dark"]:has(#panel-inicio.active) .tb-hello { font-size:24px !important; }
+  html[data-theme="dark"]:has(#panel-inicio.active) .tb-eyebrow { text-transform:none !important; letter-spacing:0 !important; font-size:12.5px !important; font-weight:600; color:rgba(255,255,255,.82) !important; }
+  .dx-prog, .dx-card { position:relative; overflow:hidden; color:#FFFFFF; background:rgba(12,30,44,.35); -webkit-backdrop-filter:blur(16px); backdrop-filter:blur(16px);
+    border:1px solid rgba(255,255,255,.07); border-top:1px solid rgba(0,229,255,.16); border-radius:20px; box-shadow:0 10px 40px rgba(0,0,0,.35); }
+  .dx-prog { padding:16px 18px 14px; cursor:pointer; transition:border-color .3s, transform .15s; }
+  .dx-prog:active, .dx-meta:active { transform:translateY(1px); border-color:rgba(0,229,255,.45); }
+  .dx-prog-h { display:flex; align-items:center; gap:8px; font-family:'Chakra Petch',sans-serif; font-weight:600; font-size:14px; color:rgba(255,255,255,.9); }
+  .dx-prog-h svg { width:20px; height:20px; padding:3px; border-radius:50%; border:1.5px solid #00E5FF; color:#00E5FF; box-sizing:content-box; }
+  .dx-animo { position:absolute; top:22px; right:20px; transform:rotate(-8deg); font-family:'Caveat','Chakra Petch',cursive; font-size:30px; font-weight:700; color:#DFF8FF; text-shadow:0 0 12px rgba(0,229,255,.45); }
+  .dx-pct { margin-top:10px; font-family:'Chakra Petch',sans-serif; font-size:44px; font-weight:700; line-height:1; }
+  .dx-pct-l { font-size:13px; font-weight:700; color:rgba(255,255,255,.85); margin-top:2px; }
+  .dx-bar { height:8px; margin:12px 0 12px; border-radius:99px; background:rgba(255,255,255,.12); overflow:hidden; }
+  .dx-bar i { display:block; height:100%; border-radius:99px; background:linear-gradient(90deg,#00E5FF,#008AA6); box-shadow:0 0 10px rgba(0,229,255,.3); }
+  .dx-prog-f { display:flex; gap:10px; font-size:11.5px; color:rgba(255,255,255,.78); }
+  .dx-prog-f span { display:flex; align-items:center; gap:6px; flex:1; min-width:0; }
+  .dx-prog-f span + span { padding-left:10px; border-left:1px solid rgba(255,255,255,.18); }
+  .dx-prog-f svg { width:15px; height:15px; flex-shrink:0; }
+  .dx-prog-f span:first-child svg { color:#0B1A22; background:#00E5FF; border-radius:50%; padding:2px; box-sizing:content-box; width:11px; height:11px; }
+  .dx-prog-f span:last-child svg { color:#F5B83D; }
+  .dx-go { margin-top:12px; padding-top:10px; border-top:1px solid rgba(255,255,255,.08); font-size:12.5px; font-weight:700; color:#7FF3FF; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .dx-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+  .dx-card { padding:16px 14px; min-height:230px; }
+  .dx-msj { text-align:center; display:flex; flex-direction:column; align-items:center; }
+  .dx-msj-img { width:56px !important; height:56px !important; border-radius:50% !important; flex:none !important; border:1.5px solid rgba(245,184,61,.55) !important; box-shadow:0 0 18px rgba(245,184,61,.35) !important; }
+  .dx-msj-l { margin-top:10px; font-family:'Chakra Petch',sans-serif; font-size:14px; font-weight:700; color:#F5B83D; }
+  .dx-msj-t { margin-top:6px; font-size:13px; font-weight:800; color:rgba(255,255,255,.95); }
+  .dx-msj-p { margin:6px 0 0; font-size:12.5px; line-height:1.5; color:rgba(255,255,255,.85); }
+  .dx-meta { cursor:pointer; padding-bottom:110px; }
+  .dx-meta-h { display:flex; align-items:center; gap:10px; }
+  .dx-meta-h svg { width:34px; height:34px; color:#00E5FF; filter:drop-shadow(0 0 8px rgba(0,229,255,.5)); flex-shrink:0; }
+  .dx-meta-h b { font-family:'Chakra Petch',sans-serif; font-size:19px; line-height:1.1; }
+  .dx-meta p { margin:12px 0 0; font-size:13px; line-height:1.45; color:rgba(255,255,255,.88); }
+  .dx-diana { position:absolute; right:-8px; bottom:-10px; width:120px; height:120px; opacity:.9; filter:drop-shadow(0 0 14px rgba(0,229,255,.35)); }
+  html:not([data-theme="dark"]) .dx-prog, html:not([data-theme="dark"]) .dx-card { background:var(--bg-card); color:var(--text-primary); }
   /* =================== FIN ESTILO CINEMATIC =================== */
 
 </style>
@@ -1512,7 +1552,7 @@ html[data-theme="dark"] .tb-sim-hero { background:linear-gradient(180deg,#0E3540
 
   <div id="screen-home">
     <div class="tb-top">
-      <div><div class="tb-eyebrow">Licencia clase B</div><h1 class="tb-hello">Hola, Constanza</h1></div>
+      <div><div class="tb-eyebrow">Tu camino hacia la licencia Clase B 🚙</div><h1 class="tb-hello">¡Hola, Constanza!</h1></div>
       <div class="tb-top-actions">
         <span class="tb-iconbtn" title="Días seguidos estudiando"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2c2.5 3.5 6 5.3 6 10.3a6 6 0 0 1-12 0c0-3 1.8-4.8 3-6.5.6 2.3 1.8 3.5 3 3.5 0-2.3-1.2-4.7 0-7.3z"/></svg><span id="tb-racha-n">0</span></span>
         <button class="tb-avatar" id="tb-logros-btn" aria-label="Tu perfil y logros"><img src="img/avatar.jpg" alt="Perfil" width="44" height="44"><span class="tb-badge hidden" id="tb-logros-badge">0</span></button>
@@ -4286,15 +4326,26 @@ function renderInicio(m) {
   var goTxt = next ? next.nombre + " · " + next.titulo : "Simulacro Municipalidad";
   var goLbl = next ? (m.p[next.id] !== undefined ? "SEGUIR PRACTICANDO" : "ARRANCAR") : "PONTE A PRUEBA";
   var msj = mensajeDelDia(), col = (msj.d - 1) % 5, fila = Math.floor((msj.d - 1) / 5);
+  var simTxt = m.muniBest ? "Mejor simulacro " + m.muniBest + "/35" : "Simulacro pendiente";
+  var animo = m.prep < 85 ? "¡Tú puedes!" : "¡Lista!";
+  var diana = '<svg class="dx-diana" viewBox="0 0 120 120" aria-hidden="true"><defs><radialGradient id="dxg" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#FF6B6B"/><stop offset=".55" stop-color="#7C5CFF"/><stop offset="1" stop-color="#00C2FF"/></radialGradient></defs>' +
+    '<circle cx="58" cy="62" r="50" fill="url(#dxg)" opacity=".9"/><circle cx="58" cy="62" r="38" fill="#0E1E2B" opacity=".55"/><circle cx="58" cy="62" r="28" fill="#5A7CFF" opacity=".75"/><circle cx="58" cy="62" r="18" fill="#F5F7FF" opacity=".9"/><circle cx="58" cy="62" r="9" fill="#FF4D5A"/>' +
+    '<path d="M60 60 L104 16" stroke="#E8EDF5" stroke-width="4" stroke-linecap="round"/><path d="M98 12 l12 -4 -4 12 -6 2z" fill="#FF9A3C"/><path d="M96 22 l12 -2 -6 8z" fill="#FFB866"/></svg>';
   el("inicio-body").innerHTML =
-    '<div class="tb-card tb-ring-card"><div class="tb-ring">' + ringSvg(104, 44, 12, m.prep, "#3FE0D0") + '<div class="tb-ring-c"><b>' + m.prep + '%</b><span>listo</span></div></div>' +
-      '<div class="tb-ring-t"><h3>' + nivel + '</h3><p>' + sub + '</p></div></div>' +
-    '<button class="tb-go" id="tb-go"><span><small>' + goLbl + '</small><strong>' + goTxt + '</strong></span>' + TB_IC.arrow + '</button>' +
-    '<div class="tb-quick"><button data-go="temas">' + TB_IC.book + 'Temas</button><button data-go="quiz">' + TB_IC.quiz + 'Quiz</button><button data-go="simulacro">' + TB_IC.timer + 'Simulacro</button><button data-go="manejo">' + TB_IC.wheel + 'Manejo</button></div>' +
-    '<div class="tb-card"><div class="tb-msg-head"><div class="tb-msg-img" role="img" aria-label="Ilustración del mensaje" style="background-position:' + (col * 25) + '% ' + (fila * 100 / 3) + '%"></div>' +
-      '<div><div class="tb-msg-lbl">' + TB_IC.heart + 'Mensaje del día</div><div class="tb-msg-t">' + msj.t + '</div></div></div><p class="tb-msg-p">' + msj.m + '</p></div>';
+    '<div class="dx-prog" id="tb-go" role="button" tabindex="0" aria-label="Continuar con ' + goTxt + '">' +
+      '<div class="dx-prog-h">' + TB_IC.check + 'Tu progreso</div><div class="dx-animo">' + animo + '</div>' +
+      '<div class="dx-pct">' + m.prep + '%</div><div class="dx-pct-l">Completado</div>' +
+      '<div class="dx-bar"><i style="width:' + Math.max(m.prep, 2) + '%"></i></div>' +
+      '<div class="dx-prog-f"><span>' + TB_IC.check + m.aprobados + ' de 10 temas aprobados</span><span>' + TB_IC.trophy + simTxt + '</span></div>' +
+      '<div class="dx-go">' + (next ? 'Continuar: ' : '') + goTxt + ' ›</div></div>' +
+    '<div class="dx-grid">' +
+      '<div class="dx-card dx-msj"><div class="tb-msg-img dx-msj-img" role="img" aria-label="Ilustración del mensaje" style="background-position:' + (col * 25) + '% ' + (fila * 100 / 3) + '%"></div>' +
+        '<div class="dx-msj-l">Mensaje del día</div><div class="dx-msj-t">' + msj.t + '</div><p class="dx-msj-p">“' + msj.m + '”</p></div>' +
+      '<div class="dx-card dx-meta" id="dx-meta" role="button" tabindex="0"><div class="dx-meta-h">' + TB_IC.trophy + '<b>Tu<br>meta</b></div>' +
+        '<p>¡Aprueba tu examen y obtén tu licencia!</p>' + diana + '</div>' +
+    '</div>';
   el("tb-go").onclick = function () { startQuiz(next ? next.id : "muni"); };
-  el("inicio-body").querySelectorAll(".tb-quick button").forEach(function (b) { b.onclick = function () { switchTab(b.dataset.go); }; });
+  el("dx-meta").onclick = function () { switchTab("simulacro"); };
   el("tb-racha-n").textContent = m.racha;
 }
 function renderQuizGrid(m) {
@@ -4387,7 +4438,7 @@ function renderManejo() {
   });
   cont.querySelectorAll(".mj-cross").forEach(function (c) { c.onclick = function () { goToTema(c.dataset.go); }; });
 }
-var TB_HEAD = { inicio: ["Licencia clase B", "Hola, Constanza"], temas: ["Teoría", "Temas"], quiz: ["Práctica por tema", "Quiz"],
+var TB_HEAD = { inicio: ["Tu camino hacia la licencia Clase B 🚙", "¡Hola, Constanza!"], temas: ["Teoría", "Temas"], quiz: ["Práctica por tema", "Quiz"],
   simulacro: ["Modo examen", "Simulacro"], manejo: ["Práctica en video", "Manejo"], logros: ["Tu perfil", "Tus logros"] };
 function setHeader(tab) { var h = TB_HEAD[tab] || TB_HEAD.inicio; var e = document.querySelector(".tb-eyebrow"), t = document.querySelector(".tb-hello"); if (e) e.textContent = h[0]; if (t) t.textContent = h[1]; }
 
