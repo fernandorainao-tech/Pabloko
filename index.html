@@ -1446,35 +1446,46 @@ html[data-theme="dark"] .tb-sim-hero { background:linear-gradient(180deg,#0E3540
   html[data-theme="dark"]:has(#panel-inicio.active) .tb-eyebrow { text-transform:none !important; letter-spacing:0 !important; font-size:12.5px !important; font-weight:600; color:rgba(255,255,255,.82) !important; }
   .dx-prog, .dx-card { position:relative; overflow:hidden; color:#FFFFFF; background:rgba(12,30,44,.35); -webkit-backdrop-filter:blur(16px); backdrop-filter:blur(16px);
     border:1px solid rgba(255,255,255,.07); border-top:1px solid rgba(0,229,255,.16); border-radius:20px; box-shadow:0 10px 40px rgba(0,0,0,.35); }
-  .dx-prog { padding:16px 18px 14px; cursor:pointer; transition:border-color .3s, transform .15s; }
-  .dx-prog:active, .dx-meta:active { transform:translateY(1px); border-color:rgba(0,229,255,.45); }
-  .dx-prog-h { display:flex; align-items:center; gap:8px; font-family:'Chakra Petch',sans-serif; font-weight:600; font-size:14px; color:rgba(255,255,255,.9); }
-  .dx-prog-h svg { width:20px; height:20px; padding:3px; border-radius:50%; border:1.5px solid #00E5FF; color:#00E5FF; box-sizing:content-box; }
-  .dx-animo { position:absolute; top:22px; right:20px; transform:rotate(-8deg); font-family:'Caveat','Chakra Petch',cursive; font-size:30px; font-weight:700; color:#DFF8FF; text-shadow:0 0 12px rgba(0,229,255,.45); }
-  .dx-pct { margin-top:10px; font-family:'Chakra Petch',sans-serif; font-size:44px; font-weight:700; line-height:1; }
-  .dx-pct-l { font-size:13px; font-weight:700; color:rgba(255,255,255,.85); margin-top:2px; }
-  .dx-bar { height:8px; margin:12px 0 12px; border-radius:99px; background:rgba(255,255,255,.12); overflow:hidden; }
+  /* Tu progreso: compacto, solo los datos clave */
+  .dx-prog { padding:12px 16px 12px; }
+  .dx-meta:active { transform:none; }
+  .dx-prog-h { display:flex; align-items:center; gap:8px; font-family:'Chakra Petch',sans-serif; font-weight:600; font-size:13px; color:rgba(255,255,255,.88); }
+  .dx-prog-h svg { width:14px; height:14px; padding:3px; border-radius:50%; border:1.5px solid #00E5FF; color:#00E5FF; box-sizing:content-box; }
+  .dx-animo { margin-left:auto; transform:rotate(-6deg); font-family:'Caveat','Chakra Petch',cursive; font-size:22px; font-weight:700; color:#DFF8FF; text-shadow:0 0 10px rgba(0,229,255,.45); line-height:1; }
+  .dx-pct-row { display:flex; align-items:baseline; gap:8px; margin-top:6px; }
+  .dx-pct { font-family:'Chakra Petch',sans-serif; font-size:30px; font-weight:700; line-height:1; }
+  .dx-pct-l { font-size:12px; font-weight:700; color:rgba(255,255,255,.75); }
+  .dx-bar { height:6px; margin:9px 0 9px; border-radius:99px; background:rgba(255,255,255,.12); overflow:hidden; }
   .dx-bar i { display:block; height:100%; border-radius:99px; background:linear-gradient(90deg,#00E5FF,#008AA6); box-shadow:0 0 10px rgba(0,229,255,.3); }
-  .dx-prog-f { display:flex; gap:10px; font-size:11.5px; color:rgba(255,255,255,.78); }
-  .dx-prog-f span { display:flex; align-items:center; gap:6px; flex:1; min-width:0; }
+  .dx-prog-f { display:flex; gap:10px; font-size:11.5px; color:rgba(255,255,255,.75); }
+  .dx-prog-f span { display:flex; align-items:center; gap:6px; flex:1; min-width:0; white-space:nowrap; }
   .dx-prog-f span + span { padding-left:10px; border-left:1px solid rgba(255,255,255,.18); }
-  .dx-prog-f svg { width:15px; height:15px; flex-shrink:0; }
-  .dx-prog-f span:first-child svg { color:#0B1A22; background:#00E5FF; border-radius:50%; padding:2px; box-sizing:content-box; width:11px; height:11px; }
+  .dx-prog-f svg { width:14px; height:14px; flex-shrink:0; }
+  .dx-prog-f span:first-child svg { color:#0B1A22; background:#00E5FF; border-radius:50%; padding:2px; box-sizing:content-box; width:10px; height:10px; }
   .dx-prog-f span:last-child svg { color:#F5B83D; }
-  .dx-go { margin-top:12px; padding-top:10px; border-top:1px solid rgba(255,255,255,.08); font-size:12.5px; font-weight:700; color:#7FF3FF; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-  .dx-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
-  .dx-card { padding:16px 14px; min-height:230px; }
-  .dx-msj { text-align:center; display:flex; flex-direction:column; align-items:center; }
-  .dx-msj-img { width:56px !important; height:56px !important; border-radius:50% !important; flex:none !important; border:1.5px solid rgba(245,184,61,.55) !important; box-shadow:0 0 18px rgba(245,184,61,.35) !important; }
-  .dx-msj-l { margin-top:10px; font-family:'Chakra Petch',sans-serif; font-size:14px; font-weight:700; color:#F5B83D; }
-  .dx-msj-t { margin-top:6px; font-size:13px; font-weight:800; color:rgba(255,255,255,.95); }
-  .dx-msj-p { margin:6px 0 0; font-size:12.5px; line-height:1.5; color:rgba(255,255,255,.85); }
-  .dx-meta { cursor:pointer; padding-bottom:110px; }
+  /* Mensaje del día y Tu meta: protagonistas */
+  .dx-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; align-items:stretch; }
+  .dx-card { padding:18px 14px; min-height:330px; border-top-color:rgba(0,229,255,.22); }
+  .dx-msj { text-align:center; display:flex; flex-direction:column; align-items:center; background:linear-gradient(180deg, rgba(245,184,61,.10), rgba(12,30,44,.35) 45%); }
+  .dx-msj-img { width:72px !important; height:72px !important; border-radius:50% !important; flex:none !important; border:2px solid rgba(245,184,61,.6) !important; box-shadow:0 0 22px rgba(245,184,61,.4) !important; }
+  .dx-msj-l { margin-top:12px; font-family:'Chakra Petch',sans-serif; font-size:15px; font-weight:700; color:#F5B83D; }
+  .dx-msj-t { margin-top:6px; font-size:14.5px; font-weight:800; line-height:1.3; color:#FFFFFF; }
+  .dx-msj-p { margin:8px 0 0; font-size:13.5px; line-height:1.55; color:rgba(255,255,255,.88); }
+  .dx-meta { display:flex; flex-direction:column; padding-bottom:16px; background:linear-gradient(180deg, rgba(0,229,255,.10), rgba(12,30,44,.35) 45%); }
   .dx-meta-h { display:flex; align-items:center; gap:10px; }
-  .dx-meta-h svg { width:34px; height:34px; color:#00E5FF; filter:drop-shadow(0 0 8px rgba(0,229,255,.5)); flex-shrink:0; }
-  .dx-meta-h b { font-family:'Chakra Petch',sans-serif; font-size:19px; line-height:1.1; }
-  .dx-meta p { margin:12px 0 0; font-size:13px; line-height:1.45; color:rgba(255,255,255,.88); }
-  .dx-diana { position:absolute; right:-8px; bottom:-10px; width:120px; height:120px; opacity:.9; filter:drop-shadow(0 0 14px rgba(0,229,255,.35)); }
+  .dx-meta-h svg { width:38px; height:38px; color:#00E5FF; filter:drop-shadow(0 0 8px rgba(0,229,255,.5)); flex-shrink:0; }
+  .dx-meta-h b { font-family:'Chakra Petch',sans-serif; font-size:21px; line-height:1.1; }
+  .dx-meta p { margin:12px 0 0; font-size:14px; line-height:1.45; color:rgba(255,255,255,.9); }
+  .dx-next { position:relative; z-index:1; margin-top:auto; padding-top:14px; }
+  .dx-next small { display:block; font-size:10.5px; font-weight:800; letter-spacing:.12em; text-transform:uppercase; color:#00E5FF; }
+  .dx-next strong { display:block; margin-top:3px; font-size:14px; line-height:1.3; color:#FFFFFF; }
+  .dx-btn { position:relative; z-index:1; margin-top:10px; align-self:flex-start; border:none; border-radius:999px; padding:9px 16px; cursor:pointer;
+    font-family:'Chakra Petch','Manrope',sans-serif; font-size:13.5px; font-weight:700; color:#050E11; background:linear-gradient(90deg,#00E5FF,#00B8D9);
+    box-shadow:0 0 16px rgba(0,229,255,.45); transition:transform .15s, box-shadow .2s; }
+  .dx-btn:active { transform:scale(.97); box-shadow:0 0 26px rgba(0,229,255,.7); }
+  /* la diana va en el espacio libre entre el texto y "Sigue con", sin tapar nada */
+  .dx-meta > p { position:relative; z-index:1; }
+  .dx-diana { position:absolute; right:12px; top:128px; width:100px; height:100px; opacity:.85; filter:drop-shadow(0 0 12px rgba(0,229,255,.3)); pointer-events:none; }
   html:not([data-theme="dark"]) .dx-prog, html:not([data-theme="dark"]) .dx-card { background:var(--bg-card); color:var(--text-primary); }
   /* =================== FIN ESTILO CINEMATIC =================== */
 
@@ -4332,20 +4343,20 @@ function renderInicio(m) {
     '<circle cx="58" cy="62" r="50" fill="url(#dxg)" opacity=".9"/><circle cx="58" cy="62" r="38" fill="#0E1E2B" opacity=".55"/><circle cx="58" cy="62" r="28" fill="#5A7CFF" opacity=".75"/><circle cx="58" cy="62" r="18" fill="#F5F7FF" opacity=".9"/><circle cx="58" cy="62" r="9" fill="#FF4D5A"/>' +
     '<path d="M60 60 L104 16" stroke="#E8EDF5" stroke-width="4" stroke-linecap="round"/><path d="M98 12 l12 -4 -4 12 -6 2z" fill="#FF9A3C"/><path d="M96 22 l12 -2 -6 8z" fill="#FFB866"/></svg>';
   el("inicio-body").innerHTML =
-    '<div class="dx-prog" id="tb-go" role="button" tabindex="0" aria-label="Continuar con ' + goTxt + '">' +
-      '<div class="dx-prog-h">' + TB_IC.check + 'Tu progreso</div><div class="dx-animo">' + animo + '</div>' +
-      '<div class="dx-pct">' + m.prep + '%</div><div class="dx-pct-l">Completado</div>' +
+    '<div class="dx-prog">' +
+      '<div class="dx-prog-h">' + TB_IC.check + 'Tu progreso<span class="dx-animo">' + animo + '</span></div>' +
+      '<div class="dx-pct-row"><span class="dx-pct">' + m.prep + '%</span><span class="dx-pct-l">Completado</span></div>' +
       '<div class="dx-bar"><i style="width:' + Math.max(m.prep, 2) + '%"></i></div>' +
-      '<div class="dx-prog-f"><span>' + TB_IC.check + m.aprobados + ' de 10 temas aprobados</span><span>' + TB_IC.trophy + simTxt + '</span></div>' +
-      '<div class="dx-go">' + (next ? 'Continuar: ' : '') + goTxt + ' ›</div></div>' +
+      '<div class="dx-prog-f"><span>' + TB_IC.check + m.aprobados + ' de 10 temas</span><span>' + TB_IC.trophy + simTxt + '</span></div></div>' +
     '<div class="dx-grid">' +
       '<div class="dx-card dx-msj"><div class="tb-msg-img dx-msj-img" role="img" aria-label="Ilustración del mensaje" style="background-position:' + (col * 25) + '% ' + (fila * 100 / 3) + '%"></div>' +
         '<div class="dx-msj-l">Mensaje del día</div><div class="dx-msj-t">' + msj.t + '</div><p class="dx-msj-p">“' + msj.m + '”</p></div>' +
-      '<div class="dx-card dx-meta" id="dx-meta" role="button" tabindex="0"><div class="dx-meta-h">' + TB_IC.trophy + '<b>Tu<br>meta</b></div>' +
-        '<p>¡Aprueba tu examen y obtén tu licencia!</p>' + diana + '</div>' +
+      '<div class="dx-card dx-meta"><div class="dx-meta-h">' + TB_IC.trophy + '<b>Tu<br>meta</b></div>' +
+        '<p>¡Aprueba tu examen y obtén tu licencia!</p>' +
+        '<div class="dx-next"><small>' + (next ? 'Sigue con' : 'Ponte a prueba') + '</small><strong>' + (next ? next.titulo : 'Simulacro Municipalidad') + '</strong></div>' +
+        '<button class="dx-btn" id="tb-go">' + (next ? 'Ir al ' + next.nombre : 'Ir al simulacro') + ' →</button>' + diana + '</div>' +
     '</div>';
   el("tb-go").onclick = function () { startQuiz(next ? next.id : "muni"); };
-  el("dx-meta").onclick = function () { switchTab("simulacro"); };
   el("tb-racha-n").textContent = m.racha;
 }
 function renderQuizGrid(m) {
