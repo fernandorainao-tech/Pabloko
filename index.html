@@ -1450,6 +1450,9 @@ html[data-theme="dark"] .tb-sim-hero { background:linear-gradient(180deg,#0E3540
     border:1px solid rgba(255,255,255,.07); border-top:1px solid rgba(0,229,255,.16); border-radius:20px; box-shadow:0 10px 40px rgba(0,0,0,.35); }
   /* Tu progreso: compacto, solo los datos clave */
   .dx-prog { padding:12px 16px 12px; }
+  /* carretera nocturna de fondo, detrás de "¡Tú puedes!": se oscurece hacia la izquierda para que los datos se lean bien */
+  html[data-theme="dark"] .dx-prog { background:linear-gradient(90deg, rgba(8,20,28,.92) 0%, rgba(8,20,28,.72) 42%, rgba(8,20,28,.25) 100%),
+    url("img/road-night.jpg") 70% 55% / cover no-repeat, rgba(12,30,44,.35); }
   .dx-meta:active { transform:none; }
   .dx-prog-h { display:flex; align-items:center; gap:8px; font-family:'Chakra Petch',sans-serif; font-weight:600; font-size:13px; color:rgba(255,255,255,.88); }
   .dx-prog-h svg { width:14px; height:14px; padding:3px; border-radius:50%; border:1.5px solid #00E5FF; color:#00E5FF; box-sizing:content-box; }
