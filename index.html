@@ -1407,13 +1407,15 @@ html[data-theme="dark"] .tb-sim-hero { background:linear-gradient(180deg,#0E3540
   /* 12) INICIO "SEAMLESS & FADED GLASS": atardecer de fondo que se funde a negro + paneles de cristal livianos */
   html[data-theme="dark"]:has(#panel-inicio.active) body {
     /* el degradado mide lo mismo que la foto (proporción 676×950 → 140.5vw) para fundirse justo antes de las tarjetas */
-    background:linear-gradient(to bottom, rgba(5,10,15,.15) 0%, rgba(5,10,15,.28) 60%, rgba(5,10,15,.75) 75%, #050A0F 90%, #050A0F 100%) center -90px / 100% calc(100vw * 1.405) no-repeat,
-               url("img/sunset-drive.jpg") center -90px / 100% auto no-repeat, #050A0F !important;
+    background:linear-gradient(to bottom, rgba(5,10,15,.15) 0%, rgba(5,10,15,.28) 60%, rgba(5,10,15,.75) 75%, #050A0F 90%, #050A0F 100%) center -150px / 100% calc(100vw * 1.405) no-repeat,
+               url("img/sunset-drive.jpg") center -150px / 100% auto no-repeat, #050A0F !important;
     background-attachment:scroll !important; }
   html[data-theme="dark"]:has(#panel-inicio.active) .tb-top { height:200px; }
   html[data-theme="dark"]:has(#panel-inicio.active) .tb-hello { text-shadow:0 2px 14px rgba(0,0,0,.55) !important; }
   html[data-theme="dark"]:has(#panel-inicio.active) .tb-eyebrow { color:rgba(255,255,255,.75) !important; text-shadow:0 1px 8px rgba(0,0,0,.5) !important; }
-  html[data-theme="dark"] #panel-inicio { padding-bottom:80px; }
+  html[data-theme="dark"] #panel-inicio { padding-bottom:0; }
+  html[data-theme="dark"]:has(#panel-inicio.active) .home-body { padding-bottom:0 !important; }
+  html[data-theme="dark"]:has(#panel-inicio.active) .wrap { padding-bottom:calc(24px + env(safe-area-inset-bottom,0px)) !important; }
   /* paneles de cristal: translúcidos, borde casi invisible y un leve reflejo cyan arriba */
   html[data-theme="dark"] #inicio-body > .tb-card, html[data-theme="dark"] #inicio-body > .tb-go, html[data-theme="dark"] #inicio-body .tb-quick button {
     background:rgba(12,30,44,.35) !important; -webkit-backdrop-filter:blur(16px) !important; backdrop-filter:blur(16px) !important;
@@ -1437,9 +1439,9 @@ html[data-theme="dark"] .tb-sim-hero { background:linear-gradient(180deg,#0E3540
   /* barra inferior integrada al fondo (todas las pestañas) */
   html[data-theme="dark"] .tb-nav { background:rgba(5,10,15,.75) !important; -webkit-backdrop-filter:blur(20px) !important; backdrop-filter:blur(20px) !important; border-top:1px solid rgba(255,255,255,.04) !important; }
   /* 13) INICIO según la referencia: saludo con avatar, "Tu progreso" de cristal, Mensaje del día + Tu meta */
-  html[data-theme="dark"]:has(#panel-inicio.active) .tb-top { height:280px; align-items:flex-start; padding-top:calc(56px + env(safe-area-inset-top,0px)); }
+  html[data-theme="dark"]:has(#panel-inicio.active) .tb-top { height:215px; align-items:flex-start; padding-top:calc(30px + env(safe-area-inset-top,0px)); }
   html[data-theme="dark"]:has(#panel-inicio.active) .tb-top > div:first-child { display:flex; flex-direction:column-reverse; margin-left:68px; gap:2px; }
-  html[data-theme="dark"]:has(#panel-inicio.active) .tb-top .tb-avatar { top:calc(50px + env(safe-area-inset-top,0px)); left:18px; }
+  html[data-theme="dark"]:has(#panel-inicio.active) .tb-top .tb-avatar { top:calc(24px + env(safe-area-inset-top,0px)); left:18px; }
   html[data-theme="dark"]:has(#panel-inicio.active) .tb-top .tb-avatar img { width:54px; height:54px; }
   html[data-theme="dark"]:has(#panel-inicio.active) .tb-top .tb-iconbtn { display:none !important; }
   html[data-theme="dark"]:has(#panel-inicio.active) .tb-hello { font-size:24px !important; }
@@ -1465,21 +1467,22 @@ html[data-theme="dark"] .tb-sim-hero { background:linear-gradient(180deg,#0E3540
   .dx-prog-f span:last-child svg { color:#F5B83D; }
   /* Mensaje del día y Tu meta: protagonistas */
   .dx-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; align-items:stretch; }
-  .dx-card { padding:18px 14px; min-height:330px; border-top-color:rgba(0,229,255,.22); }
+  .dx-card { padding:16px 14px; border-top-color:rgba(0,229,255,.22); }
   .dx-msj { text-align:center; display:flex; flex-direction:column; align-items:center; background:linear-gradient(180deg, rgba(245,184,61,.10), rgba(12,30,44,.35) 45%); }
   .dx-msj-img { width:72px !important; height:72px !important; border-radius:50% !important; flex:none !important; border:2px solid rgba(245,184,61,.6) !important; box-shadow:0 0 22px rgba(245,184,61,.4) !important; }
   .dx-msj-l { margin-top:12px; font-family:'Chakra Petch',sans-serif; font-size:15px; font-weight:700; color:#F5B83D; }
   .dx-msj-t { margin-top:6px; font-size:14.5px; font-weight:800; line-height:1.3; color:#FFFFFF; }
   .dx-msj-p { margin:8px 0 0; font-size:13.5px; line-height:1.55; color:rgba(255,255,255,.88); }
   .dx-meta { display:flex; flex-direction:column; padding-bottom:16px; background:linear-gradient(180deg, rgba(0,229,255,.10), rgba(12,30,44,.35) 45%); }
+  .dx-next-img { flex:1; min-height:120px; margin-top:12px; border-radius:14px; background-size:cover; background-position:center; border:1.5px solid rgba(0,229,255,.55); box-shadow:0 0 14px rgba(0,229,255,.25); }
   .dx-meta-h { display:flex; align-items:center; gap:10px; }
   .dx-meta-h svg { width:38px; height:38px; color:#00E5FF; filter:drop-shadow(0 0 8px rgba(0,229,255,.5)); flex-shrink:0; }
   .dx-meta-h b { font-family:'Chakra Petch',sans-serif; font-size:21px; line-height:1.1; }
   .dx-meta p { margin:12px 0 0; font-size:14px; line-height:1.45; color:rgba(255,255,255,.9); }
-  .dx-next { position:relative; z-index:1; margin-top:auto; padding-top:14px; }
+  .dx-next { position:relative; z-index:1; }
   .dx-next small { display:block; font-size:10.5px; font-weight:800; letter-spacing:.12em; text-transform:uppercase; color:#00E5FF; }
   .dx-next strong { display:block; margin-top:3px; font-size:14px; line-height:1.3; color:#FFFFFF; }
-  .dx-btn { position:relative; z-index:1; margin-top:10px; align-self:flex-start; border:none; border-radius:999px; padding:9px 16px; cursor:pointer;
+  .dx-btn { position:relative; z-index:1; margin-top:12px; align-self:stretch; border:none; border-radius:999px; padding:9px 16px; cursor:pointer;
     font-family:'Chakra Petch','Manrope',sans-serif; font-size:13.5px; font-weight:700; color:#050E11; background:linear-gradient(90deg,#00E5FF,#00B8D9);
     box-shadow:0 0 16px rgba(0,229,255,.45); transition:transform .15s, box-shadow .2s; }
   .dx-btn:active { transform:scale(.97); box-shadow:0 0 26px rgba(0,229,255,.7); }
@@ -4339,6 +4342,9 @@ function renderInicio(m) {
   var msj = mensajeDelDia(), col = (msj.d - 1) % 5, fila = Math.floor((msj.d - 1) / 5);
   var simTxt = m.muniBest ? "Mejor simulacro " + m.muniBest + "/35" : "Simulacro pendiente";
   var animo = m.prep < 85 ? "¡Tú puedes!" : "¡Lista!";
+  // misma foto que identifica a cada tema en la pestaña Temas
+  var DX_IMG = ["img/tema1/v1/p02.jpg","img/tema2/v1/p05.jpg","img/tema3/v1/p04.jpg","img/tema4/v1/p03.jpg","img/tema5/v1/p06.jpg","img/resumen/tema6/eje-calzada.jpg","img/resumen/tema7/clima-lluvia.jpg","img/tema8/v1/p04.jpg","img/tema9/v1/p05.jpg","img/tema10/v1/p01.jpg"];
+  var nextImg = next ? (DX_IMG[QUIZ_DATA.indexOf(next)] || "img/resumen/tema10/conductor.jpg") : "img/avatar-municipalidad.jpg";
   var diana = '<svg class="dx-diana" viewBox="0 0 120 120" aria-hidden="true"><defs><radialGradient id="dxg" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#FF6B6B"/><stop offset=".55" stop-color="#7C5CFF"/><stop offset="1" stop-color="#00C2FF"/></radialGradient></defs>' +
     '<circle cx="58" cy="62" r="50" fill="url(#dxg)" opacity=".9"/><circle cx="58" cy="62" r="38" fill="#0E1E2B" opacity=".55"/><circle cx="58" cy="62" r="28" fill="#5A7CFF" opacity=".75"/><circle cx="58" cy="62" r="18" fill="#F5F7FF" opacity=".9"/><circle cx="58" cy="62" r="9" fill="#FF4D5A"/>' +
     '<path d="M60 60 L104 16" stroke="#E8EDF5" stroke-width="4" stroke-linecap="round"/><path d="M98 12 l12 -4 -4 12 -6 2z" fill="#FF9A3C"/><path d="M96 22 l12 -2 -6 8z" fill="#FFB866"/></svg>';
@@ -4351,10 +4357,9 @@ function renderInicio(m) {
     '<div class="dx-grid">' +
       '<div class="dx-card dx-msj"><div class="tb-msg-img dx-msj-img" role="img" aria-label="Ilustración del mensaje" style="background-position:' + (col * 25) + '% ' + (fila * 100 / 3) + '%"></div>' +
         '<div class="dx-msj-l">Mensaje del día</div><div class="dx-msj-t">' + msj.t + '</div><p class="dx-msj-p">“' + msj.m + '”</p></div>' +
-      '<div class="dx-card dx-meta"><div class="dx-meta-h">' + TB_IC.trophy + '<b>Tu<br>meta</b></div>' +
-        '<p>¡Aprueba tu examen y obtén tu licencia!</p>' +
-        '<div class="dx-next"><small>' + (next ? 'Sigue con' : 'Ponte a prueba') + '</small><strong>' + (next ? next.titulo : 'Simulacro Municipalidad') + '</strong></div>' +
-        '<button class="dx-btn" id="tb-go">' + (next ? 'Ir al ' + next.nombre : 'Ir al simulacro') + ' →</button>' + diana + '</div>' +
+      '<div class="dx-card dx-meta"><div class="dx-next"><small>' + (next ? 'Sigue con' : 'Ponte a prueba') + '</small><strong>' + (next ? next.titulo : 'Simulacro Municipalidad') + '</strong></div>' +
+        '<div class="dx-next-img" style="background-image:url(\'' + nextImg + '\')" role="img" aria-label="' + (next ? next.titulo : 'Simulacro') + '"></div>' +
+        '<button class="dx-btn" id="tb-go">' + (next ? 'Ir al ' + next.nombre : 'Ir al simulacro') + ' →</button></div>' +
     '</div>';
   el("tb-go").onclick = function () { startQuiz(next ? next.id : "muni"); };
   el("tb-racha-n").textContent = m.racha;
