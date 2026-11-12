@@ -1487,7 +1487,19 @@ html[data-theme="dark"] .tb-sim-hero { background:linear-gradient(180deg,#0E3540
     font-family:'Chakra Petch','Manrope',sans-serif; font-size:13.5px; font-weight:700; color:#050E11; background:linear-gradient(90deg,#00E5FF,#00B8D9);
     box-shadow:0 0 16px rgba(0,229,255,.45); transition:transform .15s, box-shadow .2s; }
   .dx-btn:active { transform:scale(.97); box-shadow:0 0 26px rgba(0,229,255,.7); }
-  .dx-meta { grid-template-columns:1fr 76px; }
+  .dx-meta { grid-template-columns:1fr 84px; min-height:112px;
+    background:linear-gradient(90deg, rgba(8,20,28,.94) 0%, rgba(8,20,28,.72) 45%, rgba(8,20,28,.30) 100%), var(--foto) center / cover no-repeat, #0C232B !important; }
+  .dx-meta .dx-next { grid-row:1 / span 2; align-self:center; }
+  .dx-next strong { text-shadow:0 1px 6px rgba(0,0,0,.7); }
+  /* círculo = botón al tema */
+  .dx-go-c { grid-column:2; grid-row:1 / span 2; width:84px; height:84px; border-radius:50%; padding:0; cursor:pointer;
+    display:flex; flex-direction:column; align-items:center; justify-content:center; gap:1px; font-family:'Chakra Petch','Manrope',sans-serif; color:#050E11;
+    background:radial-gradient(circle at 35% 30%, #7FF3FF, #00E5FF 55%, #00B8D9); border:2px solid rgba(255,255,255,.55);
+    box-shadow:0 0 18px rgba(0,229,255,.55), 0 6px 18px rgba(0,0,0,.45); transition:transform .15s, box-shadow .2s; }
+  .dx-go-c small { font-size:10.5px; font-weight:700; line-height:1; text-transform:uppercase; letter-spacing:.06em; }
+  .dx-go-c b { font-size:15px; font-weight:700; line-height:1.1; }
+  .dx-go-c svg { width:16px; height:16px; }
+  .dx-go-c:active { transform:scale(.95); box-shadow:0 0 28px rgba(0,229,255,.8); }
   .dx-next-ic { grid-column:2; grid-row:1 / span 2; width:76px !important; height:76px !important; border-radius:50% !important; flex-shrink:0 !important;
     background-color:#0C232B; background-size:cover !important; background-position:center !important; background-repeat:no-repeat;
     border:2px solid #00E5FF !important; box-shadow:0 0 16px rgba(0,229,255,.35) !important; }
@@ -4346,7 +4358,7 @@ function renderInicio(m) {
   var animo = m.prep < 85 ? "¡Tú puedes!" : "¡Lista!";
   // misma foto que identifica a cada tema en la pestaña Temas
   var DX_IMG = ["img/tema1/v1/p02.jpg","img/tema2/v1/p05.jpg","img/tema3/v1/p04.jpg","img/tema4/v1/p03.jpg","img/tema5/v1/p06.jpg","img/resumen/tema6/eje-calzada.jpg","img/resumen/tema7/clima-lluvia.jpg","img/tema8/v1/p04.jpg","img/tema9/v1/p05.jpg","img/tema10/v1/p01.jpg"];
-  var nextImg = next ? "img/tema" + (QUIZ_DATA.indexOf(next) + 1) + ".jpg" : "img/avatar-municipalidad.jpg";   // foto del tema que toca (img/tema1.jpg … tema10.jpg)
+  var nextImg = next ? "img/tema" + (QUIZ_DATA.indexOf(next) + 1) + "-card.jpg" : "img/avatar-municipalidad.jpg";   // foto apaisada del tema que toca (img/tema1-card.jpg … tema10-card.jpg)
   var diana = '<svg class="dx-diana" viewBox="0 0 120 120" aria-hidden="true"><defs><radialGradient id="dxg" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#FF6B6B"/><stop offset=".55" stop-color="#7C5CFF"/><stop offset="1" stop-color="#00C2FF"/></radialGradient></defs>' +
     '<circle cx="58" cy="62" r="50" fill="url(#dxg)" opacity=".9"/><circle cx="58" cy="62" r="38" fill="#0E1E2B" opacity=".55"/><circle cx="58" cy="62" r="28" fill="#5A7CFF" opacity=".75"/><circle cx="58" cy="62" r="18" fill="#F5F7FF" opacity=".9"/><circle cx="58" cy="62" r="9" fill="#FF4D5A"/>' +
     '<path d="M60 60 L104 16" stroke="#E8EDF5" stroke-width="4" stroke-linecap="round"/><path d="M98 12 l12 -4 -4 12 -6 2z" fill="#FF9A3C"/><path d="M96 22 l12 -2 -6 8z" fill="#FFB866"/></svg>';
@@ -4359,9 +4371,8 @@ function renderInicio(m) {
     '<div class="dx-grid">' +
       '<div class="dx-card dx-msj"><div class="tb-msg-img dx-msj-img" role="img" aria-label="Ilustración del mensaje" style="background-position:' + (col * 25) + '% ' + (fila * 100 / 3) + '%"></div>' +
         '<div class="dx-msj-l">Mensaje del día</div><div class="dx-msj-t">' + msj.t + '</div><p class="dx-msj-p">“' + msj.m + '”</p></div>' +
-      '<div class="dx-card dx-meta"><div class="dx-next"><small>' + (next ? 'Sigue con' : 'Ponte a prueba') + '</small><strong>' + (next ? next.titulo : 'Simulacro Municipalidad') + '</strong></div>' +
-        '<button class="dx-btn" id="tb-go">' + (next ? 'Ir al ' + next.nombre : 'Ir al simulacro') + ' →</button>' +
-        '<span class="dx-next-ic" role="img" aria-label="' + (next ? next.titulo : 'Simulacro') + '" style="background-image:url(\'' + nextImg + '\')"></span></div>' +
+      '<div class="dx-card dx-meta" style="--foto:url(\'' + nextImg + '\')"><div class="dx-next"><small>' + (next ? 'Sigue con' : 'Ponte a prueba') + '</small><strong>' + (next ? next.titulo : 'Simulacro Municipalidad') + '</strong></div>' +
+        '<button class="dx-go-c" id="tb-go" aria-label="' + (next ? 'Ir al ' + next.nombre : 'Ir al simulacro') + '"><small>Ir al</small><b>' + (next ? next.nombre : 'Simulacro') + '</b>' + TB_IC.arrow + '</button></div>' +
     '</div>';
   el("tb-go").onclick = function () { startQuiz(next ? next.id : "muni"); };
   el("tb-racha-n").textContent = m.racha;
