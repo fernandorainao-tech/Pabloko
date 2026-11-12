@@ -1518,6 +1518,30 @@ html[data-theme="dark"] .tb-sim-hero { background:linear-gradient(180deg,#0E3540
     background:linear-gradient(180deg, rgba(12,35,43,.78) 0%, rgba(6,22,29,.88) 100%) !important;
     -webkit-backdrop-filter:blur(12px) !important; backdrop-filter:blur(12px) !important;
     border:1px solid rgba(0,229,255,.18) !important; border-top:1px solid rgba(0,229,255,.32) !important; }
+  /* 15) QUIZ: misma cabecera con foto que Temas + foto de cada tema en su tarjeta */
+  html[data-theme="dark"]:has(#panel-quiz.active) body {
+    background:linear-gradient(180deg, rgba(5,14,17,.25) 0%, rgba(5,14,17,.75) 180px, #050E11 260px, #050E11 100%),
+               url("img/banner-temas.jpg") top center / max(100%, 466px) auto no-repeat, #050E11 !important;
+    background-attachment:scroll !important; }
+  html[data-theme="dark"]:has(#panel-quiz.active) .tb-hello, html[data-theme="dark"]:has(#panel-quiz.active) .tb-eyebrow,
+  html[data-theme="dark"] #panel-quiz > .cat-intro { text-shadow:0 2px 12px rgba(0,0,0,.75) !important; }
+  html[data-theme="dark"] #panel-quiz > .cat-intro { color:rgba(255,255,255,.82) !important; }
+  /* la foto del tema (la misma del ícono en Temas) de fondo, oscurecida hacia abajo para leer título y estado */
+  html[data-theme="dark"] #quiz-list .tb-qt { --foto:none;
+    background:linear-gradient(180deg, rgba(6,22,29,.45) 0%, rgba(6,22,29,.78) 45%, rgba(6,22,29,.96) 100%), var(--foto) center / cover no-repeat, #0C232B !important;
+    border:1px solid rgba(0,229,255,.18) !important; border-top:1px solid rgba(0,229,255,.32) !important; }
+  html[data-theme="dark"] #quiz-list .tb-qt h4 { text-shadow:0 1px 8px rgba(0,0,0,.85); }
+  html[data-theme="dark"] #quiz-list .tb-qt-n { text-shadow:0 0 10px rgba(0,229,255,.35), 0 1px 6px rgba(0,0,0,.9) !important; }
+  html[data-theme="dark"] #quiz-list .tb-qt:nth-child(1) { --foto:url("img/tema1.jpg"); }
+  html[data-theme="dark"] #quiz-list .tb-qt:nth-child(2) { --foto:url("img/tema2.jpg"); }
+  html[data-theme="dark"] #quiz-list .tb-qt:nth-child(3) { --foto:url("img/tema3.jpg"); }
+  html[data-theme="dark"] #quiz-list .tb-qt:nth-child(4) { --foto:url("img/tema4.jpg"); }
+  html[data-theme="dark"] #quiz-list .tb-qt:nth-child(5) { --foto:url("img/tema5.jpg"); }
+  html[data-theme="dark"] #quiz-list .tb-qt:nth-child(6) { --foto:url("img/tema6.jpg"); }
+  html[data-theme="dark"] #quiz-list .tb-qt:nth-child(7) { --foto:url("img/tema7.jpg"); }
+  html[data-theme="dark"] #quiz-list .tb-qt:nth-child(8) { --foto:url("img/tema8.jpg"); }
+  html[data-theme="dark"] #quiz-list .tb-qt:nth-child(9) { --foto:url("img/tema9.jpg"); }
+  html[data-theme="dark"] #quiz-list .tb-qt:nth-child(10) { --foto:url("img/tema10.jpg"); }
   /* =================== FIN ESTILO CINEMATIC =================== */
 
 </style>
