@@ -1407,8 +1407,8 @@ html[data-theme="dark"] .tb-sim-hero { background:linear-gradient(180deg,#0E3540
   /* 12) INICIO "SEAMLESS & FADED GLASS": atardecer de fondo que se funde a negro + paneles de cristal livianos */
   html[data-theme="dark"]:has(#panel-inicio.active) body {
     /* el degradado mide lo mismo que la foto (proporción 676×950 → 140.5vw) para fundirse justo antes de las tarjetas */
-    background:linear-gradient(to bottom, rgba(5,10,15,.15) 0%, rgba(5,10,15,.28) 60%, rgba(5,10,15,.75) 75%, #050A0F 90%, #050A0F 100%) center -215px / 100% calc(100vw * 1.405) no-repeat,
-               url("img/sunset-drive.jpg") center -215px / 100% auto no-repeat, #050A0F !important;
+    background:linear-gradient(to bottom, rgba(5,10,15,.15) 0%, rgba(5,10,15,.28) 60%, rgba(5,10,15,.75) 75%, #050A0F 90%, #050A0F 100%) center -180px / 100% calc(100vw * 1.405) no-repeat,
+               url("img/sunset-drive.jpg") center -180px / 100% auto no-repeat, #050A0F !important;
     background-attachment:scroll !important; }
   html[data-theme="dark"]:has(#panel-inicio.active) .tb-top { height:200px; }
   html[data-theme="dark"]:has(#panel-inicio.active) .tb-hello { text-shadow:0 2px 14px rgba(0,0,0,.55) !important; }
@@ -1439,7 +1439,7 @@ html[data-theme="dark"] .tb-sim-hero { background:linear-gradient(180deg,#0E3540
   /* barra inferior integrada al fondo (todas las pestañas) */
   html[data-theme="dark"] .tb-nav { background:rgba(5,10,15,.75) !important; -webkit-backdrop-filter:blur(20px) !important; backdrop-filter:blur(20px) !important; border-top:1px solid rgba(255,255,255,.04) !important; }
   /* 13) INICIO según la referencia: saludo con avatar, "Tu progreso" de cristal, Mensaje del día + Tu meta */
-  html[data-theme="dark"]:has(#panel-inicio.active) .tb-top { height:150px; align-items:flex-start; padding-top:calc(22px + env(safe-area-inset-top,0px)); }
+  html[data-theme="dark"]:has(#panel-inicio.active) .tb-top { height:178px; align-items:flex-start; padding-top:calc(22px + env(safe-area-inset-top,0px)); }
   html[data-theme="dark"]:has(#panel-inicio.active) .tb-top > div:first-child { display:flex; flex-direction:column-reverse; margin-left:68px; gap:2px; }
   html[data-theme="dark"]:has(#panel-inicio.active) .tb-top .tb-avatar { top:calc(16px + env(safe-area-inset-top,0px)); left:18px; }
   html[data-theme="dark"]:has(#panel-inicio.active) .tb-top .tb-avatar img { width:54px; height:54px; }
