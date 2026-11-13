@@ -4412,7 +4412,7 @@ function renderInicio(m) {
       '<div class="dx-card dx-meta" style="--foto:url(\'' + nextImg + '\')"><div class="dx-next"><small>' + (next ? 'Sigue con' : 'Ponte a prueba') + '</small><strong>' + (next ? next.titulo : 'Simulacro Municipalidad') + '</strong></div>' +
         '<button class="dx-go-c" id="tb-go" aria-label="' + (next ? 'Ir al ' + next.nombre : 'Ir al simulacro') + '"><small>Ir al</small><b>' + (next ? next.nombre : 'Simulacro') + '</b>' + TB_IC.arrow + '</button></div>' +
     '</div>';
-  el("tb-go").onclick = function () { startQuiz(next ? next.id : "muni"); };
+  el("tb-go").onclick = function () { if (next) goToTema(next.id); else startQuiz("muni"); };   // abre el resumen del tema en la pestaña Temas (sin temas pendientes: simulacro)
   el("tb-racha-n").textContent = m.racha;
 }
 function renderQuizGrid(m) {
