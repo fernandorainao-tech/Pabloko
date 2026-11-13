@@ -1560,6 +1560,11 @@ html[data-theme="dark"] .tb-sim-hero { background:linear-gradient(180deg,#0E3540
     -webkit-backdrop-filter:blur(10px) !important; backdrop-filter:blur(10px) !important; z-index:10 !important; flex-shrink:0 !important; }
   /* la hoja de retroalimentación y los avisos deben quedar por encima de la pantalla completa */
   .tb-sheet { z-index:2100 !important; } #toast, #mini-popup { z-index:2200 !important; }
+  /* el modal "¿Salir del quiz?" (z-index 200) quedaba DETRÁS de la pantalla completa (2000): por eso la ✕ parecía no hacer nada */
+  .dx-modal { z-index:3000 !important; }
+  .tb-lb { z-index:3100 !important; }   /* visor de imágenes ampliadas, también por encima */
+  #screen-quiz:not(.hidden) .quiz-header, #screen-quiz:not(.hidden) .tb-qhead { position:relative; z-index:50; pointer-events:auto; }
+  #screen-quiz:not(.hidden) .tb-qx { position:relative; z-index:60; cursor:pointer; pointer-events:auto; }
   /* =================== FIN ESTILO CINEMATIC =================== */
 
 </style>
