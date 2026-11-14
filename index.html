@@ -1618,6 +1618,28 @@ html[data-theme="dark"] .tb-sim-hero { background:linear-gradient(180deg,#0E3540
   #screen-results .result-actions { width:100%; display:grid !important; grid-template-columns:1fr 1fr; gap:12px; margin-top:auto !important; padding-top:20px; }
   #screen-results #btn-home { height:52px !important; border-radius:14px !important; background:rgba(12,30,44,.7) !important; border:1px solid rgba(0,229,255,.25) !important; color:#FFFFFF !important; font-weight:600 !important; white-space:nowrap; font-size:15px !important; padding:0 8px !important; }
   #screen-results #btn-retry { height:52px !important; border-radius:14px !important; background:linear-gradient(90deg, #00E5FF, #00B8D4) !important; color:#050E11 !important; font-weight:800 !important; box-shadow:0 0 20px rgba(0,229,255,.4) !important; border:none !important; }
+  /* 19) SIMULACRO: cabecera difuminada + cristal + píldoras en una fila + pies de tarjeta sin quiebres */
+  html[data-theme="dark"]:has(#panel-simulacro.active) body {
+    background:linear-gradient(180deg, rgba(5,14,17,.3) 0%, rgba(5,14,17,.8) 175px, #050E11 250px, #050E11 100%),
+               url("img/banner-temas.jpg") top center / max(100%, 448px) auto no-repeat, #050E11 !important;   /* 250px de alto sin deformar la foto */
+    background-attachment:scroll !important; }
+  html[data-theme="dark"]:has(#panel-simulacro.active) .tb-hello, html[data-theme="dark"]:has(#panel-simulacro.active) .tb-eyebrow { text-shadow:0 2px 12px rgba(0,0,0,.75) !important; }
+  html[data-theme="dark"] #sim-muni-card { background:linear-gradient(165deg, rgba(14,42,54,.75) 0%, rgba(6,20,27,.88) 100%) !important;
+    -webkit-backdrop-filter:blur(16px) !important; backdrop-filter:blur(16px) !important; border:1px solid rgba(0,229,255,.28) !important;
+    box-shadow:0 12px 32px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.12) !important; }
+  html[data-theme="dark"] #sim-muni-card .tb-chips { display:flex !important; flex-wrap:nowrap !important; gap:6px !important; justify-content:space-between !important; width:100% !important; }
+  html[data-theme="dark"] #sim-muni-card .tb-chips span { flex:1 1 auto; min-width:0; justify-content:center; font-size:12px !important; padding:6px 10px !important; white-space:nowrap !important;
+    background:rgba(0,229,255,.06) !important; border:1px solid rgba(0,229,255,.2) !important; border-radius:999px !important; }
+  @media (max-width:370px) { html[data-theme="dark"] #sim-muni-card .tb-chips span { font-size:11px !important; padding:6px 7px !important; gap:4px; } }   /* teléfonos angostos: que quepan las 3 */
+  html[data-theme="dark"] #sim-facil-card { border-top:1.5px solid rgba(52,199,89,.45) !important; background:linear-gradient(180deg, rgba(52,199,89,.06) 0%, rgba(10,26,34,.75) 45%) !important; }
+  html[data-theme="dark"] #sim-dificil-card { border-top:1.5px solid rgba(255,59,48,.45) !important; background:linear-gradient(180deg, rgba(255,59,48,.06) 0%, rgba(10,26,34,.75) 45%) !important; }
+  /* pie en columna: estado arriba en una línea y botón a todo el ancho */
+  html[data-theme="dark"] #panel-simulacro .tb-smini-foot { display:flex !important; flex-direction:column !important; align-items:stretch !important; gap:8px !important; }
+  html[data-theme="dark"] #panel-simulacro .tb-smini-foot > span { white-space:nowrap; font-size:12.5px; }
+  html[data-theme="dark"] #panel-simulacro .tb-smini-foot b { width:100%; text-align:center; padding:9px 0 !important; border-radius:999px !important; font-weight:700; }
+  html[data-theme="dark"] #panel-simulacro .tb-hist-h { display:flex !important; flex-wrap:nowrap !important; justify-content:space-between !important; align-items:center !important; gap:8px; }
+  html[data-theme="dark"] #panel-simulacro .tb-hist-h h3 { font-size:15px !important; white-space:nowrap; margin:0 !important; }
+  html[data-theme="dark"] #panel-simulacro .tb-hist-h .tb-pill { white-space:nowrap; font-size:11.5px !important; flex-shrink:0; }
   /* =================== FIN ESTILO CINEMATIC =================== */
 
 </style>
