@@ -1565,6 +1565,21 @@ html[data-theme="dark"] .tb-sim-hero { background:linear-gradient(180deg,#0E3540
   .tb-lb { z-index:3100 !important; }   /* visor de imágenes ampliadas, también por encima */
   #screen-quiz:not(.hidden) .quiz-header, #screen-quiz:not(.hidden) .tb-qhead { position:relative; z-index:50; pointer-events:auto; }
   #screen-quiz:not(.hidden) .tb-qx { position:relative; z-index:60; cursor:pointer; pointer-events:auto; }
+  /* 17) AVATARES DE FIELTRO en DuxDrive */
+  .tb-sheet-ic.pet { width:64px !important; height:64px !important; margin:-34px 0 0 -4px; background-size:118% auto; background-position:center 30%; background-repeat:no-repeat;
+    border:2px solid currentColor; box-shadow:0 0 16px rgba(0,0,0,.45); }
+  .result-pet { display:block; width:120px; height:120px; margin:-10px auto 10px; object-fit:contain; filter:drop-shadow(0 8px 18px rgba(0,229,255,.25)); animation:petPop .5s ease-out both; }
+  @keyframes petPop { from { transform:scale(.6) translateY(12px); opacity:0; } to { transform:none; opacity:1; } }
+  /* personaje en la cabecera de cada pestaña (no en Inicio) */
+  .tb-top { position:relative; }
+  html:has(#panel-temas.active) .tb-top::after, html:has(#panel-quiz.active) .tb-top::after,
+  html:has(#panel-simulacro.active) .tb-top::after, html:has(#panel-manejo.active) .tb-top::after {
+    content:""; position:absolute; right:112px; bottom:-4px; width:70px; height:70px; background:center bottom / contain no-repeat;
+    filter:drop-shadow(0 4px 10px rgba(0,0,0,.5)); pointer-events:none; }
+  html:has(#panel-temas.active) .tb-top::after { background-image:url("img/char/nina_libro.webp"); }
+  html:has(#panel-quiz.active) .tb-top::after { background-image:url("img/char/poodle_lentes.webp"); }
+  html:has(#panel-simulacro.active) .tb-top::after { background-image:url("img/char/nino_reloj.webp"); }
+  html:has(#panel-manejo.active) .tb-top::after { background-image:url("img/char/perro_mochila.webp"); }
   /* =================== FIN ESTILO CINEMATIC =================== */
 
 </style>
@@ -1728,6 +1743,7 @@ html[data-theme="dark"] .tb-sim-hero { background:linear-gradient(180deg,#0E3540
   <!-- ============ RESULTS SCREEN ============ -->
   <div id="screen-results" class="hidden">
     <div class="result-hero">
+      <img class="result-pet" id="result-pet" src="img/char/gato_trofeo.webp" alt="">
       <div class="result-ring">
         <span class="pct" id="result-pct">0%</span>
         <span class="lbl" id="result-frac">0 / 35 correctas</span>
@@ -4636,8 +4652,12 @@ function tbQuizHeader() {
 }
 function tbShowSheet(ok, q, correctLabels) {
   var ic = el("tb-sheet-ic"), t = el("tb-sheet-t");
-  if (ok) { ic.style.background = "#0F2A28"; ic.style.color = "#3FE0D0"; ic.innerHTML = TB_IC.check; t.style.color = "#3FE0D0"; t.textContent = "¡Correcto!"; }
-  else { ic.style.background = "#3A2A10"; ic.style.color = "#FFB020"; ic.innerHTML = TB_IC.bulb; t.style.color = "#FFB020"; t.textContent = "Casi. La correcta es «" + correctLabels + "»"; }
+  // avatares de fieltro: celebran el acierto o acompañan el error (se alternan para no repetir siempre el mismo)
+  var pets = ok ? ["gato_bien", "perro_lapiz", "nina_saluda", "gatoblanco_megafono"] : ["poodle_pregunta", "gatoblanco_lupa", "nino_reloj"];
+  var pet = pets[state.current % pets.length];
+  ic.innerHTML = ""; ic.classList.add("pet"); ic.style.backgroundImage = "url('img/char/" + pet + ".webp')";
+  if (ok) { ic.style.backgroundColor = "rgba(0,229,255,.12)"; ic.style.color = "#3FE0D0"; t.style.color = "#3FE0D0"; t.textContent = "¡Correcto!"; }
+  else { ic.style.backgroundColor = "rgba(255,176,32,.12)"; ic.style.color = "#FFB020"; t.style.color = "#FFB020"; t.textContent = "Casi. La correcta es «" + correctLabels + "»"; }
   el("tb-sheet-p").textContent = q.tip || (ok ? "Sigue así." : "");
   el("btn-next").textContent = state.current < state.questions.length - 1 ? "Continuar" : "Ver resultado";
   el("tb-sheet").classList.add("show");
@@ -4930,6 +4950,7 @@ function finishQuiz() {
   else if (pct >= 50) { title = "Vas progresando"; sub = "Conviene repasar el contenido antes de seguir."; }
   else { title = "Sigue practicando"; sub = "Repasa el material y vuelve a intentarlo."; }
   el("result-title").textContent = title;
+  el("result-pet").src = "img/char/" + (pct >= 90 ? "gato_trofeo" : pct >= 70 ? "gato_bien" : pct >= 50 ? "nina_libro" : "poodle_lentes") + ".webp";
   el("result-sub").textContent = sub;
   showMiniPopup(nextFinishMessage(), "🎉");
 
