@@ -333,7 +333,7 @@
   .rz-lab { font-size: 14px; font-weight: 700; color: var(--ig-text-dark); margin: 18px 0 8px; }
   .rz-alert { border-radius: 12px; padding: 10px 12px; margin: 4px 0 14px; font-size: 12px; line-height: 1.5; color: var(--ig-text-body); }
   .rz-fig { display: block; margin: 6px 0 16px; text-decoration: none; text-align: center; }
-  .rz-fig img { display: block; width: 100%; height: auto; border-radius: 12px; border: 1px solid var(--ig-border-lavender); background: #fff; }
+  .rz-fig img { display: block; width: 100%; height: auto; min-height: 200px; object-fit: contain; border-radius: 12px; border: 1px solid var(--ig-border-lavender); background: #08161D; }   /* fondo oscuro de respaldo mientras carga (antes blanco) */
   .rz-fig span { display: inline-block; font-size: 10.5px; color: var(--ig-text-muted); margin-top: 4px; }
   .rz-own { background: var(--ig-bg-card); border: 1.5px solid var(--ig-border-lavender); border-radius: 14px; padding: 12px 10px 10px; }
   .rz-own-t { font-size: 12.5px; font-weight: 800; color: var(--ig-text-dark); margin-bottom: 6px; text-align: left; }
@@ -4397,6 +4397,21 @@ function renderManejo() {
     cont.appendChild(card);
   });
 }
+// Imágenes de los resúmenes: vienen con loading="lazy" y, dentro de una tarjeta que se despliega con animación,
+// algunos teléfonos nunca disparan la carga (la imagen queda en blanco hasta abrirla en el visor).
+// Al abrir un tema se fuerza la carga de todas sus imágenes.
+function rzCargarImagenes(card) {
+  if (!card) return;
+  card.querySelectorAll('img[loading="lazy"]').forEach(function (img) {
+    img.loading = "eager";
+    if (!img.complete || !img.naturalWidth) { var src = img.getAttribute("src"); img.removeAttribute("src"); img.setAttribute("src", src); }
+  });
+}
+document.addEventListener("click", function (e) {
+  var row = e.target.closest && e.target.closest("#ref-list .ref-row"); if (!row) return;
+  var card = row.closest(".ref-card");
+  setTimeout(function () { if (card && card.classList.contains("open")) rzCargarImagenes(card); }, 60);
+});
 function goToTema(id) {
   var t = document.querySelector('.tb-nav button[data-tab="temas"]'); if (t) t.click();
   var cards = document.querySelectorAll("#ref-list .ref-card");
